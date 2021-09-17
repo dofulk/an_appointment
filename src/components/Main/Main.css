@@ -1,0 +1,7 @@
+.component-main {
+    background-color: gray;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
