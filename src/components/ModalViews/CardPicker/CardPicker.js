@@ -5,12 +5,12 @@ import React, { useEffect } from "react";
 
 
 
-export const Exit = ({ entity }) => {
+export const CardPicker = ({ entity }) => {
 
 
   return (
     <div className="component-Player">
-      <button>HI</button>
+      <h2>{entity}</h2>
     </div>
   );
 }

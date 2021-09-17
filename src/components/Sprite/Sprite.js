@@ -1,9 +1,4 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { moveChild, changeMoves, endTurn } from '../../redux/actions/action'
-import { moveUp } from '../../lib/movement'
-import { currentTurnSelector, entitiesSelector } from '../../redux/selectors/index'
-
 
 
 

@@ -12,7 +12,7 @@ import * as PF from "pathfinding"
 import { entitiesByIdSelector, currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, floorTurnSelector, singleEntitySelector, entitiesArraySelector, entityByIdSelector, gameSelector } from '../../redux/selectors/index';
 
 import "./Main.css";
-import { CardPicker } from "../CardPicker/CardPicker";
+import { CardPicker } from "../ModalViews/CardPicker/CardPicker";
 
 
 
