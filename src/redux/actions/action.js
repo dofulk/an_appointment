@@ -184,7 +184,7 @@ export const attackTarget = (target, character, player) => {
 export const addCardFromPicker = (building, card) => {
     return dispatch => {
         batch(() => {
-            dispatch(deleteEntity(building))
+            dispatch(deleteEntity(building.id, building.tile))
             dispatch(addCardToDiscard(card))
         })
 

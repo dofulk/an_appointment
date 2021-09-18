@@ -17,7 +17,8 @@ export const ModalView = ({ setModalIsOpen, modalIsOpen, building }) => {
                 return (
                     <CardPicker
                         setModalIsOpen={setModalIsOpen}
-                        listOfCards={building.content} />
+                        listOfCards={building.content} 
+                        building={building}/>
                 )
 
             case 'Exit':

@@ -5,7 +5,6 @@ import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoves, changeHp, endTurn, draw, moveEntity, attackTarget } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
-import { } from 'react-redux'
 import * as PF from "pathfinding"
 
 import { entitiesByIdSelector, currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, floorTurnSelector, singleEntitySelector, entitiesArraySelector, entityByIdSelector, gameSelector } from '../../redux/selectors/index';
@@ -101,14 +100,6 @@ export function Main() {
   }
 
 
-
-  const moveAtCharacter = (target, character, player) => {
-    if (character.type === 'character') {
-
-    } else if (character.type === 'building') {
-
-    }
-  }
 
 
 
