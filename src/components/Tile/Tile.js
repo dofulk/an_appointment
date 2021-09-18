@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import { Sprite } from '../Sprite/Sprite';
 import { useDispatch } from 'react-redux' 
-import { entitiesIdSelector } from "../../redux/selectors";
 import { deleteEntity } from "../../redux/actions/action";
 
 
@@ -53,19 +52,19 @@ const tileStyle = (color, damage) => {
     case 4:
       background = '#66bb6a'
       break;
-    case 4:
+    case 5:
       background = '#4caf50'
       break;
-    case 5:
+    case 6:
       background = '#43a047'
       break;
-    case 6:
+    case 7:
       background = '#388e3c'
       break;
-    case 7:
+    case 8:
       background = '#2e7d32'
       break;
-    case 8:
+    case 9:
       background = '#1b5e20'
       break;
     default:
@@ -93,7 +92,7 @@ export const Tile = ({ id, color, character, building, damage }) => {
     if (character && character.hp <= 0 && character.id !== 'player') {
       console.log('Im MELLLLLLLLTTTTTTTTTTINGGGGGGGG')
       dispatch(deleteEntity(character, id))
-    } else if (character && character.hp <= 0 && character.id == 'player') {
+    } else if (character && character.hp <= 0 && character.id === 'player') {
       console.log('Game OVERERER')
     }
 

@@ -1,5 +1,5 @@
-import { batch } from 'react-redux'
-import { changeAttack, changeGold, changeHp, changeMoves, drawCards, } from '../redux/actions/action'
+
+import { changeAttack, changeGold, changeHp, changeMoves, } from '../redux/actions/action'
 import { bloodRitual, bribe, bloodyDagger } from '../redux/actions/cardActions'
 import { v4 as uuidv4 } from 'uuid'
 

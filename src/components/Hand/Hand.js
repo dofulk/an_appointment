@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { handSelector, currentPhaseSelector, drawAmountSelector, playedCardsSelector, discardSelector, drawSelector } from '../../redux/selectors/index'
-import { Card } from '../Card/Card'
-import { draw, drawCards, newPhase, changeDrawAmount, playCard, newCycle } from '../../redux/actions/action'
+import { handSelector, currentPhaseSelector, drawAmountSelector, playedCardsSelector } from '../../redux/selectors/index'
+import { draw, changeDrawAmount, playCard, newCycle } from '../../redux/actions/action'
 import { getCardEffect } from "../../lib/cardEffects";
 
 
@@ -14,8 +13,6 @@ export const Hand = () => {
 
     const dispatch = useDispatch()
 
-    const drawPile = useSelector(drawSelector)
-    const discard = useSelector(discardSelector)
     const playedCards = useSelector(playedCardsSelector)
     const hand = useSelector(handSelector)
     const currentPhase = useSelector(currentPhaseSelector)

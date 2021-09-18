@@ -1,15 +1,14 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { entitiesIdSelector, entitiesArraySelector, currentTurnSelector, levelSelector} from '../../redux/selectors/index'
+import { entitiesArraySelector, levelSelector} from '../../redux/selectors/index'
 import { Tile } from "../Tile/Tile";
-import { moveCharacter, changeMoves, endTurn, changeHp, newMap } from '../../redux/actions/action';
+import { newMap } from '../../redux/actions/action';
 import { createLevel } from "../../lib/level";
 
 
 const selectTiles = state => state.tiles
 const selectWidth = state => state.level.width
-const selectHeight = state => state.level.height
 
 
 function isEven(num) {
@@ -54,10 +53,8 @@ export const GameMap = () => {
     const width = useSelector(selectWidth)
 
     const entitiesArray = useSelector(entitiesArraySelector)
-    const currentTurn = useSelector(currentTurnSelector)
     const level = useSelector(levelSelector)
 
-    const currentEntity = entitiesArray[currentTurn]
 
 
 

@@ -1,4 +1,3 @@
-import { newMap } from "../../actions/action"
 
 const initialState = {
     byId: {

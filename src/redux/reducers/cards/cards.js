@@ -86,10 +86,9 @@ const cards = (state = initialState, action) => {
                     ...state.hand.filter(item => item.id === action.payload.id)
                 ]
             }
-
+        //discards cards in hand  
         case 'NEW_MAP':
         case 'END_CYCLE':
-        //discards cards in hand         
         case 'DISCARD':
             return {
                 ...state,

@@ -139,7 +139,7 @@ const entities = (state = initialState, action) => {
                 return {
                     ...state,
                     byId: newById,
-                    characterIds: state.characterIds.filter(id => id == !action.payload.entityId)
+                    characterIds: state.characterIds.filter(id => id === !action.payload.entityId)
 
                 }
             } else {

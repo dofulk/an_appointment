@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
-import { changeMoves, changeHp, endTurn, draw, moveEntity, attackTarget } from '../../redux/actions/action';
+import { changeMoves,  endTurn, moveOrAttack } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
 import * as PF from "pathfinding"
 
-import { entitiesByIdSelector, currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, floorTurnSelector, singleEntitySelector, entitiesArraySelector, entityByIdSelector, gameSelector } from '../../redux/selectors/index';
+import { currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector,  entityByIdSelector, gameSelector } from '../../redux/selectors/index';
 
 import "./Main.css";
-import { CardPicker } from "../ModalViews/CardPicker/CardPicker";
 import { ModalView } from "../ModalViews/ModalView";
 
 
@@ -28,12 +27,11 @@ export function Main() {
   const game = useSelector(gameSelector)
   const currentTurn = useSelector(currentTurnSelector)
   const currentPhase = useSelector(currentPhaseSelector)
-  const floorTurn = useSelector(floorTurnSelector)
 
 
   const currentEntity = entitiesById[currentTurn]
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);  
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
 
 
@@ -42,61 +40,41 @@ export function Main() {
 
   const chooseMove = () => {
 
-    let currentRowNumber = 0
-    let currentRow = []
-    let tileMap = []
+    let grid = new PF.Grid(15, 15);
+
     let tileList = tiles.byId
 
     Object.keys(tileList).forEach((i) => {
-      if (currentRowNumber == tileList[i].row) {
-        currentRow.push(tileList[i].isAValidMove ? 0 : 1)
-      } else {
-        tileMap.push(currentRow)
-
-        currentRow = []
-        currentRow.push(tileList[i].isAValidMove ? 0 : 1)
-        currentRowNumber += 1
-
-      }
+      grid.setWalkableAt(tileList[i].row, tileList[i].column, (tileList[i].isAValidMove ? true : false))
     })
-    tileMap.push(currentRow)
     let start = currentEntity.position.split(',')
     let end = player.position.split(',')
 
     let startX = parseInt(start[0])
     let startY = parseInt(start[1])
 
-    tileMap[startX][startY]= 0
+    grid.setWalkableAt(startX, startY, true)
 
     let endX = parseInt(end[0])
     let endY = parseInt(end[1])
 
-    tileMap[endX][endY] = 0
+    grid.setWalkableAt(endX, endY, true)
 
     let finder = new PF.AStarFinder()
-    let grid = new PF.Grid(tileMap);
-
 
 
     let path = finder.findPath(startX, startY, endX, endY, grid)
+    console.log(grid, path)
+    if (path.length) {
+      console.log(grid)
+      let target = path[1].join(',')
+      let targetTile = tiles.byId[target]
 
+      dispatch(moveOrAttack(targetTile, currentEntity))
+    } else {
+      changeMoves(currentEntity.id, -1)
+    }
 
-    let targetArray = path[1]
-    let target = targetArray.join(',')
-    let targetTile = tiles.byId[target]
-    if (targetTile.wall) {
-      dispatch(changeMoves(currentTurn, -1))
-    } else if (targetTile.isAValidMove) {
-      dispatch(moveEntity(targetTile, currentEntity))
-      dispatch(changeMoves(currentTurn, -1))
-    } else if (targetTile.character) {
-      dispatch(changeMoves(currentTurn, -1))
-      dispatch(changeHp(targetTile.character, -currentEntity.attack))
-    }
-    else {
-      //throw an error at some point
-      console.log('oops')
-    }
   }
 
 
@@ -114,7 +92,6 @@ export function Main() {
     }
 
     if (moves <= 0 && currentTurn === 'player' && !modalIsOpen) {
-      console.log(entityIds)
       dispatch(endTurn(entityIds, currentTurn))
 
     } else if (currentTurn === 'player') {
@@ -154,14 +131,12 @@ export function Main() {
 
         } else if (moves <= 0) {
 
-        } else if (targetTile.character.length) {
-          dispatch(attackTarget(target, entitiesById[targetTile.character], player))
-        } else if (targetTile.building.length) {
+        } else if (targetTile.building.length && !targetTile.character.length) {
           setModalIsOpen(true)
           setModalContent(entitiesById[targetTile.building])
-          dispatch(moveEntity(targetTile, player))
-        } else if (targetTile.isAValidMove) {
-          dispatch(moveEntity(targetTile, player))
+          dispatch(moveOrAttack(targetTile, player))
+        } else if (targetTile) {
+          dispatch(moveOrAttack(targetTile, player))
         } else {
           console.log(targetTile)
         }
@@ -175,7 +150,7 @@ export function Main() {
 
   return (
     <div className="component-main" onKeyDown={handleKeydown}>
-      <ModalView building={modalContent} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}/>
+      <ModalView building={modalContent} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       <GameMap />
       <div flex="horizontal" style={{ flex: 1 }}>
         <h1>Moves: {moves}/{player.baseMoves}</h1>

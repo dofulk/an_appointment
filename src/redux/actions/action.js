@@ -171,12 +171,12 @@ export const endTurn = (entities, currentTurn) => {
     }
 }
 
-export const attackTarget = (target, character, player) => {
+export const attackTarget = (characterId, entity) => {
     return (dispatch, getState) => {
 
         batch(() => {
-            dispatch(changeMoves('player', -1))
-            dispatch(changeHp(character.id, -player.attack))
+            dispatch(changeMoves(entity.id, -1))
+            dispatch(changeHp(characterId, -entity.attack))
         })
     }
 }
@@ -188,5 +188,21 @@ export const addCardFromPicker = (building, card) => {
             dispatch(addCardToDiscard(card))
         })
 
+    }
+}
+
+export const moveOrAttack = (targetTile, entity) => {
+    if (targetTile.wall) {
+       return changeMoves(entity.id, -1)
+    } else if (targetTile.isAValidMove) {
+
+       return moveEntity(targetTile, entity)
+
+    } else if (targetTile.character) {
+        return attackTarget(targetTile.character, entity)
+    }
+    else {
+        //throw an error at some point
+        console.log('oops')
     }
 }

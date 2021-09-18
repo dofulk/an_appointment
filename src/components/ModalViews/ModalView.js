@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CardPicker } from "./CardPicker/CardPicker";
 import { Exit } from "./Exit/Exit";
 import Modal from 'react-modal';
@@ -9,7 +9,6 @@ import Modal from 'react-modal';
 
 export const ModalView = ({ setModalIsOpen, modalIsOpen, building }) => {
 
-    const [modalContent, setModalContent] = useState(<div></div>);
 
     const content = (building) => {
         switch (building.buildingType) {
@@ -30,7 +29,10 @@ export const ModalView = ({ setModalIsOpen, modalIsOpen, building }) => {
                     ></Exit>
 
                 )
+                default:
+                    return
         }
+    
     }
 
     const view = (building) => {
