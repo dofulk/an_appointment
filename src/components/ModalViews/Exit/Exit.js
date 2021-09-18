@@ -5,12 +5,12 @@ import React, { useEffect } from "react";
 
 
 
-export const Exit = ({ entity }) => {
+export const Exit = ({ setModalIsOpen }) => {
 
 
   return (
     <div className="component-Player">
-      <button>HI</button>
+      <button onClick={() => setModalIsOpen(false)}>EXIT</button>
     </div>
   );
 }

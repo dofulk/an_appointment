@@ -5,12 +5,12 @@ import React, { useEffect } from "react";
 
 
 
-export const CardPicker = ({ entity }) => {
+export const CardPicker = ({ setModalIsOpen }) => {
 
 
   return (
     <div className="component-Player">
-      <h2>{entity}</h2>
+      <button onClick={() => setModalIsOpen(false)}>EXIT</button>
     </div>
   );
 }

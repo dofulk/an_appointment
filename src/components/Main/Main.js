@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Modal from 'react-modal';
+
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
-import { Exit } from "../ModalViews/Exit/Exit";
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoves, changeHp, endTurn, draw, moveEntity, attackTarget } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
@@ -13,6 +12,7 @@ import { entitiesByIdSelector, currentTurnSelector, entitiesIdSelector, playerSe
 
 import "./Main.css";
 import { CardPicker } from "../ModalViews/CardPicker/CardPicker";
+import { ModalView } from "../ModalViews/ModalView";
 
 
 
@@ -34,8 +34,8 @@ export function Main() {
 
   const currentEntity = entitiesById[currentTurn]
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(<div></div>);
+  const [modalIsOpen, setModalIsOpen] = useState(false);  
+  const [modalContent, setModalContent] = useState()
 
 
 
@@ -100,20 +100,7 @@ export function Main() {
     }
   }
 
-  const chooseModalContent = (building) => {
-    if (building.buildingType === 'Chest') {
-      setModalContent(<CardPicker
-        setModalIsOpen={setModalIsOpen}
-        listOfCards={building.content} />)
-    }
-    if (building.buildingType === 'Exit') {
-      setModalContent(<Exit
-        setModalIsOpen={setModalIsOpen}
-        player={player}
-        level={game.level}
-      ></Exit>)
-    }
-  }
+
 
   const moveAtCharacter = (target, character, player) => {
     if (character.type === 'character') {
@@ -180,7 +167,7 @@ export function Main() {
           dispatch(attackTarget(target, entitiesById[targetTile.character], player))
         } else if (targetTile.building.length) {
           setModalIsOpen(true)
-          chooseModalContent(entitiesById[targetTile.building])
+          setModalContent(entitiesById[targetTile.building])
           dispatch(moveEntity(targetTile, player))
         } else if (targetTile.isAValidMove) {
           dispatch(moveEntity(targetTile, player))
@@ -197,11 +184,7 @@ export function Main() {
 
   return (
     <div className="component-main" onKeyDown={handleKeydown}>
-      <Modal isOpen={modalIsOpen}
-        ariaHideApp={false}>
-        {modalContent}
-
-      </Modal>
+      <ModalView building={modalContent} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}/>
       <GameMap />
       <div flex="horizontal" style={{ flex: 1 }}>
         <h1>Moves: {moves}/{player.baseMoves}</h1>
