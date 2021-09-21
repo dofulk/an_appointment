@@ -4,7 +4,7 @@ export const initialState = {
 
     },
     characterIds: ['player', 'enemy1'],
-    currentTurn: 'player',
+    turn: 0,
     playerTurnInitiated: false
 };
 
@@ -24,7 +24,7 @@ const entities = (state = initialState, action) => {
                 },
                 characterIds: action.payload.entities.characterIds,
                 playerTurnInitiated: false,
-                currentTurn: 'player',
+                turn: 0,
 
             }
         //Changes the position value of entity
@@ -105,7 +105,7 @@ const entities = (state = initialState, action) => {
         case 'END_TURN':
             return {
                 ...state,
-                currentTurn: action.payload.currentTurn
+                turn: state.turn + 1
             }
         case 'END_CYCLE':
             let entities = {}
@@ -122,7 +122,7 @@ const entities = (state = initialState, action) => {
                 ...state,
                 byId: entities,
                 playerTurnInitiated: false,
-                currentTurn: 'player'
+                turn: 0
             }
 
 
@@ -135,12 +135,11 @@ const entities = (state = initialState, action) => {
         case 'DELETE_ENTITY':
             const key = action.payload.entityId
             const { [key]: value, ...newById } = state.byId
-            if (newById.type === "character") {
+            if (action.payload.entityType === "character") {
                 return {
                     ...state,
                     byId: newById,
-                    characterIds: state.characterIds.filter(id => id === !action.payload.entityId)
-
+                    characterIds: state.characterIds.filter(id => id !== action.payload.entityId)
                 }
             } else {
                 return {

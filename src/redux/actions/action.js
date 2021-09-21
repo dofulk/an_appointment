@@ -1,5 +1,6 @@
 import { batch } from "react-redux"
-
+import * as PF from "pathfinding"
+import { isCompositeComponent } from "react-dom/test-utils"
 
 export const addCharacter = (tile, character) => ({
     type: 'ADD_CHARACTER',
@@ -9,13 +10,7 @@ export const addCharacter = (tile, character) => ({
     }
 })
 
-export const removeCharacter = (tile, character) => ({
-    type: 'REMOVE_CHARACTER',
-    payload: {
-        tile: tile,
-        character: character
-    }
-})
+
 
 
 
@@ -94,10 +89,11 @@ export const playCard = (id) => ({
     }
 })
 
-export const deleteEntity = (id, tile) => ({
+export const deleteEntity = (entity, tile) => ({
     type: 'DELETE_ENTITY',
     payload: {
-        entityId: id,
+        entityType: entity.type,
+        entityId: entity.id,
         tile: tile
     }
 })
@@ -148,14 +144,13 @@ export const drawCards = (numberOfCards) => ({
     }
 })
 
-export const endTurn = (entities, currentTurn) => {
-    let currentNumber = entities.indexOf(currentTurn)
-    if (currentNumber === (entities.length - 1)) {
+export const endTurn = (entities, turn) => {
+    console.log(entities, turn)
+    if (turn >= (entities.length - 1)) {
+        console.log('NEWCYCLE')
         return {
             type: 'END_CYCLE',
             payload: {
-                phase: 'player',
-                currentTurn: entities[0],
                 brokenTiles: 4,
             }
         }
@@ -164,9 +159,6 @@ export const endTurn = (entities, currentTurn) => {
     else {
         return {
             type: 'END_TURN',
-            payload: {
-                currentTurn: entities[currentNumber + 1]
-            }
         }
     }
 }
@@ -184,7 +176,7 @@ export const attackTarget = (characterId, entity) => {
 export const addCardFromPicker = (building, card) => {
     return dispatch => {
         batch(() => {
-            dispatch(deleteEntity(building.id, building.tile))
+            dispatch(deleteEntity(building, building.position))
             dispatch(addCardToDiscard(card))
         })
 
@@ -206,3 +198,40 @@ export const moveOrAttack = (targetTile, entity) => {
         console.log('oops')
     }
 }
+
+export const chooseMove = (tiles, currentEntity, player) => {
+
+    let grid = new PF.Grid(15, 15);
+
+    let tileList = tiles.byId
+
+    Object.keys(tileList).forEach((i) => {
+      grid.setWalkableAt(tileList[i].row, tileList[i].column, (tileList[i].isAValidMove ? true : false))
+    })
+    let start = currentEntity.position.split(',')
+    let end = player.position.split(',')
+
+    let startX = parseInt(start[0])
+    let startY = parseInt(start[1])
+
+    grid.setWalkableAt(startX, startY, true)
+
+    let endX = parseInt(end[0])
+    let endY = parseInt(end[1])
+
+    grid.setWalkableAt(endX, endY, true)
+
+    let finder = new PF.AStarFinder()
+
+
+    let path = finder.findPath(startX, startY, endX, endY, grid)
+    if (path.length > 1) {
+      let target = path[1].join(',')
+      let targetTile = tiles.byId[target]
+
+      return moveOrAttack(targetTile, currentEntity)
+    } else {
+      return changeMoves(currentEntity.id, -1)
+    }
+
+  }

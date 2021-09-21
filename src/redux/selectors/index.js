@@ -6,8 +6,11 @@ export const tilesSelector = state => state.tiles
 export const playerMovesSelector = state => state.entities.byId['player'].moves
 export const entitiesIdSelector = state => state.entities.characterIds
 export const entitiesArraySelector = state => state.entities.byId
-export const singleEntitySelector = state => state
-export const currentTurnSelector = state => state.entities.currentTurn
+export const turnSelector = state => state.entities.turn
+export const currentTurnSelector = state => state.entities.characterIds[state.entities.turn]
+export const characterIdsSelector = state => state.entities.characterIds
+export const currentEntityIdsSelector = state => state.entities.characterIds[state.entities.currentTurn]
+export const currentEntitySelector = state => state.entities.byId[state.entities.characterIds[state.entities.currentTurn]]
 export const playerTurnInitiatedSelector = state => state.entities.playerTurnInitiated
 export const entityByIdSelector = state => state.entities.byId
 
@@ -20,8 +23,8 @@ export const playedCardsSelector = state => state.cards.played
 export const discardSelector = state => state.cards.discard
 export const drawSelector = state => state.cards.draw
 
-
-export const currentPhaseSelector = state => state.game.currentPhase
+export const phaseSelector = state => state.game.phase
+export const currentPhaseSelector = state => state.game.allPhases[state.game.phase]
 export const drawAmountSelector = state => state.game.drawAmount
 
 export const floorTurnSelector = state => state.level.floorTurn

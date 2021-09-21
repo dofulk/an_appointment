@@ -1,12 +1,14 @@
 
 const initialState = {
-  currentPhase: 'cards',
+  phase: 0,
+  allPhases: ['cards', 'movement', 'characters'],
   isPaused: false,
   numberOfTurns: 0,
   drawAmount: 4,
   baseDraw: 4,
   gold: 10,
-  level: 0
+  level: 0,
+  onKill: []
 
 };
 
@@ -16,18 +18,18 @@ const game = (state = initialState, action) => {
     case 'NEW_PHASE':
       return {
         ...state,
-        currentPhase: action.payload.phase
+        phase: state.phase + 1
       }
     case 'END_CYCLE':
       return {
         ...state,
-        currentPhase: 'cards'
+        phase: 0
       }
 
     case 'NEW_CYCLE':
       return {
         ...state,
-        currentPhase: action.payload.phase,
+        phase: state.phase + 1,
         drawAmount: state.baseDraw
       }
 
@@ -54,7 +56,7 @@ const game = (state = initialState, action) => {
       return{
         ...state,
         level: state.level + 1,
-        currentPhase: 'cards',
+        phase: 0,
         drawAmount: state.baseDraw
       }
 

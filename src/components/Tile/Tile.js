@@ -1,8 +1,10 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Sprite } from '../Sprite/Sprite';
-import { useDispatch } from 'react-redux' 
-import { deleteEntity } from "../../redux/actions/action";
-
+import { useDispatch, useSelector } from 'react-redux'
+import { changeHp, deleteEntity, endTurn } from "../../redux/actions/action";
+import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, currentPhaseSelector, turnSelector } from "../../redux/selectors";
+import { onKill } from "../../redux/actions/conditionalActions";
+import { chooseMove } from "../../redux/actions/action";
 
 
 
@@ -12,30 +14,7 @@ const tileStyle = (color, damage) => {
 
 
   let background
-  // switch (color) {
-  //   case 'light':
-  //     switch (damage) {
-  //       case 0:
-  //         background = '#ffcdd2';
-  //         break;
-  //       case 1:
-  //         background = '#ef9a9a'
-  //         break;
-  //       default:
-  //         background = '#e57373'
-  //     }
-  //     background = '#ffcdd2';
-  //     break;
-  //   case 'dark':
-  //     background = '#f5f5f5';
-  //     break;
-  //   case 'wall':
-  //     background = 'black'
-  //     break;
-  //   default:
-  //     background = 'red';
-  //     break;
-  // }
+
   switch (damage) {
     case 0:
       background = '#e8f5e9';
@@ -84,26 +63,44 @@ export const Tile = ({ id, color, character, building, damage }) => {
 
 
   const dispatch = useDispatch()
+  const turn = useSelector(turnSelector)
+  const currentTurn = useSelector(currentTurnSelector)
+  const characterIds = useSelector(characterIdsSelector)
+  const player = useSelector(playerSelector)
+  const tiles = useSelector(tilesSelector)
+  const currentPhase = useSelector(currentPhaseSelector)
 
-
-  
 
   useEffect(() => {
-    if (character && character.hp <= 0 && character.id !== 'player') {
-      console.log('Im MELLLLLLLLTTTTTTTTTTINGGGGGGGG')
-      dispatch(deleteEntity(character, id))
-    } else if (character && character.hp <= 0 && character.id === 'player') {
+    
+    if (!character) {
+      return
+    
+    } else if (character.hp <= 0 && character.id === 'player') {
       console.log('Game OVERERER')
-    }
+    }else if (character.hp <= 0) {
+      console.log('Im MELLLLLLLLTTTTTTTTTTINGGGGGGGG')
+      dispatch(onKill(character, id, changeHp('player', 2)))
+    }else if (currentPhase !== 'movement' || currentTurn !== character.id) {
+    } else if (character.moves <= 0) {
+      console.log('Turn Ending')
+      dispatch(endTurn(characterIds, turn))
 
-  })
+    } else if (character.id === 'player') {
+      return
+    } else {
+      dispatch(chooseMove(tiles, character, player))
+    }
+  }
+
+  )
 
   let sprite = (character, building) => {
 
     if (character) {
       return <Sprite entity={character.sprite} />
     } else if (building) {
-      return <Sprite entity={building.sprite}/>
+      return <Sprite entity={building.sprite} />
     }
   }
 

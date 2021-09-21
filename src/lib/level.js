@@ -3,14 +3,14 @@ import { v4 as uuidv4 } from 'uuid'
 
 const generateEntityArray = (level) => {
     let entities = [
-    { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
-    { id: "Exit", position: "", type: "building", buildingType: "Exit", sprite: "🚪" }
+        { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
+        { id: "Exit", position: "", type: "building", buildingType: "Exit", sprite: "🚪" }
     ]
     let i = level + 1
     while (i > 0) {
         entities.push(
             { id: uuidv4(), position: "", moves: 3, baseMoves: 3, hp: 30, maxHP: 30, attack: 4, baseAttack: 4, type: 'character', sprite: "🪲" },
-            { id: uuidv4(), position: "", moves: 8, baseMoves: 8, hp: 10, maxHP: 10, attack: 1, baseAttack: 1, type: 'character', sprite: "🥷🏼" },
+            { id: uuidv4(), position: "", moves: 8, baseMoves: 6, hp: 10, maxHP: 10, attack: 1, baseAttack: 1, type: 'character', sprite: "🥷🏼" },
         )
         i--
     }
@@ -70,7 +70,7 @@ export const createLevel = (player, level) => {
         validMoves = validMoves.filter(item => item !== position)
 
         if (entityArray[entity].type === 'character') {
-            characterIds.push([entityArray[entity].id])
+            characterIds.push(entityArray[entity].id)
             byId = {
                 ...byId,
                 [position]: {
@@ -108,6 +108,10 @@ export const createLevel = (player, level) => {
         }
     }
 
+    //puts player at the front of character array
+    characterIds = characterIds.filter(id => id !== "player")
+    characterIds.unshift('player')
+    console.log(characterIds)
     return {
         map: {
             byId: byId,

@@ -1,3 +1,4 @@
+import { attackTarget } from "../../actions/action"
 
 const initialState = {
     byId: {
@@ -28,18 +29,38 @@ const tiles = (state = initialState, action) => {
                 }
             }
         case "DELETE_ENTITY":
-        case "REMOVE_CHARACTER":
-            return {
-                ...state,
-                byId: {
-                    ...state.byId,
-                    [action.payload.tile]: {
-                        ...state.byId[action.payload.tile],
-                        character: [],
-                        isAValidMove: true
+            
+            if (action.payload.entityType === 'character') {
+                return {
+                    ...state,
+                    byId: {
+                        ...state.byId,
+                        [action.payload.tile]: {
+                            ...state.byId[action.payload.tile],
+                            character: [],
+                            isAValidMove: true
+                        }
+                    
                     }
                 }
+            } else if (action.payload.entityType === 'building') {
+                console.log(action.payload.tile, action.payload.entityId)
+                return {
+                    ...state,
+                    byId: {
+                        ...state.byId,
+                        [action.payload.tile]: {
+                            ...state.byId[action.payload.tile],
+                            building: [],
+                            isAValidMove: true
+                        }
+                    }
+                }
+            } else {
+                return state
             }
+
+
         case 'NEW_MAP':
             return {
                 ...state,
@@ -50,29 +71,29 @@ const tiles = (state = initialState, action) => {
 
         case 'MOVE_ENTITY':
             if (action.payload.entity.id === state.byId[action.payload.entity.position].character) {
-            return {
-                ...state,
-                byId: {
-                    ...state.byId,
-                    [action.payload.entity.position]: {
-                        ...state.byId[action.payload.entity.position],
-                        character: [],
-                        isAValidMove: true
+                return {
+                    ...state,
+                    byId: {
+                        ...state.byId,
+                        [action.payload.entity.position]: {
+                            ...state.byId[action.payload.entity.position],
+                            character: [],
+                            isAValidMove: true
 
-                    },
-                    [action.payload.target]: {
-                        ...state.byId[action.payload.target],
-                        character: action.payload.entity.id,
-                        isAValidMove: false
+                        },
+                        [action.payload.target]: {
+                            ...state.byId[action.payload.target],
+                            character: action.payload.entity.id,
+                            isAValidMove: false
+                        }
+
                     }
-
                 }
+            } else {
+                return state
             }
-        }else {
-            return state
-        }
 
-            
+
 
         case 'END_CYCLE':
             let chosenTiles = []

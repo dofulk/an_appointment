@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
-import { changeMoves,  endTurn, moveOrAttack } from '../../redux/actions/action';
+import {  endTurn, moveOrAttack, chooseMove } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
-import * as PF from "pathfinding"
 
-import { currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector,  entityByIdSelector, gameSelector } from '../../redux/selectors/index';
+
+import { currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector } from '../../redux/selectors/index';
 
 import "./Main.css";
 import { ModalView } from "../ModalViews/ModalView";
+import entities from "../../redux/reducers/entities/entities";
 
 
 
@@ -27,9 +28,9 @@ export function Main() {
   const game = useSelector(gameSelector)
   const currentTurn = useSelector(currentTurnSelector)
   const currentPhase = useSelector(currentPhaseSelector)
+  const turn = useSelector(turnSelector)
 
-
-  const currentEntity = entitiesById[currentTurn]
+  const currentEntity = useSelector(currentEntitySelector)
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
@@ -38,44 +39,6 @@ export function Main() {
 
   const dispatch = useDispatch()
 
-  const chooseMove = () => {
-
-    let grid = new PF.Grid(15, 15);
-
-    let tileList = tiles.byId
-
-    Object.keys(tileList).forEach((i) => {
-      grid.setWalkableAt(tileList[i].row, tileList[i].column, (tileList[i].isAValidMove ? true : false))
-    })
-    let start = currentEntity.position.split(',')
-    let end = player.position.split(',')
-
-    let startX = parseInt(start[0])
-    let startY = parseInt(start[1])
-
-    grid.setWalkableAt(startX, startY, true)
-
-    let endX = parseInt(end[0])
-    let endY = parseInt(end[1])
-
-    grid.setWalkableAt(endX, endY, true)
-
-    let finder = new PF.AStarFinder()
-
-
-    let path = finder.findPath(startX, startY, endX, endY, grid)
-    console.log(grid, path)
-    if (path.length) {
-      console.log(grid)
-      let target = path[1].join(',')
-      let targetTile = tiles.byId[target]
-
-      dispatch(moveOrAttack(targetTile, currentEntity))
-    } else {
-      changeMoves(currentEntity.id, -1)
-    }
-
-  }
 
 
 
@@ -86,28 +49,14 @@ export function Main() {
 
   useEffect(() => {
 
-    if (player.hp <= 0) {
-      console.log('GAME OVER')
-      return
+    if (!currentTurn) {
+      endTurn(entitiesById, turn)
     }
-
-    if (moves <= 0 && currentTurn === 'player' && !modalIsOpen) {
-      dispatch(endTurn(entityIds, currentTurn))
-
-    } else if (currentTurn === 'player') {
-
-    } else if (currentEntity.moves <= 0 || currentEntity.hp <= 0) {
-      dispatch(endTurn(entityIds, currentTurn))
-    } else {
-      chooseMove()
-    }
-
-
-
     window.addEventListener("keydown", handleKeydown);
     return () => {
       window.removeEventListener("keydown", handleKeydown);
     }
+
   });
 
 
@@ -129,7 +78,7 @@ export function Main() {
           return
         } else if (moves <= 0 && currentTurn === 'player') {
 
-        } else if (moves <= 0) {
+        } else if (currentTurn !== 'player') {
 
         } else if (targetTile.building.length && !targetTile.character.length) {
           setModalIsOpen(true)
@@ -137,8 +86,6 @@ export function Main() {
           dispatch(moveOrAttack(targetTile, player))
         } else if (targetTile) {
           dispatch(moveOrAttack(targetTile, player))
-        } else {
-          console.log(targetTile)
         }
         break;
       default:
@@ -159,6 +106,7 @@ export function Main() {
         <h1>Attack: {player.attack}/{player.baseAttack}</h1>
         <h1>Coin: {gold}</h1>
         <h1>Level: {game.level}</h1>
+        <h1>Phase: {currentTurn}</h1>
         <Hand />
 
       </div>
