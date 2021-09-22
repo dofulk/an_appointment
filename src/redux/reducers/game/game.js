@@ -1,3 +1,4 @@
+import { changeHp, changeAttack } from "../../actions/action";
 
 const initialState = {
   phase: 0,
@@ -8,8 +9,9 @@ const initialState = {
   baseDraw: 4,
   gold: 10,
   level: 0,
-  onKill: []
-
+  onKill: [{action: changeHp('player', 2), removeOn: 'endCycle'}],
+  onMove: [],
+  onAttack: [],
 };
 
 
@@ -23,7 +25,10 @@ const game = (state = initialState, action) => {
     case 'END_CYCLE':
       return {
         ...state,
-        phase: 0
+        phase: 0,
+        onKill: state.onKill.filter(item => item.removeOn !== 'endCycle'),
+        onMove: state.onMove.filter(item => item.removeOn !== 'endCycle'),
+        onAttack: state.onAttack.filter(item => item.removeOn !== 'endCycle')
       }
 
     case 'NEW_CYCLE':
@@ -59,7 +64,30 @@ const game = (state = initialState, action) => {
         phase: 0,
         drawAmount: state.baseDraw
       }
-
+      case 'ADD_ON_KILL':
+        return {
+          ...state,
+          onKill: [
+            ...state.onKill,
+            action.payload.onKill
+          ]
+        }
+        case 'ADD_ON_MOVE':
+        return {
+          ...state,
+          onMove: [
+            ...state.onMove,
+            action.payload.onMove
+          ]
+        }
+        case 'ADD_ON_ATTACK':
+        return {
+          ...state,
+          onAttack: [
+            ...state.onAttack,
+            action.payload.onAttack
+          ]
+        }
 
     default:
       return state;

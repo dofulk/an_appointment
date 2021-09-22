@@ -35,3 +35,7 @@ export const selectTarget = (state) => {
 }
 
 export const goldSelector = state => state.game.gold
+
+export const onKillSelector = state => state.game.onKill
+export const onMoveSelector = state => state.game.onMove
+export const onAttackSelector = state => state.game.onAttack

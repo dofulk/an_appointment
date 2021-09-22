@@ -1,6 +1,6 @@
 
-import { changeAttack, changeGold, changeHp, changeMoves, } from '../redux/actions/action'
-import { bloodRitual, bribe, bloodyDagger } from '../redux/actions/cardActions'
+import { changeAttack, changeGold, changeHp, changeMoves, addOnKill, addOnMove, addOnAttack } from '../redux/actions/action'
+import { bloodRitual, bribe, bloodyDagger, glassCannon } from '../redux/actions/cardActions'
 import { v4 as uuidv4 } from 'uuid'
 
 const cardEffects = {
@@ -10,7 +10,18 @@ const cardEffects = {
     'Blood Ritual': { title: 'Blood Ritual', effect: bloodRitual(), description: "Lose 2 HP, Draw 2" },
     'Bribe': { title: 'Bribe', effect: bribe(), description: "Spend 2 Gold, Draw 2" },
     'Bloody Dagger': { title: 'Bloody Dagger', effect: bloodyDagger(), description: "Lose 2 HP, Gain 10 Attack" },
-    'Piece of Silver': { title: 'Piece of Silver', effect: changeGold(2), description: "Gain 2 Gold" }
+    'Piece of Silver': { title: 'Piece of Silver', effect: changeGold(2), description: "Gain 2 Gold" },
+    'Vampirism': {title: 'Vampirism', effect: addOnKill({ action: changeHp('player', 2), removeOn: 'endCycle' }), description: 'Gain 2 HP on a Kill'},
+    'Jeffrey Bezos': {title: 'Jeffrey Bezos', effect: addOnKill({ action: changeGold(5), removeOn: 'endCycle' }), description: 'Gain 5 Gold on a Kill'},
+    'Snowball': {title: 'Snowball', effect: addOnKill({ action: changeMoves('player', 3), removeOn: 'endCycle' }), description: 'Gain 3 Moves on a Kill'},
+    'Meatball': {title: 'Meatball', effect: addOnKill({ action: changeAttack('player', 3), removeOn: 'endCycle' }), description: 'Gain 3 Attack on a Kill'},
+    'Sneak Attack': {title: 'Sneak Attack', effect: addOnMove({ action: changeAttack('player', 1), removeOn: 'endCycle' }), description: 'Gain 1 Attack when you Move'},
+    'Golden Boot': {title: 'Golden Boot', effect: addOnMove({ action: changeGold(1), removeOn: 'endCycle' }), description: 'Gain 1 Gold when you Move'},
+    'Fury Blows': {title: 'Fury Blows', effect: addOnAttack({ action: changeAttack('player', 2), removeOn: 'endCycle' }), description: 'Gain 1 Attack when you Attack'},
+    'Golden Fists': {title: 'Golden Fists', effect: addOnAttack({ action: changeGold(1), removeOn: 'endCycle' }), description: 'Gain 1 Gold when you Attack'},
+    'Glass Cannon': {title: 'Glass Cannon', effect: glassCannon(), description: 'Gain 10 Attack, Lose 3 Attack when you Attack'},
+
+
 
 }
 

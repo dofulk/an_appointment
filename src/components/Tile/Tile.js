@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Sprite } from '../Sprite/Sprite';
 import { useDispatch, useSelector } from 'react-redux'
-import { changeHp, deleteEntity, endTurn } from "../../redux/actions/action";
-import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, currentPhaseSelector, turnSelector } from "../../redux/selectors";
+import { changeAttack, changeHp, deleteEntity, endTurn } from "../../redux/actions/action";
+import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, currentPhaseSelector, turnSelector, onKillSelector } from "../../redux/selectors";
 import { onKill } from "../../redux/actions/conditionalActions";
 import { chooseMove } from "../../redux/actions/action";
 
@@ -69,7 +69,7 @@ export const Tile = ({ id, color, character, building, damage }) => {
   const player = useSelector(playerSelector)
   const tiles = useSelector(tilesSelector)
   const currentPhase = useSelector(currentPhaseSelector)
-
+  const killAction = useSelector(onKillSelector)
 
   useEffect(() => {
     
@@ -80,7 +80,7 @@ export const Tile = ({ id, color, character, building, damage }) => {
       console.log('Game OVERERER')
     }else if (character.hp <= 0) {
       console.log('Im MELLLLLLLLTTTTTTTTTTINGGGGGGGG')
-      dispatch(onKill(character, id, changeHp('player', 2)))
+      dispatch(onKill(character, id, killAction))
     }else if (currentPhase !== 'movement' || currentTurn !== character.id) {
     } else if (character.moves <= 0) {
       console.log('Turn Ending')

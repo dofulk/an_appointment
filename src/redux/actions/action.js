@@ -1,6 +1,7 @@
 import { batch } from "react-redux"
 import * as PF from "pathfinding"
-import { isCompositeComponent } from "react-dom/test-utils"
+import { onAttack, onMove } from "./conditionalActions"
+
 
 export const addCharacter = (tile, character) => ({
     type: 'ADD_CHARACTER',
@@ -163,6 +164,33 @@ export const endTurn = (entities, turn) => {
     }
 }
 
+export const addOnKill = (effect) => {
+    return {
+        type: 'ADD_ON_KILL',
+        payload: {
+            onKill: effect
+        }
+    }
+}
+
+export const addOnMove = (effect) => {
+    return {
+        type: 'ADD_ON_MOVE',
+        payload: {
+            onMove: effect
+        }
+    }
+}
+
+export const addOnAttack = (effect) => {
+    return {
+        type: 'ADD_ON_ATTACK',
+        payload: {
+            onAttack: effect
+        }
+    }
+}
+
 export const attackTarget = (characterId, entity) => {
     return (dispatch, getState) => {
 
@@ -183,15 +211,17 @@ export const addCardFromPicker = (building, card) => {
     }
 }
 
-export const moveOrAttack = (targetTile, entity) => {
+
+
+export const moveOrAttack = (targetTile, entity, moveEffects, attackEffects) => {
     if (targetTile.wall) {
        return changeMoves(entity.id, -1)
     } else if (targetTile.isAValidMove) {
+        return onMove(targetTile, entity, moveEffects)
 
-       return moveEntity(targetTile, entity)
 
     } else if (targetTile.character) {
-        return attackTarget(targetTile.character, entity)
+        return onAttack(targetTile.character, entity, attackEffects)
     }
     else {
         //throw an error at some point
