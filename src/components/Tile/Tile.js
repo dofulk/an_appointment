@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Sprite } from '../Sprite/Sprite';
 import { useDispatch, useSelector } from 'react-redux'
 import { changeAttack, changeHp, deleteEntity, endTurn } from "../../redux/actions/action";
@@ -6,11 +6,12 @@ import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelecto
 import { onKill } from "../../redux/actions/conditionalActions";
 import { chooseMove } from "../../redux/actions/action";
 
-
+import { motion } from 'framer-motion'
 
 
 
 const tileStyle = (color, damage) => {
+
 
 
   let background
@@ -54,12 +55,14 @@ const tileStyle = (color, damage) => {
     width: '48px',
     height: '48px',
     backgroundColor: background,
+    listStyleType: 'none'
   }
 }
 
 
 
 export const Tile = ({ id, color, character, building, damage }) => {
+
 
 
   const dispatch = useDispatch()
@@ -72,32 +75,53 @@ export const Tile = ({ id, color, character, building, damage }) => {
   const killAction = useSelector(onKillSelector)
 
   useEffect(() => {
-    
+
+
+
+
+
     if (!character) {
       return
-    
+
     } else if (character.hp <= 0 && character.id === 'player') {
       console.log('Game OVERERER')
-    }else if (character.hp <= 0) {
+    } else if (character.hp <= 0) {
       console.log('Im MELLLLLLLLTTTTTTTTTTINGGGGGGGG')
       dispatch(onKill(character, id, killAction))
-    }else if (currentPhase !== 'movement' || currentTurn !== character.id) {
+    } else if (currentPhase !== 'movement' || currentTurn !== character.id) {
     } else if (character.moves <= 0) {
-      console.log('Turn Ending')
+
+      setTimeout(() => {
       dispatch(endTurn(characterIds, turn))
+      }, 150)
 
     } else if (character.id === 'player') {
       return
-    } else {
-      dispatch(chooseMove(tiles, character, player))
+    } else{
+      setTimeout(() => {
+        dispatch(chooseMove(tiles, character, player))
+      }, 150)
+
     }
   }
 
   )
 
-  let sprite = (character, building) => {
-
-    if (character) {
+  let sprite = (character, building, currentTurn) => {
+    if (character && (character.id === currentTurn) ) {
+      return (
+        (character) &&
+        < motion.div
+          key={character}
+          layoutId={currentTurn}
+          variants={id}
+          animate={{}
+          }
+          transition={spring}
+        > <Sprite entity={character.sprite} />
+        </motion.div >
+      )
+    } else if (character) {
       return <Sprite entity={character.sprite} />
     } else if (building) {
       return <Sprite entity={building.sprite} />
@@ -105,9 +129,16 @@ export const Tile = ({ id, color, character, building, damage }) => {
   }
 
   return (
-    <div className="component-tile" style={tileStyle(color, damage)}>
-      {sprite(character, building)}
-    </div>
+    <li className="component-tile" style={tileStyle(color, damage)}>
+
+
+      {sprite(character, building, currentTurn)}
+    </li>
   );
 
 }
+
+const spring = {
+  type: "tween",
+  duration: .15
+};

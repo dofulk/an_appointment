@@ -3,7 +3,7 @@ export const initialState = {
         "player": { id: "player", position: "1,1", moves: 5, baseMoves: 5, hp: 30, maxHP: 30, attack: 4, baseAttack: 4, type: 'character', sprite: "🙂" },
 
     },
-    characterIds: ['player', 'enemy1'],
+    characterIds: [],
     turn: 0,
     playerTurnInitiated: false
 };

@@ -1,10 +1,11 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { entitiesArraySelector, levelSelector} from '../../redux/selectors/index'
+import { entitiesArraySelector, levelSelector } from '../../redux/selectors/index'
 import { Tile } from "../Tile/Tile";
 import { newMap } from '../../redux/actions/action';
 import { createLevel } from "../../lib/level";
+import { AnimateSharedLayout } from 'framer-motion'
 
 
 const selectTiles = state => state.tiles
@@ -28,7 +29,7 @@ const gamemapStyle = width => {
 }
 
 
-const renderedTiles = (tiles, entities) => {
+const renderedTiles = (tiles, entities, currentTurn) => {
     let tileList = []
     tiles.allIds.map(id => {
         let tile = tiles.byId[id]
@@ -38,9 +39,9 @@ const renderedTiles = (tiles, entities) => {
             return tileList.push(<Tile key={id} id={id} color="wall" character={entities[character]} building={entities[building]}/>)
         }
         if ((!isEven(tiles.byId[id].row) && !isEven(tiles.byId[id].column)) || (isEven(tiles.byId[id].row) && isEven(tiles.byId[id].column))) {
-            return tileList.push(<Tile key={id} id={id} color="dark" character={entities[character]} building={entities[building]} damage={tiles.byId[id].damage} />)
+            return tileList.push(<Tile key={id} id={id} color="dark" character={entities[character]} building={entities[building]} damage={tiles.byId[id].damage}/>)
         } else {
-            return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} damage={tiles.byId[id].damage} />)
+            return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} damage={tiles.byId[id].damage}/>)
         }
     })
     return tileList
@@ -62,7 +63,7 @@ export const GameMap = () => {
 
 
     useEffect(() => {
-        
+
 
         if (!Object.keys(tiles.byId).length) {
             console.log(level)
@@ -74,15 +75,19 @@ export const GameMap = () => {
 
 
     return (
+
         <div style={{
             display: "flex",
             flex: 3,
             alignItems: "center",
             justifyContent: "center",
         }}>
-            <div style={gamemapStyle(width)}>
-                {renderedTiles(tiles, entitiesArray)}
-            </div>
+            <AnimateSharedLayout>
+                <ul style={gamemapStyle(width)}>
+                    {renderedTiles(tiles, entitiesArray)}
+                </ul>
+            </AnimateSharedLayout>
         </div>
+
     )
 }

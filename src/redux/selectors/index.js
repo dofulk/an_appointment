@@ -11,7 +11,7 @@ export const currentTurnSelector = state => state.entities.characterIds[state.en
 export const characterIdsSelector = state => state.entities.characterIds
 export const currentEntityIdsSelector = state => state.entities.characterIds[state.entities.currentTurn]
 export const currentEntitySelector = state => state.entities.byId[state.entities.characterIds[state.entities.currentTurn]]
-export const playerTurnInitiatedSelector = state => state.entities.playerTurnInitiated
+
 export const entityByIdSelector = state => state.entities.byId
 
 export const gameSelector = state => state.game
@@ -28,11 +28,6 @@ export const currentPhaseSelector = state => state.game.allPhases[state.game.pha
 export const drawAmountSelector = state => state.game.drawAmount
 
 export const floorTurnSelector = state => state.level.floorTurn
-
-export const selectTarget = (state) => {
-
-
-}
 
 export const goldSelector = state => state.game.gold
 

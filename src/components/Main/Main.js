@@ -52,6 +52,7 @@ export function Main() {
   useEffect(() => {
 
     if (!currentTurn) {
+      
       endTurn(entitiesById, turn)
     }
     window.addEventListener("keydown", handleKeydown);
