@@ -6,7 +6,7 @@ export const bloodRitual = () => {
 
         batch(() => {
             dispatch(drawCards(2))
-            dispatch(changeHp('player', -2))
+            dispatch(changeHp({id: 'player'}, -2))
         })
 
     }
@@ -28,7 +28,7 @@ export const bloodyDagger = () => {
 
         batch(() => {
             dispatch(changeAttack('player', 10))
-            dispatch(changeHp('player', -2))
+            dispatch(changeHp({id: 'player'}, -2))
         })
 
     }

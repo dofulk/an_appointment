@@ -9,7 +9,7 @@ const initialState = {
   baseDraw: 4,
   gold: 10,
   level: 0,
-  onKill: [{action: changeHp('player', 2), removeOn: 'endCycle'}],
+  onKill: [],
   onMove: [],
   onAttack: [],
 };
@@ -62,14 +62,18 @@ const game = (state = initialState, action) => {
         ...state,
         level: state.level + 1,
         phase: 0,
-        drawAmount: state.baseDraw
+        drawAmount: state.baseDraw,
+        onKill: state.onKill.filter(item => item.removeOn !== 'endCycle'),
+        onMove: state.onMove.filter(item => item.removeOn !== 'endCycle'),
+        onAttack: state.onAttack.filter(item => item.removeOn !== 'endCycle')
       }
       case 'ADD_ON_KILL':
         return {
           ...state,
           onKill: [
             ...state.onKill,
-            action.payload.onKill
+            action.payload.onKill,
+            
           ]
         }
         case 'ADD_ON_MOVE':

@@ -24,12 +24,12 @@ export const onKill = (character, id, listOfActions) => {
     }
 }
 
-export const onAttack = (target, entity, listOfActions) => {
+export const onAttack = (target, entity, attackEffects, killEffects) => {
 
     return dispatch => {
         batch(() => {
-            dispatch(attackTarget(target, entity))
-            batchList(listOfActions, dispatch)
+            dispatch(attackTarget(target, entity, killEffects))
+            batchList(attackEffects, dispatch)
 
         })
 

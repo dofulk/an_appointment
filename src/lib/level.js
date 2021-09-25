@@ -6,7 +6,7 @@ const generateEntityArray = (level) => {
         { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
         { id: "Exit", position: "", type: "building", buildingType: "Exit", sprite: "🚪" }
     ]
-    let i = level + 1
+    let i = Math.floor((level + 3)/2)
     while (i > 0) {
         entities.push(
             { id: uuidv4(), position: "", moves: 3, baseMoves: 3, hp: 30, maxHP: 30, attack: 4, baseAttack: 4, type: 'character', sprite: "🪲" },

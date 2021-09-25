@@ -135,11 +135,22 @@ const entities = (state = initialState, action) => {
         case 'DELETE_ENTITY':
             const key = action.payload.entityId
             const { [key]: value, ...newById } = state.byId
+
             if (action.payload.entityType === "character") {
-                return {
-                    ...state,
-                    byId: newById,
-                    characterIds: state.characterIds.filter(id => id !== action.payload.entityId)
+                console.log(state.characterIds.indexOf(key), state.turn)
+                if (state.characterIds.indexOf(key) <= state.turn) {
+                    return {
+                        ...state,
+                        byId: newById,
+                        characterIds: state.characterIds.filter(id => id !== action.payload.entityId),
+                        turn: state.turn - 1
+                    }
+                } else {
+                    return {
+                        ...state,
+                        byId: newById,
+                        characterIds: state.characterIds.filter(id => id !== action.payload.entityId)
+                    }
                 }
             } else {
                 return {

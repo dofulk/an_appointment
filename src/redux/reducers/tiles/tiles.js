@@ -31,6 +31,7 @@ const tiles = (state = initialState, action) => {
         case "DELETE_ENTITY":
             
             if (action.payload.entityType === 'character') {
+                console.log(action.payload.tile)
                 return {
                     ...state,
                     byId: {
@@ -52,7 +53,6 @@ const tiles = (state = initialState, action) => {
                         [action.payload.tile]: {
                             ...state.byId[action.payload.tile],
                             building: [],
-                            isAValidMove: true
                         }
                     }
                 }
@@ -96,8 +96,8 @@ const tiles = (state = initialState, action) => {
 
 
         case 'END_CYCLE':
-            let chosenTiles = []
-            chosenTiles = state.validMoves.sort(() => Math.random() - Math.random()).slice(0, action.payload.brokenTiles)
+            let randomTiles = state.validMoves.sort(() => Math.random() - Math.random())
+            let chosenTiles =randomTiles.slice(0, action.payload.brokenTiles)
             let newTiles = {}
             chosenTiles.forEach(item => {
                 newTiles[item] = {

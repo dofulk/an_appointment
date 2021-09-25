@@ -1,6 +1,7 @@
 import { batch } from "react-redux"
 import * as PF from "pathfinding"
-import { onAttack, onMove } from "./conditionalActions"
+import { onAttack, onKill, onMove } from "./conditionalActions"
+import { entityByIdSelector } from "../selectors"
 
 
 export const addCharacter = (tile, character) => ({
@@ -24,13 +25,20 @@ export const changeMoves = (id, moves) => ({
 })
 
 
-export const changeHp = (id, hp) => ({
-    type: 'CHANGE_HP',
-    payload: {
-        id: id,
-        hp: hp
+export const changeHp = (entity, hp, killEffects) => {
+    if (entity.id !== 'player' && entity.hp + hp <= 0) {
+        return onKill(entity, entity.position, killEffects)
+    } else {
+        return {
+            type: 'CHANGE_HP',
+            payload: {
+                id: entity.id,
+                hp: hp
+            }
+        }
     }
-})
+
+}
 
 export const changeAttack = (id, attack) => ({
     type: 'CHANGE_ATTACK',
@@ -146,7 +154,6 @@ export const drawCards = (numberOfCards) => ({
 })
 
 export const endTurn = (entities, turn) => {
-    console.log(entities, turn)
     if (turn >= (entities.length - 1)) {
         console.log('NEWCYCLE')
         return {
@@ -191,12 +198,12 @@ export const addOnAttack = (effect) => {
     }
 }
 
-export const attackTarget = (characterId, entity) => {
+export const attackTarget = (target, attacker, killEffects) => {
     return (dispatch, getState) => {
 
         batch(() => {
-            dispatch(changeMoves(entity.id, -1))
-            dispatch(changeHp(characterId, -entity.attack))
+            dispatch(changeMoves(attacker.id, -1))
+            dispatch(changeHp(target, -attacker.attack, killEffects))
         })
     }
 }
@@ -213,15 +220,15 @@ export const addCardFromPicker = (building, card) => {
 
 
 
-export const moveOrAttack = (targetTile, entity, moveEffects, attackEffects) => {
+export const moveOrAttack = (targetTile, entity, entities, moveEffects, attackEffects, killEffects) => {
     if (targetTile.wall) {
-       return changeMoves(entity.id, -1)
+        return changeMoves(entity.id, -1)
     } else if (targetTile.isAValidMove) {
         return onMove(targetTile, entity, moveEffects)
 
 
     } else if (targetTile.character) {
-        return onAttack(targetTile.character, entity, attackEffects)
+        return onAttack(entities[targetTile.character], entity, attackEffects, killEffects)
     }
     else {
         //throw an error at some point
@@ -229,14 +236,14 @@ export const moveOrAttack = (targetTile, entity, moveEffects, attackEffects) => 
     }
 }
 
-export const chooseMove = (tiles, currentEntity, player) => {
+export const chooseMove = (tiles, currentEntity, player, entities) => {
 
     let grid = new PF.Grid(15, 15);
 
     let tileList = tiles.byId
 
     Object.keys(tileList).forEach((i) => {
-      grid.setWalkableAt(tileList[i].row, tileList[i].column, (tileList[i].isAValidMove ? true : false))
+        grid.setWalkableAt(tileList[i].row, tileList[i].column, (tileList[i].isAValidMove ? true : false))
     })
     let start = currentEntity.position.split(',')
     let end = player.position.split(',')
@@ -256,12 +263,12 @@ export const chooseMove = (tiles, currentEntity, player) => {
 
     let path = finder.findPath(startX, startY, endX, endY, grid)
     if (path.length > 1) {
-      let target = path[1].join(',')
-      let targetTile = tiles.byId[target]
+        let target = path[1].join(',')
+        let targetTile = tiles.byId[target]
 
-      return moveOrAttack(targetTile, currentEntity)
+        return moveOrAttack(targetTile, currentEntity, entities)
     } else {
-      return changeMoves(currentEntity.id, -1)
+        return changeMoves(currentEntity.id, -1)
     }
 
-  }
+}
