@@ -7,7 +7,7 @@ import {  endTurn, moveOrAttack, chooseMove } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
 
 
-import { currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector, onMoveSelector, onAttackSelector } from '../../redux/selectors/index';
+import { currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector, onMoveSelector, onAttackSelector, onKillSelector } from '../../redux/selectors/index';
 
 import "./Main.css";
 import { ModalView } from "../ModalViews/ModalView";
@@ -33,6 +33,7 @@ export function Main() {
   const currentEntity = useSelector(currentEntitySelector)
   const moveEffects = useSelector(onMoveSelector)
   const attackEffects = useSelector(onAttackSelector)
+  const killEffects = useSelector(onKillSelector)
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
@@ -53,8 +54,15 @@ export function Main() {
 
     if (!currentTurn) {
       
-      endTurn(entitiesById, turn)
+      endTurn(entityIds, turn)
     }
+
+    if (currentTurn === 'player' && moves <= 0 && !modalIsOpen) {
+      setTimeout(() => {
+        dispatch(endTurn(entityIds,turn))
+      }, 150);
+    }
+
     window.addEventListener("keydown", handleKeydown);
     return () => {
       window.removeEventListener("keydown", handleKeydown);
@@ -86,9 +94,9 @@ export function Main() {
         } else if (targetTile.building.length && !targetTile.character.length) {
           setModalIsOpen(true)
           setModalContent(entitiesById[targetTile.building])
-          dispatch(moveOrAttack(targetTile, player, moveEffects, attackEffects))
+          dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
         } else if (targetTile) {
-          dispatch(moveOrAttack(targetTile, player, moveEffects, attackEffects))
+          dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
         }
         break;
       default:
@@ -109,6 +117,7 @@ export function Main() {
         <h1>Attack: {player.attack}/{player.baseAttack}</h1>
         <h1>Coin: {gold}</h1>
         <h1>Level: {game.level}</h1>
+        <h1>Turn: {currentTurn}</h1>
         <Hand />
 
       </div>
