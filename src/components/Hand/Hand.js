@@ -4,8 +4,7 @@ import { handSelector, currentPhaseSelector, drawAmountSelector } from '../../re
 import { draw, changeDrawAmount, newCycle, drawOne } from '../../redux/actions/action'
 import { getCardEffect } from "../../lib/cardEffects";
 import { Card } from "../Card/Card";
-import { motion } from "framer-motion";
-import { batch } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -21,6 +20,7 @@ export const Hand = () => {
     const currentPhase = useSelector(currentPhaseSelector)
     const drawAmount = useSelector(drawAmountSelector)
     const [cardsPlayed, setCardsPlayed] = useState(0)
+    const [beingPlayed, setBeingPlayed] = useState()
 
 
     useEffect(() => {
@@ -30,32 +30,55 @@ export const Hand = () => {
 
                     dispatch(drawOne(1))
 
-                } else if (Array.isArray(hand) && (cardsPlayed < hand.length) && drawAmount <= 0) {
+                }
+            }
+        }, 200)
+    }, [drawAmount, currentPhase])
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (currentPhase === 'cards') {
+
+                if (Array.isArray(hand) && (cardsPlayed < hand.length) && drawAmount <= 0) {
                     setCardsPlayed(cardsPlayed => cardsPlayed + 1)
+                    setBeingPlayed(hand[cardsPlayed].id)
                     dispatch(getCardEffect(hand[cardsPlayed].cardTitle))
 
 
 
                 } else {
+                    setBeingPlayed()
                     dispatch(newCycle())
 
                 }
             }
-        }, 250)
+        }, 500)
 
         return () => clearInterval(timeout);
     }, [drawAmount, cardsPlayed, currentPhase])
 
+    useEffect(() => {
+        setCardsPlayed(0)
+    }, [currentPhase])
 
     let cards = hand.map((card) => {
         let allCards = []
         if (card) {
-            allCards.push(<li key={card.id} style={{
-                listStyle: "none"
-            }}>
+            allCards.push(
+                <AnimatePresence>
+                    <motion.li
+                        key={card.id}
+                        style={{
+                            listStyle: "none"
+                        }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
 
-                <Card title={card.cardTitle} isBig={false}></Card>
-            </li>)
+                        <Card title={card.cardTitle} isBig={false} id={card.id} beingPlayed={beingPlayed}></Card>
+                    </motion.li>
+                </AnimatePresence>)
         }
         return allCards
     })
@@ -65,6 +88,7 @@ export const Hand = () => {
         <div className="component-Player">
             <ul>{cards}</ul>
             <h1>{currentPhase}</h1>
+            <h1>{drawAmount}</h1>
         </div>
     );
 }
