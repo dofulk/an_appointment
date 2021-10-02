@@ -19,13 +19,24 @@ export const CardPicker = ({ setModalIsOpen, listOfCards, building }) => {
   }
 
   let cards = listOfCards.map((card) => 
-    <li key={card.id}>
-      <Card id={card.id} title={card.title} description={card.description} onClick={() => addCard(building, card)}></Card>
+    <li key={card.id} style={{
+      listStyle: "none",
+    }}>
+      <Card id={card.id} title={card.title} description={card.description} onClick={() => addCard(building, card)} isBig={true}></Card>
     </li>
   )
   return (
-    <div className="component-Player">
+    <div className="component-Player" style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
+    }}>
+      <ul style={{
+        display: "flex",
+        flexDirection: "row"
+      }}>
       {cards}
+      </ul>
       <button onClick={() => setModalIsOpen(false)}>EXIT</button>
     </div>
   );

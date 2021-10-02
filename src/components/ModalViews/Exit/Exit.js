@@ -18,7 +18,8 @@ export const Exit = ({ setModalIsOpen }) => {
   }
   return (
     <div className="component-Player">
-      <button onClick={onClick}>EXIT</button>
+      <button onClick={onClick}>NEXT FLOOR</button>
+      <button onClick={() => setModalIsOpen(false)}>EXIT</button>
     </div>
   );
 }

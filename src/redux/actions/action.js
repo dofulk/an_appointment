@@ -57,6 +57,21 @@ export const draw = (number) => ({
     }
 })
 
+export const changeDrawAmount = (amount) => ({
+    type: 'CHANGE_DRAW_AMOUNT',
+    payload: {
+        amount: amount
+    }
+})
+
+export const drawOne = () => ({
+    type: 'DRAW_ONE',
+    payload: {
+        amount: -1,
+        numberOfCards: 1
+    }
+})
+
 export const newPhase = (phase) => ({
     type: 'NEW_PHASE',
     payload: {
@@ -84,19 +99,13 @@ export const newMap = (level) => ({
 })
 
 
-export const changeDrawAmount = (amount) => ({
-    type: 'CHANGE_DRAW_AMOUNT',
-    payload: {
-        amount: amount
-    }
-})
 
-export const playCard = (id) => ({
-    type: 'PLAY_CARD',
-    payload: {
-        id: id
-    }
-})
+// export const playCard = (id) => ({
+//     type: 'PLAY_CARD',
+//     payload: {
+//         id: id
+//     }
+// })
 
 export const deleteEntity = (entity, tile) => ({
     type: 'DELETE_ENTITY',

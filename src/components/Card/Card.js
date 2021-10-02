@@ -1,25 +1,28 @@
 import React from "react";
 
 import { Sprite } from '../Sprite/Sprite';
+import './Card.css'
 
 
 
+export const Card = ({ id, color, title, description, onClick, isBig }) => {
 
-export const Card = ({ id, color, title, description, onClick }) => {
-
-
+  let subhead = () => {
+    if (isBig) {
+      return <div className="description">
+        {description}
+      </div>
+    }
+  }
 
   return (
-    <div className="component-tile" style={{
-      width: 100,
-      height: 150,
-      backgroundColor: "red",
-      margin: 10
-    }}
-    onClick={onClick}>
-      <Sprite entity={title}/>
-      {description}
+    <div className="card"
+      onClick={onClick}>
+
+      <h2>{title}</h2>
+      {subhead()}
     </div>
   );
 
 }
+

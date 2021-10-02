@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
-import {  endTurn, moveOrAttack, chooseMove } from '../../redux/actions/action';
+import { endTurn, moveOrAttack, chooseMove } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
 
 
@@ -53,13 +53,13 @@ export function Main() {
   useEffect(() => {
 
     if (!currentTurn) {
-      
+
       endTurn(entityIds, turn)
     }
 
     if (currentTurn === 'player' && moves <= 0 && !modalIsOpen) {
       setTimeout(() => {
-        dispatch(endTurn(entityIds,turn))
+        dispatch(endTurn(entityIds, turn))
       }, 150);
     }
 
@@ -107,19 +107,22 @@ export function Main() {
 
 
   return (
-    <div className="component-main" onKeyDown={handleKeydown}>
+    <div className="component-main" onKeyDown={handleKeydown} >
       <ModalView building={modalContent} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
-      <GameMap />
-      <div flex="horizontal" style={{ flex: 1 }}>
+      <div className="game-info">
         <h1>Moves: {moves}/{player.baseMoves}</h1>
 
         <h1>HP: {player.hp}/{player.maxHP}</h1>
         <h1>Attack: {player.attack}/{player.baseAttack}</h1>
         <h1>Coin: {gold}</h1>
         <h1>Level: {game.level}</h1>
-        <h1>Turn: {currentTurn}</h1>
-        <Hand />
 
+      </div>
+      <div className="gamemap">
+        <GameMap />
+      </div>
+      <div className="hand">
+      <Hand  />
       </div>
     </div>
   );

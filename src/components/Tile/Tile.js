@@ -77,38 +77,37 @@ export const Tile = ({ id, color, character, building, damage }) => {
 
   useEffect(() => {
 
+    const timeout = setTimeout(() => {
 
 
+      if (!character) {
+        return
+
+      } else if (character.hp <= 0 && character.id === 'player') {
+        console.log('Game OVERERER')
+      } else if (character.hp <= 0) {
+
+      } else if (currentPhase !== 'movement' || currentTurn !== character.id) {
+      } else if (character.moves <= 0 && character.id !== 'player') {
+        dispatch(endTurn(characterIds, turn))
 
 
-    if (!character) {
-      return
+      } else if (character.id === 'player') {
+        return
+      } else {
 
-    } else if (character.hp <= 0 && character.id === 'player') {
-      console.log('Game OVERERER')
-    } else if (character.hp <= 0) {
-
-    } else if (currentPhase !== 'movement' || currentTurn !== character.id) {
-    } else if (character.moves <= 0 && character.id !== 'player') {
-
-      setTimeout(() => {
-      dispatch(endTurn(characterIds, turn))
-      }, 150)
-
-    } else if (character.id === 'player') {
-      return
-    } else{
-      setTimeout(() => {
         dispatch(chooseMove(tiles, character, player, entities))
-      }, 150)
+      }
+    }, 150)
 
-    }
-  }
+    return () => clearInterval(timeout);
 
-  )
+  }, [character, currentTurn, currentPhase])
+
+
 
   let sprite = (character, building, currentTurn) => {
-    if (character && (character.id === currentTurn) ) {
+    if (character && (character.id === currentTurn)) {
       return (
         (character) &&
         < motion.div

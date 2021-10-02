@@ -1,11 +1,11 @@
 import { batch } from 'react-redux'
-import { drawCards, changeHp, changeGold, changeAttack, addOnKill, addOnAttack } from './action'
+import {changeDrawAmount, changeHp, changeGold, changeAttack, addOnKill, addOnAttack } from './action'
 
 export const bloodRitual = () => {
     return (dispatch, getState) => {
 
         batch(() => {
-            dispatch(drawCards(2))
+            dispatch(changeDrawAmount(2))
             dispatch(changeHp({id: 'player'}, -2))
         })
 
@@ -16,7 +16,7 @@ export const bribe = () => {
     return (dispatch, getState) => {
 
         batch(() => {
-            dispatch(drawCards(2))
+            dispatch(changeDrawAmount(2))
             dispatch(changeGold(-2))
         })
 

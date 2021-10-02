@@ -2,6 +2,7 @@ import React from "react";
 import { CardPicker } from "./CardPicker/CardPicker";
 import { Exit } from "./Exit/Exit";
 import Modal from 'react-modal';
+import { Shop } from "./Shop/Shop";
 
 
 
@@ -28,6 +29,12 @@ export const ModalView = ({ setModalIsOpen, modalIsOpen, building }) => {
                     // level={game.level}
                     ></Exit>
 
+                )
+            case 'Shop':
+                console.log(building)
+                return (
+                    <Shop setModalIsOpen={setModalIsOpen}
+                    shopItems={building.content}></Shop>
                 )
                 default:
                     return

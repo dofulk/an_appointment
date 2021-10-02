@@ -1,16 +1,18 @@
-import { getNewCardList } from "./cardEffects"
+import { getNewCardList, generateShop } from "./cardEffects"
 import { v4 as uuidv4 } from 'uuid'
 
 const generateEntityArray = (level) => {
     let entities = [
         { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
-        { id: "Exit", position: "", type: "building", buildingType: "Exit", sprite: "🚪" }
+        { id: "Exit", position: "", type: "building", buildingType: "Exit", sprite: "🚪" },
+        { id: "Shop", position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" }
     ]
     let i = Math.floor((level + 3)/2)
     while (i > 0) {
         entities.push(
             { id: uuidv4(), position: "", moves: 3, baseMoves: 3, hp: 30, maxHP: 30, attack: 4, baseAttack: 4, type: 'character', sprite: "🪲" },
-            { id: uuidv4(), position: "", moves: 8, baseMoves: 6, hp: 10, maxHP: 10, attack: 1, baseAttack: 1, type: 'character', sprite: "🥷🏼" },
+            { id: uuidv4(), position: "", moves: 6, baseMoves: 6, hp: 10, maxHP: 10, attack: 1, baseAttack: 1, type: 'character', sprite: "🥷🏼" },
+            { id: uuidv4(), position: "", moves: 4, baseMoves: 4, hp: 15, maxHP: 15, attack: 6, baseAttack: 6, type: 'character', sprite: "🦊" },
         )
         i--
     }
@@ -56,6 +58,8 @@ export const createLevel = (player, level) => {
         }
         i++
     }
+
+    
 
     let entities = {}
     let characterIds = []

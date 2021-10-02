@@ -13,7 +13,7 @@ const cardEffects = {
     'Piece of Silver': { title: 'Piece of Silver', effect: changeGold(2), description: "Gain 2 Gold" },
     'Vampirism': {title: 'Vampirism', effect: addOnKill({ action: changeHp({id: 'player'}, 2), removeOn: 'endCycle' }), description: 'Gain 2 HP on a Kill'},
     'Jeffrey Bezos': {title: 'Jeffrey Bezos', effect: addOnKill({ action: changeGold(5), removeOn: 'endCycle' }), description: 'Gain 5 Gold on a Kill'},
-    'Snowball': {title: 'Snowball', effect: addOnKill({ action: changeMoves('player', 3), removeOn: 'endCycle' }), description: 'Gain 3 Moves on a Kill'},
+    'Snowball': {title: 'Snowball', effect: addOnKill({ action: changeMoves('player', 2), removeOn: 'endCycle' }), description: 'Gain 2 Moves on a Kill'},
     'Meatball': {title: 'Meatball', effect: addOnKill({ action: changeAttack('player', 3), removeOn: 'endCycle' }), description: 'Gain 3 Attack on a Kill'},
     'Sneak Attack': {title: 'Sneak Attack', effect: addOnMove({ action: changeAttack('player', 1), removeOn: 'endCycle' }), description: 'Gain 1 Attack when you Move'},
     'Golden Boot': {title: 'Golden Boot', effect: addOnMove({ action: changeGold(1), removeOn: 'endCycle' }), description: 'Gain 1 Gold when you Move'},
@@ -47,4 +47,8 @@ export const getNewCardList = (numberOfCards) => {
     }
     console.log(newCardList)
     return newCardList
+}
+
+export const generateShop = () => {
+    return [{type: 'card', id: uuidv4(), price: 16, content: {title: 'Glass Cannon', effect: glassCannon(), description: 'Gain 10 Attack, Lose 3 Attack when you Attack'}}]
 }

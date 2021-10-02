@@ -5,3 +5,15 @@
     justify-content: center;
     overflow: hidden;
 }
+
+.hand {
+    flex: 1;
+}
+
+.gamemap {
+    flex: 4;
+}
+
+.game-info {
+    flex: 1;
+}

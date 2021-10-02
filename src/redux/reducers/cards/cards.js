@@ -1,4 +1,4 @@
-
+import { v4 as uuidv4 } from 'uuid'
 export const initialState = {
     draw: [
 
@@ -6,20 +6,17 @@ export const initialState = {
     hand: [
 
     ],
-    played: [
-
-    ],
     discard: [
-        { id: '1', cardTitle: 'Attack', },
-        { id: '2', cardTitle: 'Attack', },
-        { id: '3', cardTitle: 'Attack', },
-        { id: '4', cardTitle: 'Attack', },
-        { id: '5', cardTitle: 'Attack', },
-        { id: '6', cardTitle: 'Move', },
-        { id: '7', cardTitle: 'Move', },
-        { id: '8', cardTitle: 'Move', },
-        { id: '9', cardTitle: 'Move', },
-        { id: '10', cardTitle: 'Move', },
+        { id: uuidv4(), cardTitle: 'Attack', },
+        { id: uuidv4(), cardTitle: 'Attack', },
+        { id: uuidv4(), cardTitle: 'Attack', },
+        { id: uuidv4(), cardTitle: 'Attack', },
+        { id: uuidv4(), cardTitle: 'Attack', },
+        { id: uuidv4(), cardTitle: 'Bribe', },
+        { id: uuidv4(), cardTitle: 'Move', },
+        { id: uuidv4(), cardTitle: 'Move', },
+        { id: uuidv4(), cardTitle: 'Move', },
+        { id: uuidv4(), cardTitle: 'Move', },
 
 
     ]
@@ -29,7 +26,7 @@ export const initialState = {
 
 const cards = (state = initialState, action) => {
     switch (action.type) {
-        case 'DRAW_CARDS':
+        case 'DRAW_ONE':
         case 'DRAW':
             let newHand = state.hand
             let drawPile = state.draw
@@ -75,29 +72,16 @@ const cards = (state = initialState, action) => {
             }
 
 
-        //Filter gets called twice here should probably fix that
-        // but it really shouldn't matter cause the arrays should be max 20 or something. Should probably just use for each
-        case 'PLAY_CARD':
-            return {
-                ...state,
-                hand: state.hand.filter(item => item.id !== action.payload.id),
-                played: [
-                    ...state.played,
-                    ...state.hand.filter(item => item.id === action.payload.id)
-                ]
-            }
-        //discards cards in hand  
+   
         case 'NEW_MAP':
         case 'END_CYCLE':
         case 'DISCARD':
             return {
                 ...state,
                 hand: [],
-                played: [],
                 discard: [
                     ...state.discard,
                     ...state.hand,
-                    ...state.played
                 ]
             }
         case 'ADD_CARD_TO_DISCARD':

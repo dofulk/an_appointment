@@ -19,7 +19,6 @@ export const levelSelector = state => state.game.level
 
 
 export const handSelector = state => state.cards.hand
-export const playedCardsSelector = state => state.cards.played
 export const discardSelector = state => state.cards.discard
 export const drawSelector = state => state.cards.draw
 

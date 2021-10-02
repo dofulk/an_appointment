@@ -5,8 +5,8 @@ const initialState = {
   allPhases: ['cards', 'movement', 'characters'],
   isPaused: false,
   numberOfTurns: 0,
-  drawAmount: 4,
-  baseDraw: 4,
+  drawAmount: 5,
+  baseDraw: 5,
   gold: 10,
   level: 0,
   onKill: [],
@@ -38,6 +38,7 @@ const game = (state = initialState, action) => {
         drawAmount: state.baseDraw
       }
 
+    case 'DRAW_ONE':
     case 'CHANGE_DRAW_AMOUNT':
       return {
         ...state,
@@ -57,8 +58,8 @@ const game = (state = initialState, action) => {
         }
 
       }
-      case 'NEW_MAP':
-      return{
+    case 'NEW_MAP':
+      return {
         ...state,
         level: state.level + 1,
         phase: 0,
@@ -67,31 +68,31 @@ const game = (state = initialState, action) => {
         onMove: state.onMove.filter(item => item.removeOn !== 'endCycle'),
         onAttack: state.onAttack.filter(item => item.removeOn !== 'endCycle')
       }
-      case 'ADD_ON_KILL':
-        return {
-          ...state,
-          onKill: [
-            ...state.onKill,
-            action.payload.onKill,
-            
-          ]
-        }
-        case 'ADD_ON_MOVE':
-        return {
-          ...state,
-          onMove: [
-            ...state.onMove,
-            action.payload.onMove
-          ]
-        }
-        case 'ADD_ON_ATTACK':
-        return {
-          ...state,
-          onAttack: [
-            ...state.onAttack,
-            action.payload.onAttack
-          ]
-        }
+    case 'ADD_ON_KILL':
+      return {
+        ...state,
+        onKill: [
+          ...state.onKill,
+          action.payload.onKill,
+
+        ]
+      }
+    case 'ADD_ON_MOVE':
+      return {
+        ...state,
+        onMove: [
+          ...state.onMove,
+          action.payload.onMove
+        ]
+      }
+    case 'ADD_ON_ATTACK':
+      return {
+        ...state,
+        onAttack: [
+          ...state.onAttack,
+          action.payload.onAttack
+        ]
+      }
 
     default:
       return state;
