@@ -18,6 +18,8 @@ export const Card = ({ id, color, title, description, onClick, isBig, beingPlaye
       setIsPlaying(0)
     }
   }, [beingPlayed])
+
+  
   let subhead = () => {
     if (isBig) {
       return <div className="description">

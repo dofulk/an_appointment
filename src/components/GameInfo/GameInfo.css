@@ -1,0 +1,32 @@
+
+
+.moves[movesanimation="1"] {
+    animation: pulse .25s;
+}
+
+
+.hp[hpanimation="1"] {
+    animation: pulse .25s;
+}
+
+
+.attack[attackanimation="1"] {
+    animation: pulse .25s;
+}
+
+.gold[goldanimation="1"] {
+    animation: pulse .25s;
+}
+
+
+@keyframes pulse {
+    0% {
+        color: black
+    }
+    50% {
+        color: rgb(46, 51, 46)
+    }
+    100% {
+        color: black
+    }
+}

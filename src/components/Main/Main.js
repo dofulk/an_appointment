@@ -12,6 +12,7 @@ import { currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector,
 import "./Main.css";
 import { ModalView } from "../ModalViews/ModalView";
 import entities from "../../redux/reducers/entities/entities";
+import { GameInfo } from "../GameInfo/GameInfo";
 
 
 
@@ -109,15 +110,8 @@ export function Main() {
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
       <ModalView building={modalContent} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
-      <div className="game-info">
-        <h1>Moves: {moves}/{player.baseMoves}</h1>
+      <GameInfo player={player} moves={moves} gold={gold}/>
 
-        <h1>HP: {player.hp}/{player.maxHP}</h1>
-        <h1>Attack: {player.attack}/{player.baseAttack}</h1>
-        <h1>Coin: {gold}</h1>
-        <h1>Level: {game.level}</h1>
-
-      </div>
       <div className="gamemap">
         <GameMap />
       </div>
