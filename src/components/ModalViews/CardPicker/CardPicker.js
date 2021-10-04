@@ -13,7 +13,6 @@ export const CardPicker = ({ setModalIsOpen, listOfCards, building }) => {
   const dispatch = useDispatch()
 
   const addCard = (building,card) => {
-    console.log(building)
     dispatch(addCardFromPicker(building, generateCard(card.title)))
     setModalIsOpen(false)
   }

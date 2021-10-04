@@ -72,7 +72,7 @@ const cards = (state = initialState, action) => {
             }
 
 
-   
+
         case 'NEW_MAP':
         case 'END_CYCLE':
         case 'DISCARD':
@@ -85,7 +85,7 @@ const cards = (state = initialState, action) => {
                 ]
             }
         case 'ADD_CARD_TO_DISCARD':
-            console.log(action.payload.card)
+        case 'BUY_CARD':
             return {
                 ...state,
                 discard: [

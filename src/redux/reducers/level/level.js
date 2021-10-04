@@ -1,7 +1,7 @@
 
 const initialState = {
-    width: 15,
-    height: 15,
+    width: 0,
+    height: 0,
     floorTurn: 0
 };
 
@@ -13,6 +13,13 @@ const level = (state = initialState, action) => {
             return {
                 ...state,
                 floorTurn: state.floorTurn + 1
+            }
+
+        case 'NEW_MAP': 
+            return {
+                ...state,
+                width: action.payload.map.width,
+                height: action.payload.map.height
             }
         default:
             return state;

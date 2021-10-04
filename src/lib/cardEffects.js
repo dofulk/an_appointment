@@ -50,5 +50,18 @@ export const getNewCardList = (numberOfCards) => {
 }
 
 export const generateShop = () => {
-    return [{type: 'card', id: uuidv4(), price: 16, content: {title: 'Glass Cannon', effect: glassCannon(), description: 'Gain 10 Attack, Lose 3 Attack when you Attack'}}]
+
+
+    let content = []
+    let keys = Object.keys(cardEffects);
+
+    let i = 5
+    while (i > 0) {
+        let randomKey = keys[ keys.length * Math.random() << 0]
+        content.push(
+            {type: 'card', id: uuidv4(), price: 15, content: cardEffects[randomKey]})
+        keys = keys.filter(key => key !== randomKey)
+        i--
+    }
+    return content
 }

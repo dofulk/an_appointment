@@ -46,6 +46,7 @@ const game = (state = initialState, action) => {
 
       }
     case 'CHANGE_GOLD':
+    case 'BUY_CARD':
       if (state.gold + action.payload.gold <= 0) {
         return {
           ...state,

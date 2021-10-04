@@ -5,6 +5,7 @@ const generateEntityArray = (level) => {
     let entities = [
         { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
         { id: "Exit", position: "", type: "building", buildingType: "Exit", sprite: "🚪" },
+        { id: "Arcade", position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
         { id: "Shop", position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" }
     ]
     let i = Math.floor((level + 3)/2)
@@ -28,8 +29,8 @@ export const createLevel = (player, level) => {
     let byId = {}
     let allIds = []
     let validMoves = []
-    let width = 15
-    let height = 15
+    let width = 10 + level
+    let height = 10 + level
 
     let i = 0
 
@@ -121,6 +122,8 @@ export const createLevel = (player, level) => {
             byId: byId,
             allIds: allIds,
             validMoves: validMoves,
+            height: height,
+            width: width,
         },
         entities: {
             byId: entities,

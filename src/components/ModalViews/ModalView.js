@@ -3,12 +3,13 @@ import { CardPicker } from "./CardPicker/CardPicker";
 import { Exit } from "./Exit/Exit";
 import Modal from 'react-modal';
 import { Shop } from "./Shop/Shop";
+import { Arcade } from "./Arcade/Arcade";
 
 
 
 
 
-export const ModalView = ({ setModalIsOpen, modalIsOpen, building }) => {
+export const ModalView = ({ setModalIsOpen, modalIsOpen, building, setModalContent }) => {
 
 
     const content = (building) => {
@@ -31,10 +32,14 @@ export const ModalView = ({ setModalIsOpen, modalIsOpen, building }) => {
 
                 )
             case 'Shop':
-                console.log(building)
                 return (
                     <Shop setModalIsOpen={setModalIsOpen}
-                    shopItems={building.content}></Shop>
+                    shopItems={building.content}
+                    building={building}></Shop>
+                )
+            case 'Arcade':
+                return (
+                    <Arcade setModalIsOpen={setModalIsOpen}/>
                 )
                 default:
                     return

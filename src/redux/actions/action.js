@@ -227,6 +227,17 @@ export const addCardFromPicker = (building, card) => {
     }
 }
 
+export const buyCard = (building, card, price) => {
+    return {
+        type: 'BUY_CARD',
+        payload: {
+            card: card,
+            gold: price,
+            shop: building
+        }
+    }
+}
+
 
 
 export const moveOrAttack = (targetTile, entity, entities, moveEffects, attackEffects, killEffects) => {

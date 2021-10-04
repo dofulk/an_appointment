@@ -94,7 +94,7 @@ export function Main() {
 
         } else if (targetTile.building.length && !targetTile.character.length) {
           setModalIsOpen(true)
-          setModalContent(entitiesById[targetTile.building])
+          setModalContent(targetTile.building)
           dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
         } else if (targetTile) {
           dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
@@ -109,14 +109,16 @@ export function Main() {
 
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
-      <ModalView building={modalContent} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
-      <GameInfo player={player} moves={moves} gold={gold}/>
 
+      <div className='game-info'>
+        <GameInfo player={player} moves={moves} gold={gold} />
+      </div>
       <div className="gamemap">
         <GameMap />
+        <ModalView building={entitiesById[modalContent]} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       </div>
       <div className="hand">
-      <Hand  />
+        <Hand />
       </div>
     </div>
   );

@@ -125,6 +125,20 @@ const entities = (state = initialState, action) => {
                 turn: 0
             }
 
+        case 'BUY_CARD':
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    [action.payload.shop.id]: {
+                        ...state.byId[action.payload.shop.id],
+                        content: state.byId[action.payload.shop.id].content.filter(item => item.content.title !== action.payload.card.cardTitle)
+                    }
+                }
+            }
+            // return state
+    
+
 
         case 'INITIATE_TURN':
             return {
