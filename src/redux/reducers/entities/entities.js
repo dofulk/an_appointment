@@ -184,6 +184,18 @@ const entities = (state = initialState, action) => {
                 characterIds: [...state.characterIds, action.payload.character]
 
             }
+        case 'UNLOCK_DOOR':
+            return{
+                ...state,
+                byId:{
+                    ...state.byId,
+                    Exit: {
+                        ...state.byId['Exit'],
+                        isLocked: false
+
+                    }
+                }
+            }
 
         default:
             return state;

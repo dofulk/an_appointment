@@ -32,7 +32,11 @@ export const Shop = ({ setModalIsOpen, shopItems, building }) => {
         </li>
     )
     return (
-        <div className="component-Player">
+        <div className="component-Player" style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}>
             <ul className="cards">
                 {items}
             </ul>

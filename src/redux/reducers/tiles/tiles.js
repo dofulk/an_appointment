@@ -96,7 +96,14 @@ const tiles = (state = initialState, action) => {
 
 
         case 'END_CYCLE':
-            let randomTiles = state.validMoves.sort(() => Math.random() - Math.random())
+            let shuffle = (a) => {
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
+            }
+            let randomTiles = shuffle(state.validMoves)
             let chosenTiles =randomTiles.slice(0, action.payload.brokenTiles)
             let newTiles = {}
             chosenTiles.forEach(item => {

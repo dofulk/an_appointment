@@ -8,7 +8,7 @@ import { playerSelector, levelSelector } from "../../../redux/selectors";
 
 
 
-export const Exit = ({ setModalIsOpen }) => {
+export const Exit = ({ setModalIsOpen, building }) => {
   const player = useSelector(playerSelector)
   const level = useSelector(levelSelector)
   const dispatch = useDispatch()
@@ -18,7 +18,9 @@ export const Exit = ({ setModalIsOpen }) => {
   }
   return (
     <div className="component-Player">
-      <button onClick={onClick}>NEXT FLOOR</button>
+      {building.isLocked
+        ? <h1>Door Locked! Find the Key</h1>
+        : <button onClick={onClick}>NEXT FLOOR</button>}
       <button onClick={() => setModalIsOpen(false)}>EXIT</button>
     </div>
   );

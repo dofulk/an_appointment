@@ -4,9 +4,10 @@ import { v4 as uuidv4 } from 'uuid'
 const generateEntityArray = (level) => {
     let entities = [
         { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
-        { id: "Exit", position: "", type: "building", buildingType: "Exit", sprite: "🚪" },
+        { id: "Exit", position: "", isLocked: true, type: "building", buildingType: "Exit", sprite: "🚪" },
         { id: "Arcade", position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
-        { id: "Shop", position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" }
+        { id: "Shop", position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" },
+        { id: "Key", position: "", type: "building", buildingType: "Key", sprite: "🔑" }
     ]
     let i = Math.floor((level + 3)/2)
     while (i > 0) {
@@ -29,10 +30,26 @@ export const createLevel = (player, level) => {
     let byId = {}
     let allIds = []
     let validMoves = []
-    let width = 10 + level
-    let height = 10 + level
+    let width = 9 + (2 * Math.round(level/2))
+    let height = 9 + (2 * Math.round(level/2))
 
     let i = 0
+
+    //checks if point a,b is inside of circle with radius r and center x,y
+    let checkInCircle = (a, b, x, y, r) => {
+        let dist_points = (a - x) * (a - x) + (b - y) * (b - y);
+        r *= r;
+      
+        if (dist_points < r) {
+          return true;
+        }
+      
+        return false;
+      }
+
+    let radius = Math.round(height / 2 - 1)
+    let x = Math.round(width / 2 - 1)
+    let y = Math.round(height / 2 -1)  
 
     while (i < height) {
         let j = 0
@@ -42,7 +59,7 @@ export const createLevel = (player, level) => {
 
             allIds.push(positionId)
 
-            if (i === 0 || i === height - 1 || j === 0 || j === width - 1) {
+            if (!checkInCircle(i, j, x, y, radius)) {
                 byId = {
                     ...byId,
                     [positionId]: { id: positionId, row: i, column: j, isAValidMove: false, character: [], wall: true, damage: 0, isAStructure: true, building: [] },

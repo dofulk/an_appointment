@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Sprite } from '../Sprite/Sprite';
 import { useDispatch, useSelector } from 'react-redux'
 import { changeAttack, changeHp, deleteEntity, endTurn } from "../../redux/actions/action";
-import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, currentPhaseSelector, turnSelector, onKillSelector, entityByIdSelector } from "../../redux/selectors";
+import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, currentPhaseSelector, turnSelector, onKillSelector, entityByIdSelector, heightSelector, widthSelector } from "../../redux/selectors";
 import { onKill } from "../../redux/actions/conditionalActions";
 import { chooseMove } from "../../redux/actions/action";
 
@@ -74,6 +74,8 @@ export const Tile = ({ id, color, character, building, damage }) => {
   const currentPhase = useSelector(currentPhaseSelector)
   const killAction = useSelector(onKillSelector)
   const entities = useSelector(entityByIdSelector)
+  const height = useSelector(heightSelector)
+  const width = useSelector(widthSelector)
 
   useEffect(() => {
 
@@ -96,7 +98,7 @@ export const Tile = ({ id, color, character, building, damage }) => {
         return
       } else {
 
-        dispatch(chooseMove(tiles, character, player, entities))
+        dispatch(chooseMove(tiles, character, player, entities, height, width))
       }
     }, 150)
 

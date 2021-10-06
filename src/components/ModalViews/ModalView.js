@@ -5,11 +5,14 @@ import Modal from 'react-modal';
 import { Shop } from "./Shop/Shop";
 import { Arcade } from "./Arcade/Arcade";
 
+import './ModalView.css'
+import { Key } from "./Key/Key";
 
 
 
 
-export const ModalView = ({ setModalIsOpen, modalIsOpen, building, setModalContent }) => {
+
+export const ModalView = ({ setModalIsOpen, building }) => {
 
 
     const content = (building) => {
@@ -26,6 +29,7 @@ export const ModalView = ({ setModalIsOpen, modalIsOpen, building, setModalConte
                 return (
                     <Exit
                         setModalIsOpen={setModalIsOpen}
+                        building={building}
                     // player={player}
                     // level={game.level}
                     ></Exit>
@@ -41,6 +45,8 @@ export const ModalView = ({ setModalIsOpen, modalIsOpen, building, setModalConte
                 return (
                     <Arcade setModalIsOpen={setModalIsOpen}/>
                 )
+            case 'Key':
+                return <Key setModalIsOpen={setModalIsOpen}/>
                 default:
                     return
         }
@@ -55,11 +61,8 @@ export const ModalView = ({ setModalIsOpen, modalIsOpen, building, setModalConte
         }
     }
     return (
-        <div className="component-Player">
-            <Modal isOpen={modalIsOpen}
-                ariaHideApp={false}>
+        <div className="modal">
                 {view(building)}
-            </Modal>
         </div>
     );
 }

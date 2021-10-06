@@ -207,6 +207,12 @@ export const addOnAttack = (effect) => {
     }
 }
 
+export const unlockDoor = () => {
+    return {
+        type: 'UNLOCK_DOOR'
+    }
+}
+
 export const attackTarget = (target, attacker, killEffects) => {
     return (dispatch, getState) => {
 
@@ -256,9 +262,9 @@ export const moveOrAttack = (targetTile, entity, entities, moveEffects, attackEf
     }
 }
 
-export const chooseMove = (tiles, currentEntity, player, entities) => {
+export const chooseMove = (tiles, currentEntity, player, entities, height, width) => {
 
-    let grid = new PF.Grid(15, 15);
+    let grid = new PF.Grid(width, height);
 
     let tileList = tiles.byId
 

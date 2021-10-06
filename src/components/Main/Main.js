@@ -114,8 +114,11 @@ export function Main() {
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>
       <div className="gamemap">
-        <GameMap />
-        <ModalView building={entitiesById[modalContent]} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+        {modalIsOpen? 
+        <ModalView className="modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} /> :
+         <GameMap /> 
+        }
+        
       </div>
       <div className="hand">
         <Hand />
