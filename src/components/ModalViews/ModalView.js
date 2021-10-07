@@ -7,6 +7,8 @@ import { Arcade } from "./Arcade/Arcade";
 
 import './ModalView.css'
 import { Key } from "./Key/Key";
+import { Medic } from "./Medic/Medic";
+import { GoldPile } from "./GoldPile/GoldPile";
 
 
 
@@ -21,8 +23,8 @@ export const ModalView = ({ setModalIsOpen, building }) => {
                 return (
                     <CardPicker
                         setModalIsOpen={setModalIsOpen}
-                        listOfCards={building.content} 
-                        building={building}/>
+                        listOfCards={building.content}
+                        building={building} />
                 )
 
             case 'Exit':
@@ -38,19 +40,24 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Shop':
                 return (
                     <Shop setModalIsOpen={setModalIsOpen}
-                    shopItems={building.content}
-                    building={building}></Shop>
+                        shopItems={building.content}
+                        building={building}></Shop>
                 )
             case 'Arcade':
                 return (
-                    <Arcade setModalIsOpen={setModalIsOpen}/>
+                    <Arcade setModalIsOpen={setModalIsOpen} />
                 )
             case 'Key':
-                return <Key setModalIsOpen={setModalIsOpen}/>
-                default:
-                    return
+                return <Key setModalIsOpen={setModalIsOpen} building={building} />
+            case 'Medic':
+                return <Medic setModalIsOpen={setModalIsOpen}></Medic>
+            case 'GoldPile':
+                return <GoldPile setModalIsOpen={setModalIsOpen} building={building}></GoldPile>
+
+            default:
+                return
         }
-    
+
     }
 
     const view = (building) => {
@@ -62,7 +69,7 @@ export const ModalView = ({ setModalIsOpen, building }) => {
     }
     return (
         <div className="modal">
-                {view(building)}
+            {view(building)}
         </div>
     );
 }

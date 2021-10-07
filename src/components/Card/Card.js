@@ -30,7 +30,7 @@ export const Card = ({ id, color, title, description, onClick, isBig, beingPlaye
 
   return (
     <div className="card"
-    isPlaying={isPlaying}
+    isplaying={isPlaying}
       onClick={onClick}>
 
       <h2>{title}</h2>

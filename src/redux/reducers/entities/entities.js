@@ -147,8 +147,8 @@ const entities = (state = initialState, action) => {
             }
 
         case 'DELETE_ENTITY':
-            const key = action.payload.entityId
-            const { [key]: value, ...newById } = state.byId
+            let key = action.payload.entityId
+            let { [key]: value, ...newById } = state.byId
 
             if (action.payload.entityType === "character") {
                 console.log(state.characterIds.indexOf(key), state.turn)
@@ -185,10 +185,12 @@ const entities = (state = initialState, action) => {
 
             }
         case 'UNLOCK_DOOR':
+            const { Key, ...byIdNoKey } = state.byId
             return{
                 ...state,
                 byId:{
-                    ...state.byId,
+                    ...byIdNoKey,
+                    
                     Exit: {
                         ...state.byId['Exit'],
                         isLocked: false

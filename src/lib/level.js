@@ -7,7 +7,9 @@ const generateEntityArray = (level) => {
         { id: "Exit", position: "", isLocked: true, type: "building", buildingType: "Exit", sprite: "🚪" },
         { id: "Arcade", position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
         { id: "Shop", position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" },
-        { id: "Key", position: "", type: "building", buildingType: "Key", sprite: "🔑" }
+        { id: "Key", position: "", type: "building", buildingType: "Key", sprite: "🔑" },
+        { id: "Medic", position: "", type: "building", buildingType: "Medic", sprite: "🩹" },
+        { id: "GoldPile", position: "", type: "building", gold: 22, buildingType: "GoldPile", sprite: "💰" }
     ]
     let i = Math.floor((level + 3)/2)
     while (i > 0) {

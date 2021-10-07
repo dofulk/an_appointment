@@ -29,9 +29,8 @@ const tiles = (state = initialState, action) => {
                 }
             }
         case "DELETE_ENTITY":
-            
+        case "UNLOCK_DOOR":
             if (action.payload.entityType === 'character') {
-                console.log(action.payload.tile)
                 return {
                     ...state,
                     byId: {
@@ -45,7 +44,7 @@ const tiles = (state = initialState, action) => {
                     }
                 }
             } else if (action.payload.entityType === 'building') {
-                console.log(action.payload.tile, action.payload.entityId)
+
                 return {
                     ...state,
                     byId: {

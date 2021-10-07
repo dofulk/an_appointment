@@ -207,9 +207,14 @@ export const addOnAttack = (effect) => {
     }
 }
 
-export const unlockDoor = () => {
+export const unlockDoor = (building) => {
     return {
-        type: 'UNLOCK_DOOR'
+        type: 'UNLOCK_DOOR',
+        payload: {
+            entityType: building.type,
+            entityId: building.id,
+            tile: building.position
+        }
     }
 }
 
