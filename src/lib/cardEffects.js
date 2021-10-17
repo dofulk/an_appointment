@@ -30,8 +30,8 @@ export const getCardEffect = (title) => {
 
 }
 
-export const generateCard = (title) => {
-    return { id: uuidv4(), cardTitle: title }
+export const generateCard = (title, description) => {
+    return { id: uuidv4(), cardTitle: title, description: description }
 }
 
 export const getNewCardList = (numberOfCards) => {

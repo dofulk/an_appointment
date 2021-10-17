@@ -16,7 +16,7 @@ export const Shop = ({ setModalIsOpen, shopItems, building }) => {
 
     const purchase = (building, item) => {
         if (gold >= item.price) {
-        dispatch(buyCard(building, generateCard(item.content.title), -item.price))
+        dispatch(buyCard(building, generateCard(item.content.title, item.content.description), -item.price))
         } else {
             return
         }

@@ -6,7 +6,7 @@ import './Card.css'
 
 
 
-export const Card = ({ id, color, title, description, onClick, isBig, beingPlayed }) => {
+export const Card = ({ id, color, title, description, onClick, beingPlayed }) => {
 
   const [isPlaying, setIsPlaying] = useState(0)
 
@@ -20,21 +20,17 @@ export const Card = ({ id, color, title, description, onClick, isBig, beingPlaye
   }, [beingPlayed])
 
   
-  let subhead = () => {
-    if (isBig) {
-      return <div className="description">
-        {description}
-      </div>
-    }
-  }
 
   return (
     <div className="card"
+    onMouseEnter={() => console.log('CARD DESCRIPTION')}
     isplaying={isPlaying}
       onClick={onClick}>
 
       <h2>{title}</h2>
-      {subhead()}
+      <div className="description">
+        {description}
+      </div>
     </div>
   );
 

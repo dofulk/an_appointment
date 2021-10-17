@@ -67,7 +67,7 @@ export const GameMap = () => {
 
         if (!Object.keys(tiles.byId).length) {
             console.log(level)
-            dispatch(newMap(createLevel(entitiesArray.player, 1)))
+            dispatch(newMap(createLevel(entitiesArray.player, 0)))
         }
 
     })

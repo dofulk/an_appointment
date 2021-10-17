@@ -62,7 +62,7 @@ const game = (state = initialState, action) => {
     case 'NEW_MAP':
       return {
         ...state,
-        level: state.level + 1,
+        level: action.payload.level,
         phase: 0,
         drawAmount: state.baseDraw,
         onKill: state.onKill.filter(item => item.removeOn !== 'endCycle'),

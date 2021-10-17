@@ -2,12 +2,14 @@
     background-color: gray;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     overflow: hidden;
 }
 
 .hand {
-    flex: 1;
+    align-self: center;
+    height: 200px;
 }
 
 .gamemap {
@@ -18,9 +20,16 @@
 }
 
 .game-info {
-    flex: 1;
+
+    align-self: center;
 }
 
 .modal {
     width: 500px;
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
 }

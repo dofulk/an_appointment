@@ -95,6 +95,7 @@ export const newMap = (level) => ({
     payload: {
         map: level.map,
         entities: level.entities,
+        level: level.level
     }
 })
 

@@ -1,3 +1,4 @@
+import { breakTiles } from "../../../lib/breakTiles"
 import { attackTarget } from "../../actions/action"
 
 const initialState = {
@@ -40,7 +41,7 @@ const tiles = (state = initialState, action) => {
                             character: [],
                             isAValidMove: true
                         }
-                    
+
                     }
                 }
             } else if (action.payload.entityType === 'building') {
@@ -95,31 +96,13 @@ const tiles = (state = initialState, action) => {
 
 
         case 'END_CYCLE':
-            let shuffle = (a) => {
-                for (let i = a.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [a[i], a[j]] = [a[j], a[i]];
-                }
-                return a;
-            }
-            let randomTiles = shuffle(state.validMoves)
-            let chosenTiles =randomTiles.slice(0, action.payload.brokenTiles)
-            let newTiles = {}
-            chosenTiles.forEach(item => {
-                newTiles[item] = {
-                    ...state.byId[item],
-                    damage: state.byId[item].damage + 1
-                }
-            })
+            let newTiles = breakTiles(state.validMoves, action.payload.brokenTiles, state.byId)
 
 
 
             return {
                 ...state,
-                byId: {
-                    ...state.byId,
-                    ...newTiles
-                }
+                byId: newTiles
             }
 
         default:

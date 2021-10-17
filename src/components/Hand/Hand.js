@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { handSelector, currentPhaseSelector, drawAmountSelector } from '../../redux/selectors/index'
+import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector } from '../../redux/selectors/index'
 import { draw, changeDrawAmount, newCycle, drawOne } from '../../redux/actions/action'
 import { getCardEffect } from "../../lib/cardEffects";
 import { Card } from "../Card/Card";
+import {CardList} from "../CardList/CardList"
 import { motion, AnimatePresence } from "framer-motion";
+import Modal from 'react-modal';
 
 
-
+import './Hand.css'
 
 
 
@@ -17,8 +19,13 @@ export const Hand = () => {
 
 
     const hand = useSelector(handSelector)
+    const discard = useSelector(discardSelector)
+    const draw = useSelector(drawSelector)
     const currentPhase = useSelector(currentPhaseSelector)
     const drawAmount = useSelector(drawAmountSelector)
+
+    const [modalContent, setModalContent] = useState()
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [cardsPlayed, setCardsPlayed] = useState(0)
     const [beingPlayed, setBeingPlayed] = useState()
 
@@ -61,6 +68,12 @@ export const Hand = () => {
         setCardsPlayed(0)
     }, [currentPhase])
 
+    const openDraw = () => {
+        console.log(draw)
+        setModalIsOpen(true)
+        setModalContent(<CardList listOfCards={draw}></CardList>)
+    }
+
     let cards = hand.map((card) => {
         let allCards = []
         if (card) {
@@ -76,7 +89,7 @@ export const Hand = () => {
                         exit={{ opacity: 0 }}
                     >
 
-                        <Card title={card.cardTitle} isBig={false} id={card.id} beingPlayed={beingPlayed}></Card>
+                        <Card title={card.cardTitle} isBig={false} description={card.description} id={card.id} beingPlayed={beingPlayed}></Card>
                     </motion.li>
                 </AnimatePresence>)
         }
@@ -85,10 +98,20 @@ export const Hand = () => {
 
 
     return (
-        <div className="component-Player">
-            <ul>{cards}</ul>
-            <h1>{currentPhase}</h1>
-            <h1>{drawAmount}</h1>
+        <div className="hand">
+            <Modal
+            isOpen={modalIsOpen}
+            >
+                {modalContent}
+            </Modal>
+            
+            <div onClick={openDraw}>
+                <h1>{draw.length}</h1>
+            </div>
+            <ul className="cards">{cards}</ul>
+            <div>
+                <h1>{discard.length}</h1>
+            </div>
         </div>
     );
 }

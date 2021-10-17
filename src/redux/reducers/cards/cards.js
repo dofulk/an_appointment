@@ -7,16 +7,16 @@ export const initialState = {
 
     ],
     discard: [
-        { id: uuidv4(), cardTitle: 'Attack', },
-        { id: uuidv4(), cardTitle: 'Attack', },
-        { id: uuidv4(), cardTitle: 'Attack', },
-        { id: uuidv4(), cardTitle: 'Attack', },
-        { id: uuidv4(), cardTitle: 'Attack', },
-        { id: uuidv4(), cardTitle: 'Bribe', },
-        { id: uuidv4(), cardTitle: 'Move', },
-        { id: uuidv4(), cardTitle: 'Move', },
-        { id: uuidv4(), cardTitle: 'Move', },
-        { id: uuidv4(), cardTitle: 'Move', },
+        { id: uuidv4(), cardTitle: 'Attack', description: "Add 2 to attack"},
+        { id: uuidv4(), cardTitle: 'Attack', description: "Add 2 to attack"},
+        { id: uuidv4(), cardTitle: 'Attack', description: "Add 2 to attack"},
+        { id: uuidv4(), cardTitle: 'Attack', description: "Add 2 to attack"},
+        { id: uuidv4(), cardTitle: 'Attack', description: "Add 2 to attack"},
+        { id: uuidv4(), cardTitle: 'Move', description: "Gain 1 move"},
+        { id: uuidv4(), cardTitle: 'Move', description: "Gain 1 move"},
+        { id: uuidv4(), cardTitle: 'Move', description: "Gain 1 move"},
+        { id: uuidv4(), cardTitle: 'Move', description: "Gain 1 move"},
+        { id: uuidv4(), cardTitle: 'Move', description: "Gain 1 move"},
 
 
     ]

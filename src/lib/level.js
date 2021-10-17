@@ -1,5 +1,6 @@
 import { getNewCardList, generateShop } from "./cardEffects"
 import { v4 as uuidv4 } from 'uuid'
+import { breakTiles } from "./breakTiles"
 
 const generateEntityArray = (level) => {
     let entities = [
@@ -131,14 +132,16 @@ export const createLevel = (player, level) => {
 
         }
     }
+    console.log(level ** 2)
 
+    let newTiles = breakTiles(validMoves, (level ** 2), byId )
     //puts player at the front of character array
     characterIds = characterIds.filter(id => id !== "player")
     characterIds.unshift('player')
     console.log(characterIds)
     return {
         map: {
-            byId: byId,
+            byId: newTiles,
             allIds: allIds,
             validMoves: validMoves,
             height: height,
@@ -147,7 +150,8 @@ export const createLevel = (player, level) => {
         entities: {
             byId: entities,
             characterIds: characterIds
-        }
+        },
+        level: level + 1
     }
 
 }
