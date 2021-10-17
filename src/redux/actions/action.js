@@ -275,13 +275,15 @@ export const chooseMove = (tiles, currentEntity, player, entities, height, width
     let tileList = tiles.byId
 
     Object.keys(tileList).forEach((i) => {
-        grid.setWalkableAt(tileList[i].row, tileList[i].column, (tileList[i].isAValidMove ? true : false))
+        grid.setWalkableAt( tileList[i].column, tileList[i].row, (tileList[i].isAValidMove ? true : false))
     })
     let start = currentEntity.position.split(',')
     let end = player.position.split(',')
 
     let startX = parseInt(start[0])
     let startY = parseInt(start[1])
+
+
 
     grid.setWalkableAt(startX, startY, true)
 

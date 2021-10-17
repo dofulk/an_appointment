@@ -5,14 +5,14 @@ import { breakTiles } from "./breakTiles"
 const generateEntityArray = (level) => {
     let entities = [
         { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
-        { id: "Exit", position: "", isLocked: true, type: "building", buildingType: "Exit", sprite: "🚪" },
+
         { id: "Arcade", position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
         { id: "Shop", position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" },
         { id: "Key", position: "", type: "building", buildingType: "Key", sprite: "🔑" },
         { id: "Medic", position: "", type: "building", buildingType: "Medic", sprite: "🩹" },
         { id: "GoldPile", position: "", type: "building", gold: 22, buildingType: "GoldPile", sprite: "💰" }
     ]
-    let i = Math.floor((level + 3)/2)
+    let i = Math.floor((level + 3) / 2)
     while (i > 0) {
         entities.push(
             { id: uuidv4(), position: "", moves: 3, baseMoves: 3, hp: 30, maxHP: 30, attack: 4, baseAttack: 4, type: 'character', sprite: "🪲" },
@@ -27,42 +27,25 @@ const generateEntityArray = (level) => {
 export const createLevel = (player, level) => {
 
     let entityArray = generateEntityArray(level)
-    console.log(player)
-    entityArray.push(player)
 
     let byId = {}
     let allIds = []
     let validMoves = []
-    let width = 9 + (2 * Math.round(level/2))
-    let height = 9 + (2 * Math.round(level/2))
+    let width = 20
+    let height = 5 + (2 * Math.round(level / 2))
 
     let i = 0
 
-    //checks if point a,b is inside of circle with radius r and center x,y
-    let checkInCircle = (a, b, x, y, r) => {
-        let dist_points = (a - x) * (a - x) + (b - y) * (b - y);
-        r *= r;
-      
-        if (dist_points < r) {
-          return true;
-        }
-      
-        return false;
-      }
-
-    let radius = Math.round(height / 2 - 1)
-    let x = Math.round(width / 2 - 1)
-    let y = Math.round(height / 2 -1)  
 
     while (i < height) {
         let j = 0
         while (j < width) {
-            let positionId = i + ',' + j
+            let positionId = j + ',' + i
 
 
             allIds.push(positionId)
 
-            if (!checkInCircle(i, j, x, y, radius)) {
+            if (i === 0 || j === 0 || i === height - 1 || j === width - 1) {
                 byId = {
                     ...byId,
                     [positionId]: { id: positionId, row: i, column: j, isAValidMove: false, character: [], wall: true, damage: 0, isAStructure: true, building: [] },
@@ -80,10 +63,42 @@ export const createLevel = (player, level) => {
         i++
     }
 
-    
 
-    let entities = {}
-    let characterIds = []
+    let playerPosition = '1,' + Math.floor(height / 2)
+    player.position = playerPosition
+    validMoves = validMoves.filter(item => item !== playerPosition)
+    byId = {
+        ...byId,
+        [playerPosition]: {
+            ...byId[playerPosition],
+            character: player.id,
+            isAValidMove: false
+        }
+    }
+
+
+    let exit = { id: "Exit", position: "", isLocked: true, type: "building", buildingType: "Exit", sprite: "🚪" }
+
+
+    let exitPosition = (width - 2) + ',' + Math.floor(height / 2)
+    exit.position = exitPosition
+    validMoves = validMoves.filter(item => item !== exitPosition)
+
+    console.log(exitPosition)
+
+    byId = {
+        ...byId,
+        [exitPosition]: {
+            ...byId[exitPosition],
+            building: exit.id,
+        }
+    }
+    let entities = {
+        "player": player,
+        "Exit": exit,
+    }
+    let characterIds = ['player']
+
 
     for (const entity in entityArray) {
         let position = validMoves[Math.floor(Math.random() * validMoves.length)]
@@ -95,6 +110,7 @@ export const createLevel = (player, level) => {
         validMoves = validMoves.filter(item => item !== position)
 
         if (entityArray[entity].type === 'character') {
+
             characterIds.push(entityArray[entity].id)
             byId = {
                 ...byId,
@@ -132,13 +148,13 @@ export const createLevel = (player, level) => {
 
         }
     }
-    console.log(level ** 2)
 
-    let newTiles = breakTiles(validMoves, (level ** 2), byId )
+    let newTiles = breakTiles(validMoves, (level ** 2), byId)
+
+    console.log(newTiles)
     //puts player at the front of character array
     characterIds = characterIds.filter(id => id !== "player")
     characterIds.unshift('player')
-    console.log(characterIds)
     return {
         map: {
             byId: newTiles,

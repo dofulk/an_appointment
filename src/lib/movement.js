@@ -1,25 +1,25 @@
 
-const moveRight = (origin, distance) => {
+const moveDown = (origin, distance) => {
 
     let cordinate = origin.split(',')
     let target = cordinate[0] + "," + (Number(cordinate[1]) + distance)
     return target
 }
 
-const moveLeft = (origin, distance) => {
+const moveUp = (origin, distance) => {
 
     let cordinate = origin.split(',')
     let target = cordinate[0] + "," + (Number(cordinate[1]) - distance)
     return target
 }
 
-const moveUp = (origin, distance) => {
+const moveLeft = (origin, distance) => {
 
     let cordinate = origin.split(',')
     let target = (Number(cordinate[0]) - distance) + "," + cordinate[1]
     return target
 }
-const moveDown = (origin, distance) => {
+const moveRight = (origin, distance) => {
 
     let cordinate = origin.split(',')
     let target = (Number(cordinate[0]) + distance)+ "," + cordinate[1]
