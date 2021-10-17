@@ -4,7 +4,7 @@ const initialState = {
   phase: 0,
   allPhases: ['cards', 'movement', 'characters'],
   isPaused: false,
-  numberOfTurns: 0,
+  numberOfCycles: 0,
   drawAmount: 5,
   baseDraw: 5,
   gold: 10,
@@ -35,7 +35,8 @@ const game = (state = initialState, action) => {
       return {
         ...state,
         phase: state.phase + 1,
-        drawAmount: state.baseDraw
+        drawAmount: state.baseDraw,
+        numberOfCycles: state.numberOfCycles + 1
       }
 
     case 'DRAW_ONE':

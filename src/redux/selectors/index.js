@@ -22,9 +22,12 @@ export const handSelector = state => state.cards.hand
 export const discardSelector = state => state.cards.discard
 export const drawSelector = state => state.cards.draw
 
+
+
 export const phaseSelector = state => state.game.phase
 export const currentPhaseSelector = state => state.game.allPhases[state.game.phase]
 export const drawAmountSelector = state => state.game.drawAmount
+export const numberOfCyclesSelector = state => state.game.numberOfCycles
 
 export const floorTurnSelector = state => state.level.floorTurn
 

@@ -24,7 +24,10 @@ const generateEntityArray = (level) => {
     return entities
 }
 
-export const createLevel = (player, level) => {
+export const createLevel = (player, level, numberOfCycles) => {
+
+
+
 
     let entityArray = generateEntityArray(level)
 
@@ -62,6 +65,11 @@ export const createLevel = (player, level) => {
         }
         i++
     }
+
+
+    console.log(numberOfCycles)
+    byId = breakTiles(validMoves, numberOfCycles, byId)
+
 
 
     let playerPosition = '1,' + Math.floor(height / 2)
@@ -149,15 +157,13 @@ export const createLevel = (player, level) => {
         }
     }
 
-    let newTiles = breakTiles(validMoves, (level ** 2), byId)
 
-    console.log(newTiles)
     //puts player at the front of character array
     characterIds = characterIds.filter(id => id !== "player")
     characterIds.unshift('player')
     return {
         map: {
-            byId: newTiles,
+            byId: byId,
             allIds: allIds,
             validMoves: validMoves,
             height: height,

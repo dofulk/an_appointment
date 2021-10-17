@@ -55,7 +55,8 @@ const tileStyle = (color, damage) => {
     width: '48px',
     height: '48px',
     backgroundColor: background,
-    listStyleType: 'none'
+    listStyleType: 'none',
+    borderRadius: 2,
   }
 }
 

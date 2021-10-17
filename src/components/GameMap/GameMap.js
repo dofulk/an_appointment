@@ -1,7 +1,7 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { entitiesArraySelector, levelSelector } from '../../redux/selectors/index'
+import { entitiesArraySelector, levelSelector, numberOfCyclesSelector } from '../../redux/selectors/index'
 import { Tile } from "../Tile/Tile";
 import { newMap } from '../../redux/actions/action';
 import { createLevel } from "../../lib/level";
@@ -56,6 +56,7 @@ export const GameMap = () => {
     const entitiesArray = useSelector(entitiesArraySelector)
     const level = useSelector(levelSelector)
 
+    const numberOfCycles = useSelector(numberOfCyclesSelector)
 
 
 
@@ -67,7 +68,7 @@ export const GameMap = () => {
 
         if (!Object.keys(tiles.byId).length) {
             console.log(level)
-            dispatch(newMap(createLevel(entitiesArray.player, 0)))
+            dispatch(newMap(createLevel(entitiesArray.player, 0, numberOfCycles)))
         }
 
     })
