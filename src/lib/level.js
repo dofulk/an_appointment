@@ -32,7 +32,7 @@ export const createLevel = (player, level) => {
     let allIds = []
     let validMoves = []
     let width = 20
-    let height = 5 + (2 * Math.round(level / 2))
+    let height = 5 + (Math.round(level / 2))
 
     let i = 0
 
