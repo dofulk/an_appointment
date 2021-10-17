@@ -1,33 +1,76 @@
 
 
 .moves[movesanimation="1"] {
-    animation: pulse .5s;
+    background-color: bisque;
+}
+
+.moves[movesanimation="0"] {
+    background-color: white;
+
+}
+
+.moves {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 5px;
+    transition: background-color .25s;
 }
 
 
 .hp[hpanimation="1"] {
-    animation: pulse .5s;
+    background-color: bisque;
 }
 
+.hp[hpanimation="0"] {
+    background-color: white;
+}
+
+.hp {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 5px;
+    transition: background-color .25s;
+}
 
 .attack[attackanimation="1"] {
-    animation: pulse .5s;
+    background-color: bisque;
 }
 
+.attack[attackanimation="0"] {
+    background-color: white;
+}
+
+.attack {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 5px;
+    transition: background-color .25s;
+}
 .gold[goldanimation="1"] {
-    animation: pulse .5s;
+    background-color: bisque;
+}
+
+.gold[goldanimation="0"] {
+    background-color: white;
+}
+
+.gold {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 5px;
+    transition: background-color .25s;
 }
 
 .game-info {
     display: flex;
     flex-direction: row;
-    padding: 20px;
+    padding: 5px;
 }
 
 .game-info > * {
     margin-left: 20px;
     margin-right: 20px;
-    box-shadow: 2px 2px 5px black;
+
 }
 @keyframes pulse {
     0% {

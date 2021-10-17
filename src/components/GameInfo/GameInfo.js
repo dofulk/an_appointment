@@ -10,64 +10,82 @@ export const GameInfo = ({ player, moves, gold }) => {
     const [attackAnimation, setAttackAnimation] = useState(0)
     const [goldAnimation, setGoldAnimation] = useState(0)
     useEffect(() => {
-        if (movesAnimation === 1) {
-            return
-        } else {
-            setMovesAnimation(1)
-        }
+        setMovesAnimation(1)
+        let timer = setTimeout(() => {
+            setMovesAnimation(0)
+        }, 350);
 
+        return () => {
+            clearTimeout(timer)
+        }
     }, [moves])
 
 
     useEffect(() => {
-        if (hpAnimation === 1) {
-            return
-        } else {
-            setHpAnimation(1)
+        setHpAnimation(1)
+        let timer = setTimeout(() => {
+            setHpAnimation(0)
+        }, 250);
+
+        return () => {
+            clearTimeout(timer)
         }
 
     }, [player.hp])
     useEffect(() => {
-        if (attackAnimation === 1) {
-            return
-        } else {
-            setAttackAnimation(1)
+        setAttackAnimation(1)
+        let timer = setTimeout(() => {
+            setAttackAnimation(0)
+        }, 250);
+
+        return () => {
+            clearTimeout(timer)
         }
 
     }, [player.attack])
 
     useEffect(() => {
-        if (goldAnimation === 1) {
-            return
-        } else {
-            setGoldAnimation(1)
+        setGoldAnimation(1)
+        let timer = setTimeout(() => {
+            setGoldAnimation(0)
+        }, 250);
+
+        return () => {
+            clearTimeout(timer)
         }
 
     }, [gold])
 
     return (
         <div className="game-info">
+            <div 
+            className="moves"
+            movesanimation={movesAnimation}>
+                <h1
+
+                    
+                >Moves: {moves}/{player.baseMoves}</h1>
+            </div>
+
+            <div 
+            className="hp"
+            hpanimation={hpAnimation}>
             <h1
-                className="moves"
-                movesanimation={movesAnimation}
-                onAnimationEnd={() => setMovesAnimation(0)}
-            >Moves: {moves}/{player.baseMoves}</h1>
+            >HP: {player.hp}/{player.maxHP}</h1>
+            </div>
+            <div 
+            className="attack"
+            attackanimation={attackAnimation}>
+            <h1
+            >Attack: {player.attack}/{player.baseAttack}</h1>
+            </div>
+            <div 
+            className="gold"
+            goldanimation={goldAnimation}>
 
             <h1
-                className="hp"
-                hpanimation={hpAnimation}
-                onAnimationEnd={() => setHpAnimation(0)}
-            >HP: {player.hp}/{player.maxHP}</h1>
-            <h1
-                className="attack"
-                attackanimation={attackAnimation}
-                onAnimationEnd={() => setAttackAnimation(0)}
-            >Attack: {player.attack}/{player.baseAttack}</h1>
-            <h1
-                className="gold"
-                goldanimation={goldAnimation}
-                onAnimationEnd={() => setGoldAnimation(0)}
             >Coin: {gold}</h1>
+            </div>
 
         </div>
     );

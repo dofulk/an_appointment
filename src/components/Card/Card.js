@@ -23,7 +23,6 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
 
   return (
     <div className="card"
-    onMouseEnter={() => console.log('CARD DESCRIPTION')}
     isplaying={isPlaying}
       onClick={onClick}>
 
