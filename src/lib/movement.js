@@ -22,7 +22,7 @@ const moveLeft = (origin, distance) => {
 const moveRight = (origin, distance) => {
 
     let cordinate = origin.split(',')
-    let target = (Number(cordinate[0]) + distance)+ "," + cordinate[1]
+    let target = (Number(cordinate[0]) + distance) + "," + cordinate[1]
     return target
 }
 
@@ -36,6 +36,25 @@ export const choosePlayerTarget = (position, keystroke) => {
         case 'ArrowDown':
             return moveDown(position, 1)
         case 'ArrowLeft':
+            return moveLeft(position, 1)
+        default:
+            break;
+    }
+}
+
+
+export const chooseRandomTarget = (position) => {
+    console.log(position)
+    let direction = Math.floor(Math.random() * 4)
+
+    switch (direction) {
+        case 0:
+            return moveUp(position, 1)
+        case 1:
+            return moveRight(position, 1)
+        case 2:
+            return moveDown(position, 1)
+        case 3:
             return moveLeft(position, 1)
         default:
             break;

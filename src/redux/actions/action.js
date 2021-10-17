@@ -2,6 +2,7 @@ import { batch } from "react-redux"
 import * as PF from "pathfinding"
 import { onAttack, onKill, onMove } from "./conditionalActions"
 import { entityByIdSelector } from "../selectors"
+import { chooseRandomTarget } from "../../lib/movement"
 
 
 export const addCharacter = (tile, character) => ({
@@ -268,27 +269,55 @@ export const moveOrAttack = (targetTile, entity, entities, moveEffects, attackEf
     }
 }
 
+
+export const moveOnly = (targetTile, entity, entities, moveEffects, attackEffects, killEffects) => {
+    if (targetTile.wall) {
+        return changeMoves(entity.id, -1)
+    } else if (targetTile.isAValidMove) {
+        return onMove(targetTile, entity, moveEffects)
+
+
+    } else if (targetTile.character) {
+        return changeMoves(entity.id, -1)
+    }
+    else {
+        //throw an error at some point
+        console.log('oops')
+    }
+}
+
 export const chooseMove = (tiles, currentEntity, player, entities, height, width) => {
-
-    let grid = new PF.Grid(width, height);
-
-    let tileList = tiles.byId
-
-    Object.keys(tileList).forEach((i) => {
-        grid.setWalkableAt( tileList[i].column, tileList[i].row, (tileList[i].isAValidMove ? true : false))
-    })
     let start = currentEntity.position.split(',')
     let end = player.position.split(',')
 
     let startX = parseInt(start[0])
     let startY = parseInt(start[1])
 
+    let endX = parseInt(end[0])
+    let endY = parseInt(end[1])
+
+    if (Math.abs(startX - endX) + Math.abs(startY - endY) > 7) {
+
+
+        return moveOnly(tiles.byId[chooseRandomTarget(currentEntity.position)], currentEntity, entities)
+    }
+
+    let grid = new PF.Grid(width, height);
+
+    let tileList = tiles.byId
+
+    Object.keys(tileList).forEach((i) => {
+        grid.setWalkableAt(tileList[i].column, tileList[i].row, (tileList[i].isAValidMove ? true : false))
+    })
+
+
+
+
 
 
     grid.setWalkableAt(startX, startY, true)
 
-    let endX = parseInt(end[0])
-    let endY = parseInt(end[1])
+
 
     grid.setWalkableAt(endX, endY, true)
 
