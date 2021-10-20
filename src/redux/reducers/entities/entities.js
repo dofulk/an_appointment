@@ -1,6 +1,6 @@
 export const initialState = {
     byId: {
-        "player": { id: "player", position: "1,1", moves: 5, baseMoves: 5, hp: 30, maxHP: 30, attack: 4, baseAttack: 4, type: 'character', sprite: "🙂" },
+        "player": { id: "player", position: "1,1", moves: 3, baseMoves: 3, hp: 30, maxHP: 30, attack: 3, baseAttack: 4, type: 'character', sprite: "🙂" },
 
     },
     characterIds: [],

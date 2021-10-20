@@ -4,7 +4,7 @@ import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector
 import { draw, changeDrawAmount, newCycle, drawOne } from '../../redux/actions/action'
 import { getCardEffect } from "../../lib/cardEffects";
 import { Card } from "../Card/Card";
-import {CardList} from "../CardList/CardList"
+import { CardList } from "../CardList/CardList"
 import { motion, AnimatePresence } from "framer-motion";
 import Modal from 'react-modal';
 
@@ -68,10 +68,13 @@ export const Hand = () => {
         setCardsPlayed(0)
     }, [currentPhase])
 
-    const openDraw = () => {
-        console.log(draw)
+    const openCardList = (cards) => {
         setModalIsOpen(true)
-        setModalContent(<CardList listOfCards={draw}></CardList>)
+        setModalContent(
+            <div>
+                <CardList listOfCards={cards}></CardList>
+                <button onClick={() => setModalIsOpen(false)}>Exit</button>
+            </div>)
     }
 
     let cards = hand.map((card) => {
@@ -100,16 +103,16 @@ export const Hand = () => {
     return (
         <div className="hand">
             <Modal
-            isOpen={modalIsOpen}
+                isOpen={modalIsOpen}
             >
                 {modalContent}
             </Modal>
-            
-            <div onClick={openDraw}>
+
+            <div onClick={() => openCardList(draw)}>
                 <h1>{draw.length}</h1>
             </div>
             <ul className="cards">{cards}</ul>
-            <div>
+            <div onClick={() => openCardList(discard)}>
                 <h1>{discard.length}</h1>
             </div>
         </div>
