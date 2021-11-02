@@ -38,13 +38,19 @@ export function Main() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
-
+  const [playerPosition, setPlayerPosition] = useState()
 
 
   const dispatch = useDispatch()
 
 
 
+  const gameMapStyle = {
+    flex: 4,
+    position: 'relative',
+    left: '50%',
+    transform: `translateX(${-playerPosition}px)` 
+  }
 
 
 
@@ -113,13 +119,14 @@ export function Main() {
       <div className='game-info'>
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>
-      <div className="gamemap">
-        {modalIsOpen? 
+      {modalIsOpen ?
         <ModalView className="modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} /> :
-         <GameMap /> 
-        }
-        
-      </div>
+        <div className="gamemap" style={gameMapStyle}>
+
+          <GameMap className="gamemap_map" setPlayerPosition={setPlayerPosition} />
+
+        </div>
+      }
       <div className="hand">
         <Hand />
       </div>

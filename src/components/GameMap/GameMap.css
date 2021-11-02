@@ -1,0 +1,10 @@
+.gamemap {
+    display: "flex";
+    flex: 3;
+    align-items: "center";
+    justify-content: "center";
+    overflow: "hidden";
+    position: "relative";
+    left: 500px;
+    background-color: beige;
+}

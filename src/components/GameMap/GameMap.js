@@ -10,7 +10,7 @@ import { AnimateSharedLayout } from 'framer-motion'
 
 const selectTiles = state => state.tiles
 const selectWidth = state => state.level.width
-
+const selectHeight = state => state.level.height
 
 function isEven(num) {
     return num % 2 === 0
@@ -18,30 +18,34 @@ function isEven(num) {
 
 
 
-const gamemapStyle = width => {
+const gamemapStyle = (width, height) => {
     return {
         display: 'flex',
         flexWrap: 'wrap',
-        width: (50 * width) + 'px',
+        width: (100 * width) + 'px',
+        height: (100 * height),
         alignContent: 'flex-start',
-        alignSelf: 'center'
+        alignSelf: 'center',
+
     }
 }
 
 
-const renderedTiles = (tiles, entities, currentTurn) => {
+
+
+const renderedTiles = (tiles, entities, setPlayerPosition) => {
     let tileList = []
     tiles.allIds.map(id => {
         let tile = tiles.byId[id]
         let character = tile.character
         let building = tile.building
         if (tiles.byId[id].wall) {
-            return tileList.push(<Tile key={id} id={id} color="wall" character={entities[character]} building={entities[building]}/>)
+            return tileList.push(<Tile key={id} id={id} color="wall" character={entities[character]} building={entities[building]} setPlayerPosition={setPlayerPosition}/>)
         }
         if ((!isEven(tiles.byId[id].row) && !isEven(tiles.byId[id].column)) || (isEven(tiles.byId[id].row) && isEven(tiles.byId[id].column))) {
-            return tileList.push(<Tile key={id} id={id} color="dark" character={entities[character]} building={entities[building]} damage={tiles.byId[id].damage}/>)
+            return tileList.push(<Tile key={id} id={id} color="dark" character={entities[character]} building={entities[building]} setPlayerPosition={setPlayerPosition} damage={tiles.byId[id].damage}/>)
         } else {
-            return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} damage={tiles.byId[id].damage}/>)
+            return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} setPlayerPosition={setPlayerPosition} damage={tiles.byId[id].damage}/>)
         }
     })
     return tileList
@@ -49,9 +53,10 @@ const renderedTiles = (tiles, entities, currentTurn) => {
 
 
 
-export const GameMap = () => {
+export const GameMap = ({setPlayerPosition}) => {
     const tiles = useSelector(selectTiles)
     const width = useSelector(selectWidth)
+    const height = useSelector(selectHeight)
 
     const entitiesArray = useSelector(entitiesArraySelector)
     const level = useSelector(levelSelector)
@@ -77,15 +82,10 @@ export const GameMap = () => {
 
     return (
 
-        <div style={{
-            display: "flex",
-            flex: 3,
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
+        <div className="gamemap">
             <AnimateSharedLayout>
-                <ul style={gamemapStyle(width)}>
-                    {renderedTiles(tiles, entitiesArray)}
+                <ul style={gamemapStyle(width, height)}>
+                    {renderedTiles(tiles, entitiesArray, setPlayerPosition)}
                 </ul>
             </AnimateSharedLayout>
         </div>

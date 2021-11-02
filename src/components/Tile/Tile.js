@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Sprite } from '../Sprite/Sprite';
 import { useDispatch, useSelector } from 'react-redux'
 import { changeAttack, changeHp, deleteEntity, endTurn } from "../../redux/actions/action";
@@ -51,20 +51,19 @@ const tileStyle = (color, damage) => {
       background = 'black'
   }
   return {
-    border: '1px solid black',
-    width: '48px',
-    height: '48px',
+    width: (100 / 20) + '%',
+    height: (100 / 7) + '%',
     backgroundColor: background,
     listStyleType: 'none',
-    borderRadius: 2,
+    borderRadius: 3,
   }
 }
 
 
 
-export const Tile = ({ id, color, character, building, damage }) => {
+export const Tile = ({ id, color, character, building, damage, setPlayerPosition }) => {
 
-
+  const inputRef = useRef();
 
   const dispatch = useDispatch()
   const turn = useSelector(turnSelector)
@@ -78,7 +77,10 @@ export const Tile = ({ id, color, character, building, damage }) => {
   const height = useSelector(heightSelector)
   const width = useSelector(widthSelector)
 
+
   useEffect(() => {
+
+
 
     const timeout = setTimeout(() => {
 
@@ -107,6 +109,14 @@ export const Tile = ({ id, color, character, building, damage }) => {
 
   }, [character, currentTurn, currentPhase])
 
+  useEffect(() => {
+    if (!character) {
+
+    } else if (character.id === 'player') {
+
+      setPlayerPosition(inputRef.current.offsetLeft);
+    }
+  }, [character])
 
 
   let sprite = (character, building, currentTurn) => {
@@ -120,18 +130,18 @@ export const Tile = ({ id, color, character, building, damage }) => {
           animate={{}
           }
           transition={spring}
-        > <Sprite entity={character.sprite} />
+        > <Sprite entity={character} />
         </motion.div >
       )
     } else if (character) {
-      return <Sprite entity={character.sprite} />
+      return <Sprite entity={character} />
     } else if (building) {
-      return <Sprite entity={building.sprite} />
+      return <Sprite entity={building} />
     }
   }
 
   return (
-    <li className="component-tile" style={tileStyle(color, damage)}>
+    <li className="component-tile" style={tileStyle(color, damage)} ref={inputRef}>
 
 
       {sprite(character, building, currentTurn)}

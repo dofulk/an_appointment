@@ -1,0 +1,23 @@
+.sprite {
+    height: 100%;
+    width: 100%;
+}
+
+.sprite_info {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.sprite_sprite {
+
+}
+
+.sprite_info--attack {
+    justify-self: flex-start;
+}
+
+.sprite_info--hp {
+    right: 5px;
+
+}
