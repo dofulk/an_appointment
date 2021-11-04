@@ -1,8 +1,21 @@
 .hand {
     display: flex;
     flex-direction: row;
-}
-.hand {
+    width: 100%;
     display: flex;
-    flex-direction: row;
+}
+
+.draw {
+    width: 50px;
+
+}
+
+.discard {
+    width: 50px;
+
+}
+
+.cards {
+    flex-grow: 1;
+    justify-content: center;
 }

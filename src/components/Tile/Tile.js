@@ -61,7 +61,7 @@ const tileStyle = (color, damage) => {
 
 
 
-export const Tile = ({ id, color, character, building, damage, setPlayerPosition }) => {
+export const Tile = ({ id, color, character, building, damage, setPlayerPositionX, setPlayerPositionY }) => {
 
   const inputRef = useRef();
 
@@ -114,38 +114,40 @@ export const Tile = ({ id, color, character, building, damage, setPlayerPosition
 
     } else if (character.id === 'player') {
 
-      setPlayerPosition(inputRef.current.offsetLeft);
+      setPlayerPositionX(inputRef.current.offsetLeft);
+      setPlayerPositionY(inputRef.current.offsetTop);
     }
   }, [character])
 
 
   let sprite = (character, building, currentTurn) => {
-    if (character && (character.id === currentTurn)) {
-      return (
-        (character) &&
-        < motion.div
-          key={character}
-          layoutId={currentTurn}
-          variants={id}
-          animate={{}
-          }
-          transition={spring}
-        > <Sprite entity={character} />
-        </motion.div >
-      )
-    } else if (character) {
+    // if (character && (character.id === currentTurn)) {
+    //   return (
+    //     (character) &&
+    //     < motion.div
+    //       key={character}
+    //       layoutId={currentTurn}
+    //       variants={id}
+    //       animate={{}
+    //       }
+    //       transition={spring}
+    //     > <Sprite entity={character} />
+    //     </motion.div >
+    //   )
+    // } else 
+    if (character) {
       return <Sprite entity={character} />
     } else if (building) {
       return <Sprite entity={building} />
     }
+
   }
 
   return (
-    <li className="component-tile" style={tileStyle(color, damage)} ref={inputRef}>
-
+    <div className="component-tile" style={tileStyle(color, damage)} ref={inputRef}>
 
       {sprite(character, building, currentTurn)}
-    </li>
+    </div>
   );
 
 }
@@ -153,4 +155,4 @@ export const Tile = ({ id, color, character, building, damage, setPlayerPosition
 const spring = {
   type: "tween",
   duration: .15
-};
+}

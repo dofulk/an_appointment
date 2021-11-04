@@ -1,23 +1,36 @@
 .sprite {
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .sprite_info {
-    display: flex;
-    flex-direction: row;
+    position: absolute;
+    bottom: 0px;
     width: 100%;
+    background-color: darkorange;
+}
+
+.sprite_attack {
+    position: absolute;
+    font-size: 50px;
+    bottom: 0;
+    left: 5px;
+}
+
+.sprite_hp {
+    position: absolute;
+    font-size: 50px;
+    bottom: 0;
+    right: 5px;
 }
 
 .sprite_sprite {
-
-}
-
-.sprite_info--attack {
-    justify-self: flex-start;
-}
-
-.sprite_info--hp {
-    right: 5px;
-
+    font-size: 100px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
 }

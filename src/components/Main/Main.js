@@ -38,7 +38,8 @@ export function Main() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
-  const [playerPosition, setPlayerPosition] = useState()
+  const [playerPositionX, setPlayerPositionX] = useState()
+  const [playerPositionY, setPlayerPositionY] = useState()
 
 
   const dispatch = useDispatch()
@@ -49,7 +50,9 @@ export function Main() {
     flex: 4,
     position: 'relative',
     left: '50%',
-    transform: `translateX(${-playerPosition}px)` 
+    top: '45%',
+   
+    transform: `translate(${-playerPositionX}px, ${-playerPositionY}px)`,
   }
 
 
@@ -79,6 +82,7 @@ export function Main() {
 
 
   const handleKeydown = (e) => {
+    console.log(playerPositionX)
 
     switch (e.key) {
       case 'ArrowUp':
@@ -123,7 +127,7 @@ export function Main() {
         <ModalView className="modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} /> :
         <div className="gamemap" style={gameMapStyle}>
 
-          <GameMap className="gamemap_map" setPlayerPosition={setPlayerPosition} />
+          <GameMap className="gamemap_map" setPlayerPositionX={setPlayerPositionX}  setPlayerPositionY={setPlayerPositionY} />
 
         </div>
       }

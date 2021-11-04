@@ -108,11 +108,11 @@ export const Hand = () => {
                 {modalContent}
             </Modal>
 
-            <div onClick={() => openCardList(draw)}>
+            <div onClick={() => openCardList(draw)} className="draw">
                 <h1>{draw.length}</h1>
             </div>
             <ul className="cards">{cards}</ul>
-            <div onClick={() => openCardList(discard)}>
+            <div onClick={() => openCardList(discard)} className="discard">
                 <h1>{discard.length}</h1>
             </div>
         </div>

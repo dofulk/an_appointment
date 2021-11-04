@@ -22,8 +22,8 @@ const gamemapStyle = (width, height) => {
     return {
         display: 'flex',
         flexWrap: 'wrap',
-        width: (100 * width) + 'px',
-        height: (100 * height),
+        width: (150 * width) + 'px',
+        height: (150 * height),
         alignContent: 'flex-start',
         alignSelf: 'center',
 
@@ -33,19 +33,19 @@ const gamemapStyle = (width, height) => {
 
 
 
-const renderedTiles = (tiles, entities, setPlayerPosition) => {
+const renderedTiles = (tiles, entities, setPlayerPositionX, setPlayerPositionY) => {
     let tileList = []
     tiles.allIds.map(id => {
         let tile = tiles.byId[id]
         let character = tile.character
         let building = tile.building
         if (tiles.byId[id].wall) {
-            return tileList.push(<Tile key={id} id={id} color="wall" character={entities[character]} building={entities[building]} setPlayerPosition={setPlayerPosition}/>)
+            return tileList.push(<Tile key={id} id={id} color="wall" character={entities[character]} building={entities[building]} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY}/>)
         }
         if ((!isEven(tiles.byId[id].row) && !isEven(tiles.byId[id].column)) || (isEven(tiles.byId[id].row) && isEven(tiles.byId[id].column))) {
-            return tileList.push(<Tile key={id} id={id} color="dark" character={entities[character]} building={entities[building]} setPlayerPosition={setPlayerPosition} damage={tiles.byId[id].damage}/>)
+            return tileList.push(<Tile key={id} id={id} color="dark" character={entities[character]} building={entities[building]} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} damage={tiles.byId[id].damage}/>)
         } else {
-            return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} setPlayerPosition={setPlayerPosition} damage={tiles.byId[id].damage}/>)
+            return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} damage={tiles.byId[id].damage}/>)
         }
     })
     return tileList
@@ -53,7 +53,7 @@ const renderedTiles = (tiles, entities, setPlayerPosition) => {
 
 
 
-export const GameMap = ({setPlayerPosition}) => {
+export const GameMap = ({setPlayerPositionX, setPlayerPositionY}) => {
     const tiles = useSelector(selectTiles)
     const width = useSelector(selectWidth)
     const height = useSelector(selectHeight)
@@ -85,7 +85,7 @@ export const GameMap = ({setPlayerPosition}) => {
         <div className="gamemap">
             <AnimateSharedLayout>
                 <ul style={gamemapStyle(width, height)}>
-                    {renderedTiles(tiles, entitiesArray, setPlayerPosition)}
+                    {renderedTiles(tiles, entitiesArray, setPlayerPositionX, setPlayerPositionY)}
                 </ul>
             </AnimateSharedLayout>
         </div>
