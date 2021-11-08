@@ -101,14 +101,6 @@ export const newMap = (level) => ({
 })
 
 
-
-// export const playCard = (id) => ({
-//     type: 'PLAY_CARD',
-//     payload: {
-//         id: id
-//     }
-// })
-
 export const deleteEntity = (entity, tile) => ({
     type: 'DELETE_ENTITY',
     payload: {
@@ -158,29 +150,18 @@ export const drawCards = (numberOfCards) => ({
         numberOfCards: numberOfCards,
         phase: 'hand'
 
-        //  dispatch(draw(numberOfCards)),
-        // dispatch(newPhase('hand')),
-
     }
 })
 
-export const endTurn = (entities, turn) => {
-    if (turn >= (entities.length - 1)) {
-        console.log('NEWCYCLE')
-        return {
-            type: 'END_CYCLE',
-            payload: {
-                brokenTiles: 4,
-            }
-        }
-
-    }
-    else {
-        return {
-            type: 'END_TURN',
+export const endCycle = () => {
+    return {
+        type: 'END_CYCLE',
+        payload: {
+            brokenTiles: 4,
         }
     }
 }
+
 
 export const addOnKill = (effect) => {
     return {
@@ -224,7 +205,7 @@ export const attackTarget = (target, attacker, killEffects) => {
     return (dispatch, getState) => {
 
         batch(() => {
-            dispatch(changeMoves(attacker.id, -1))
+            dispatch(changeMoves(attacker.id, -attacker.moves))
             dispatch(changeHp(target, -attacker.attack, killEffects))
         })
     }
@@ -255,6 +236,7 @@ export const buyCard = (building, card, price) => {
 
 export const moveOrAttack = (targetTile, entity, entities, moveEffects, attackEffects, killEffects) => {
     if (targetTile.wall) {
+    
         return changeMoves(entity.id, -1)
     } else if (targetTile.isAValidMove) {
         return onMove(targetTile, entity, moveEffects)

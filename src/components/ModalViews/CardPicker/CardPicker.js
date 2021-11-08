@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Card } from "../../Card/Card";
 import { addCardFromPicker } from "../../../redux/actions/action";
@@ -17,8 +17,10 @@ export const CardPicker = ({ setModalIsOpen, listOfCards, building }) => {
     setModalIsOpen(false)
   }
 
+
+
   let cards = listOfCards.map((card) => 
-    <li key={card.id} style={{
+    <li key={card.title} style={{
       listStyle: "none",
     }}>
       <Card id={card.id} title={card.title} description={card.description} onClick={() => addCard(building, card)} isBig={true}></Card>

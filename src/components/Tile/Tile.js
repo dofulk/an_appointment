@@ -79,37 +79,6 @@ export const Tile = ({ id, color, character, building, damage, setPlayerPosition
 
 
   useEffect(() => {
-
-
-
-    const timeout = setTimeout(() => {
-
-
-      if (!character) {
-        return
-
-      } else if (character.hp <= 0 && character.id === 'player') {
-        console.log('Game OVERERER')
-      } else if (character.hp <= 0) {
-
-      } else if (currentPhase !== 'movement' || currentTurn !== character.id) {
-      } else if (character.moves <= 0 && character.id !== 'player') {
-        dispatch(endTurn(characterIds, turn))
-
-
-      } else if (character.id === 'player') {
-        return
-      } else {
-
-        dispatch(chooseMove(tiles, character, player, entities, height, width))
-      }
-    }, 150)
-
-    return () => clearInterval(timeout);
-
-  }, [character, currentTurn, currentPhase])
-
-  useEffect(() => {
     if (!character) {
 
     } else if (character.id === 'player') {

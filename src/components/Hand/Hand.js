@@ -77,6 +77,7 @@ export const Hand = () => {
             </div>)
     }
 
+
     let cards = hand.map((card) => {
         let allCards = []
         if (card) {

@@ -68,7 +68,7 @@ export const ModalView = ({ setModalIsOpen, building }) => {
         }
     }
     return (
-        <div className="modal">
+        <div className="modalview">
             {view(building)}
         </div>
     );

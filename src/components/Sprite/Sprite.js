@@ -9,7 +9,7 @@ export const Sprite = ({ entity }) => {
   return (
     <div className="sprite">
       <div className="sprite_sprite">
-        <text>{entity.sprite}</text>
+        {entity.sprite}
       </div>
 
       <div className="sprite_attack">{entity.attack}</div>

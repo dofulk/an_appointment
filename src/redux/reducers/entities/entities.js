@@ -4,7 +4,6 @@ export const initialState = {
 
     },
     characterIds: [],
-    turn: 0,
     playerTurnInitiated: false
 };
 
@@ -24,8 +23,6 @@ const entities = (state = initialState, action) => {
                 },
                 characterIds: action.payload.entities.characterIds,
                 playerTurnInitiated: false,
-                turn: 0,
-
             }
         //Changes the position value of entity
 
@@ -101,12 +98,6 @@ const entities = (state = initialState, action) => {
 
                 }
             }
-
-        case 'END_TURN':
-            return {
-                ...state,
-                turn: state.turn + 1
-            }
         case 'END_CYCLE':
             let entities = {}
             for (let key in state.byId) {
@@ -122,7 +113,6 @@ const entities = (state = initialState, action) => {
                 ...state,
                 byId: entities,
                 playerTurnInitiated: false,
-                turn: 0
             }
 
         case 'BUY_CARD':
@@ -136,8 +126,8 @@ const entities = (state = initialState, action) => {
                     }
                 }
             }
-            // return state
-    
+        // return state
+
 
 
         case 'INITIATE_TURN':
@@ -151,21 +141,13 @@ const entities = (state = initialState, action) => {
             let { [key]: value, ...newById } = state.byId
 
             if (action.payload.entityType === "character") {
-                console.log(state.characterIds.indexOf(key), state.turn)
-                if (state.characterIds.indexOf(key) <= state.turn) {
-                    return {
-                        ...state,
-                        byId: newById,
-                        characterIds: state.characterIds.filter(id => id !== action.payload.entityId),
-                        turn: state.turn - 1
-                    }
-                } else {
-                    return {
-                        ...state,
-                        byId: newById,
-                        characterIds: state.characterIds.filter(id => id !== action.payload.entityId)
-                    }
+
+                return {
+                    ...state,
+                    byId: newById,
+                    characterIds: state.characterIds.filter(id => id !== action.payload.entityId)
                 }
+
             } else {
                 return {
                     ...state,
@@ -186,11 +168,11 @@ const entities = (state = initialState, action) => {
             }
         case 'UNLOCK_DOOR':
             const { Key, ...byIdNoKey } = state.byId
-            return{
+            return {
                 ...state,
-                byId:{
+                byId: {
                     ...byIdNoKey,
-                    
+
                     Exit: {
                         ...state.byId['Exit'],
                         isLocked: false

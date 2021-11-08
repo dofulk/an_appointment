@@ -2,7 +2,7 @@ import { changeHp, changeAttack } from "../../actions/action";
 
 const initialState = {
   phase: 0,
-  allPhases: ['cards', 'movement', 'characters'],
+  allPhases: ['cards', 'player', 'enemies'],
   isPaused: false,
   numberOfCycles: 0,
   drawAmount: 5,

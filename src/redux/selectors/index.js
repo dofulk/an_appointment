@@ -1,14 +1,15 @@
 
 
 export const playerSelector = state => state.entities.byId['player']
+
 export const singleTileSelector = (state, id) => state.tiles.byId[id]
 export const tilesSelector = state => state.tiles
 export const playerMovesSelector = state => state.entities.byId['player'].moves
-export const entitiesIdSelector = state => state.entities.characterIds
+export const characterIdsSelector = state => state.entities.characterIds
+export const enemyIdsSelector =state => state.entities.characterIds.filter(id => id !== 'player')
 export const entitiesArraySelector = state => state.entities.byId
 export const turnSelector = state => state.entities.turn
 export const currentTurnSelector = state => state.entities.characterIds[state.entities.turn]
-export const characterIdsSelector = state => state.entities.characterIds
 export const currentEntityIdsSelector = state => state.entities.characterIds[state.entities.currentTurn]
 export const currentEntitySelector = state => state.entities.byId[state.entities.characterIds[state.entities.currentTurn]]
 

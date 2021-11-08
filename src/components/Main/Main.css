@@ -5,31 +5,29 @@
     justify-content: center;
     overflow: hidden;
     width: 100vw;
+    position: relative;
+    display: flex;
 }
 
-.hand {
-    position: absolute;
+.game_hand {
     height: 200px;
-    bottom: 0px;
     width: 100%;
     z-index: 2;
 }
 
-.game-info {
-    position: absolute;
-    top: 0px;
+.game_info {
+    width: 100%;
     z-index: 2;
 }
 
-.modal {
-    max-width: 90vw;
-}
+.game_modal {
+    flex-grow: 1;
+    height: 100%;
 
-.game {
-    display: flex;
-    flex-direction: row;
+    z-index: 2;
     flex-grow: 1;
 }
+
 
 .gamemap {
     position: absolute;

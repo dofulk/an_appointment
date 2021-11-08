@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
-import { endTurn, moveOrAttack, chooseMove } from '../../redux/actions/action';
+import { endTurn, moveOrAttack, chooseMove, newPhase, newCycle, endCycle } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
 
 
-import { currentTurnSelector, entitiesIdSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector, onMoveSelector, onAttackSelector, onKillSelector } from '../../redux/selectors/index';
+import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector, onMoveSelector, onAttackSelector, onKillSelector, heightSelector, widthSelector, enemyIdsSelector } from '../../redux/selectors/index';
 
 import "./Main.css";
 import { ModalView } from "../ModalViews/ModalView";
@@ -24,13 +24,16 @@ export function Main() {
   const tiles = useSelector(tilesSelector)
   const moves = useSelector(playerMovesSelector)
   const gold = useSelector(goldSelector)
-  const entityIds = useSelector(entitiesIdSelector)
+  const characterIds = useSelector(characterIdsSelector)
+  const enemyIds = useSelector(enemyIdsSelector)
   const entitiesById = useSelector(entityByIdSelector)
   const game = useSelector(gameSelector)
   const currentTurn = useSelector(currentTurnSelector)
   const currentPhase = useSelector(currentPhaseSelector)
   const turn = useSelector(turnSelector)
 
+  const height = useSelector(heightSelector)
+  const width = useSelector(widthSelector)
   const currentEntity = useSelector(currentEntitySelector)
   const moveEffects = useSelector(onMoveSelector)
   const attackEffects = useSelector(onAttackSelector)
@@ -40,7 +43,7 @@ export function Main() {
   const [modalContent, setModalContent] = useState()
   const [playerPositionX, setPlayerPositionX] = useState()
   const [playerPositionY, setPlayerPositionY] = useState()
-
+  const [enemyTurnOrder, setEnemyTurnOrder] = useState()
 
   const dispatch = useDispatch()
 
@@ -51,27 +54,37 @@ export function Main() {
     position: 'relative',
     left: '50%',
     top: '45%',
-   
+
     transform: `translate(${-playerPositionX}px, ${-playerPositionY}px)`,
   }
 
 
 
-
-
+  const chooseEnemyTurns = () => {
+    if (!Array.isArray(enemyTurnOrder)) {
+      setEnemyTurnOrder(enemyIds)
+    } else if (!enemyTurnOrder.length) {
+      setEnemyTurnOrder()
+      dispatch(endCycle())
+    } else if (entitiesById[enemyTurnOrder[0]].moves <= 0) {
+      console.log(enemyTurnOrder.slice(1))
+      setEnemyTurnOrder(enemyTurnOrder.slice(1))
+    } else {
+      dispatch(chooseMove(tiles, entitiesById[enemyTurnOrder[0]], player, entitiesById, height, width))
+    }
+  }
 
   useEffect(() => {
 
-    if (!currentTurn) {
+    if (currentPhase === 'player' && moves <= 0 && !modalIsOpen) {
+      dispatch(newPhase('enemies'))
 
-      endTurn(entityIds, turn)
     }
 
-    if (currentTurn === 'player' && moves <= 0 && !modalIsOpen) {
-      setTimeout(() => {
-        dispatch(endTurn(entityIds, turn))
-      }, 150);
+    if (currentPhase === 'enemies') {
+      chooseEnemyTurns()
     }
+
 
     window.addEventListener("keydown", handleKeydown);
     return () => {
@@ -82,7 +95,6 @@ export function Main() {
 
 
   const handleKeydown = (e) => {
-    console.log(playerPositionX)
 
     switch (e.key) {
       case 'ArrowUp':
@@ -94,13 +106,11 @@ export function Main() {
         let target = choosePlayerTarget(player.position, e.key)
         let targetTile = tiles.byId[target]
 
-        if (currentPhase !== 'movement' || modalIsOpen) {
+        if (currentPhase !== 'player' || modalIsOpen) {
           return
         } else if (!target) {
           return
-        } else if (moves <= 0 && currentTurn === 'player') {
-
-        } else if (currentTurn !== 'player') {
+        } else if (moves <= 0) {
 
         } else if (targetTile.building.length && !targetTile.character.length) {
           setModalIsOpen(true)
@@ -119,19 +129,23 @@ export function Main() {
 
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
+      <div className="gamemap" style={gameMapStyle}>
 
-      <div className='game-info'>
+        <GameMap className="gamemap_map" setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} />
+
+      </div>
+      <div className='game_info'>
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>
-      {modalIsOpen ?
-        <ModalView className="modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} /> :
-        <div className="gamemap" style={gameMapStyle}>
+      <div className="game_modal" style={{ backgroundColor: modalIsOpen ? 'darkgrey' : '' }}>
+        {modalIsOpen ?
+          <ModalView className="game_modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} isOpen={1} /> :
+          <ModalView className="game_modal" setModalIsOpen={setModalIsOpen} isOpen={0} />
+        }
+      </div>
+      {currentPhase}
 
-          <GameMap className="gamemap_map" setPlayerPositionX={setPlayerPositionX}  setPlayerPositionY={setPlayerPositionY} />
-
-        </div>
-      }
-      <div className="hand">
+      <div className="game_hand">
         <Hand />
       </div>
     </div>
