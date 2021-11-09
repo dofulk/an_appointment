@@ -3,15 +3,14 @@ import React, { useEffect, useState } from "react";
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
-import { endTurn, moveOrAttack, chooseMove, newPhase, newCycle, endCycle } from '../../redux/actions/action';
+import {  moveOrAttack, chooseMove, newPhase, endCycle } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
 
 
-import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector, onMoveSelector, onAttackSelector, onKillSelector, heightSelector, widthSelector, enemyIdsSelector, removeAmountSelector } from '../../redux/selectors/index';
+import { playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, onMoveSelector, onAttackSelector, onKillSelector, heightSelector, widthSelector, enemyIdsSelector, removeAmountSelector } from '../../redux/selectors/index';
 
 import "./Main.css";
 import { ModalView } from "../ModalViews/ModalView";
-import entities from "../../redux/reducers/entities/entities";
 import { GameInfo } from "../GameInfo/GameInfo";
 
 
@@ -24,17 +23,13 @@ export function Main() {
   const tiles = useSelector(tilesSelector)
   const moves = useSelector(playerMovesSelector)
   const gold = useSelector(goldSelector)
-  const characterIds = useSelector(characterIdsSelector)
   const enemyIds = useSelector(enemyIdsSelector)
   const entitiesById = useSelector(entityByIdSelector)
-  const game = useSelector(gameSelector)
-  const currentTurn = useSelector(currentTurnSelector)
   const currentPhase = useSelector(currentPhaseSelector)
-  const turn = useSelector(turnSelector)
 
   const height = useSelector(heightSelector)
   const width = useSelector(widthSelector)
-  const currentEntity = useSelector(currentEntitySelector)
+
   const moveEffects = useSelector(onMoveSelector)
   const attackEffects = useSelector(onAttackSelector)
   const killEffects = useSelector(onKillSelector)

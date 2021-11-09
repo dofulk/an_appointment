@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector } from '../../redux/selectors/index'
-import { draw, changeDrawAmount, newCycle, drawOne } from '../../redux/actions/action'
+import {  newCycle, drawOne } from '../../redux/actions/action'
 import { getCardEffect } from "../../lib/cardEffects";
 import { Card } from "../Card/Card";
 import { CardList } from "../CardList/CardList"
@@ -31,7 +31,7 @@ export const Hand = () => {
 
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
             if (currentPhase === 'cards') {
                 if (drawAmount > 0) {
 
@@ -40,7 +40,7 @@ export const Hand = () => {
                 }
             }
         }, 200)
-    }, [drawAmount, currentPhase])
+    }, [drawAmount, currentPhase, dispatch])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -66,7 +66,7 @@ export const Hand = () => {
         }, 500)
 
         return () => clearInterval(timeout);
-    }, [drawAmount, cardsPlayed, currentPhase])
+    }, [drawAmount, cardsPlayed, currentPhase, hand, dispatch])
 
     useEffect(() => {
         setCardsPlayed(0)
