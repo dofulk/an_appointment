@@ -85,7 +85,6 @@ const cards = (state = initialState, action) => {
                 ]
             }
         case 'ADD_CARD_TO_DISCARD':
-        case 'BUY_CARD':
             return {
                 ...state,
                 discard: [

@@ -9,6 +9,7 @@ const initialState = {
   baseDraw: 5,
   gold: 10,
   level: 0,
+  removeAmount: 0,
   onKill: [],
   onMove: [],
   onAttack: [],
@@ -95,7 +96,11 @@ const game = (state = initialState, action) => {
           action.payload.onAttack
         ]
       }
-
+    case 'CHANGE_REMOVE_AMOUNT':
+      return {
+        ...state,
+        removeAmount: state.removeAmount + action.payload.removeAmount
+      }
     default:
       return state;
   }

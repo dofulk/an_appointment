@@ -126,12 +126,29 @@ export const changeGold = (gold) => ({
     }
 })
 
-export const addCardToDiscard = (card) => ({
-    type: 'ADD_CARD_TO_DISCARD',
-    payload: {
-        card: card
+export const addCardToDiscard = (card, onAdd) => {
+    console.log(card)
+    if (onAdd) {
+        return dispatch => {
+            batch(() => {
+                dispatch(onAdd)
+                dispatch({
+                    type: 'ADD_CARD_TO_DISCARD',
+                    payload: {
+                        card: card
+                    }
+                })
+            })
+        }
+    } else {
+        return {
+            type: 'ADD_CARD_TO_DISCARD',
+            payload: {
+                card: card
+            }
+        }
     }
-})
+}
 
 
 export const moveEntity = (target, entity) => ({
@@ -201,6 +218,15 @@ export const unlockDoor = (building) => {
     }
 }
 
+export const changeRemoveAmount = (amount) => {
+    return {
+        type: 'CHANGE_REMOVE_AMOUNT',
+        payload: {
+            removeAmount: amount
+        }
+    }
+}
+
 export const attackTarget = (target, attacker, killEffects) => {
     return (dispatch, getState) => {
 
@@ -211,24 +237,31 @@ export const attackTarget = (target, attacker, killEffects) => {
     }
 }
 
-export const addCardFromPicker = (building, card) => {
+export const addCardFromPicker = (building, card, onAdd) => {
     return dispatch => {
         batch(() => {
             dispatch(deleteEntity(building, building.position))
-            dispatch(addCardToDiscard(card))
+            dispatch(addCardToDiscard(card, onAdd))
         })
 
     }
 }
 
-export const buyCard = (building, card, price) => {
-    return {
-        type: 'BUY_CARD',
-        payload: {
-            card: card,
-            gold: price,
-            shop: building
-        }
+export const buyCard = (building, card, price, onAdd) => {
+    return dispatch => {
+        batch(() => {
+            dispatch(addCardToDiscard(card, onAdd))
+            dispatch(
+                {
+                    type: 'BUY_CARD',
+                    payload: {
+                        card: card,
+                        gold: price,
+                        shop: building
+                    }
+                })
+        })
+
     }
 }
 
@@ -236,7 +269,7 @@ export const buyCard = (building, card, price) => {
 
 export const moveOrAttack = (targetTile, entity, entities, moveEffects, attackEffects, killEffects) => {
     if (targetTile.wall) {
-    
+
         return changeMoves(entity.id, -1)
     } else if (targetTile.isAValidMove) {
         return onMove(targetTile, entity, moveEffects)

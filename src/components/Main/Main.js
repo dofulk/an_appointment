@@ -7,7 +7,7 @@ import { endTurn, moveOrAttack, chooseMove, newPhase, newCycle, endCycle } from 
 import { choosePlayerTarget } from '../../lib/movement';
 
 
-import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector, onMoveSelector, onAttackSelector, onKillSelector, heightSelector, widthSelector, enemyIdsSelector } from '../../redux/selectors/index';
+import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, playerMovesSelector, goldSelector, currentPhaseSelector, entityByIdSelector, gameSelector, currentEntitySelector, turnSelector, onMoveSelector, onAttackSelector, onKillSelector, heightSelector, widthSelector, enemyIdsSelector, removeAmountSelector } from '../../redux/selectors/index';
 
 import "./Main.css";
 import { ModalView } from "../ModalViews/ModalView";
@@ -38,6 +38,7 @@ export function Main() {
   const moveEffects = useSelector(onMoveSelector)
   const attackEffects = useSelector(onAttackSelector)
   const killEffects = useSelector(onKillSelector)
+  const removeAmount = useSelector(removeAmountSelector)
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
@@ -58,7 +59,11 @@ export function Main() {
     transform: `translate(${-playerPositionX}px, ${-playerPositionY}px)`,
   }
 
-
+  useEffect(() => {
+    if (removeAmount) {
+      console.log('remove!')
+    }
+  }, [removeAmount])
 
   const chooseEnemyTurns = () => {
     if (!Array.isArray(enemyTurnOrder)) {
@@ -73,6 +78,8 @@ export function Main() {
       dispatch(chooseMove(tiles, entitiesById[enemyTurnOrder[0]], player, entitiesById, height, width))
     }
   }
+
+
 
   useEffect(() => {
 
@@ -143,7 +150,6 @@ export function Main() {
           <ModalView className="game_modal" setModalIsOpen={setModalIsOpen} isOpen={0} />
         }
       </div>
-      {currentPhase}
 
       <div className="game_hand">
         <Hand />
