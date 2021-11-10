@@ -47,7 +47,6 @@ export function Main() {
 
   const gameMapStyle = {
     flex: 4,
-    position: 'relative',
     left: '50%',
     top: '45%',
 

@@ -1,16 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Sprite } from '../Sprite/Sprite';
-import { useDispatch, useSelector } from 'react-redux'
-import { changeAttack, changeHp, deleteEntity, endTurn } from "../../redux/actions/action";
-import { currentTurnSelector, characterIdsSelector, playerSelector, tilesSelector, currentPhaseSelector, turnSelector, onKillSelector, entityByIdSelector, heightSelector, widthSelector } from "../../redux/selectors";
-import { onKill } from "../../redux/actions/conditionalActions";
-import { chooseMove } from "../../redux/actions/action";
 
-import { motion } from 'framer-motion'
-
-
-
-const tileStyle = (color, damage) => {
+const tileStyle = (damage) => {
 
 
 
@@ -61,22 +52,27 @@ const tileStyle = (color, damage) => {
 
 
 
-export const Tile = ({ id, color, character, building, damage, setPlayerPositionX, setPlayerPositionY }) => {
+export const Tile = ({ character, building, damage, setPlayerPositionX, setPlayerPositionY, changePosition }) => {
 
   const inputRef = useRef();
 
-  const dispatch = useDispatch()
-  const turn = useSelector(turnSelector)
-  const currentTurn = useSelector(currentTurnSelector)
-  const characterIds = useSelector(characterIdsSelector)
-  const player = useSelector(playerSelector)
-  const tiles = useSelector(tilesSelector)
-  const currentPhase = useSelector(currentPhaseSelector)
-  const killAction = useSelector(onKillSelector)
-  const entities = useSelector(entityByIdSelector)
-  const height = useSelector(heightSelector)
-  const width = useSelector(widthSelector)
 
+  useEffect(() => {
+    if (!character) {
+
+    } else {
+      changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, character.id)
+    }
+  }, [character])
+
+
+  useEffect(() => {
+    if (!building) {
+
+    } else {
+      changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, building.id)
+    }
+  }, [building])
 
   useEffect(() => {
     if (!character) {
@@ -86,42 +82,12 @@ export const Tile = ({ id, color, character, building, damage, setPlayerPosition
       setPlayerPositionX(inputRef.current.offsetLeft);
       setPlayerPositionY(inputRef.current.offsetTop);
     }
-  }, [character])
+  }, [character, setPlayerPositionX, setPlayerPositionY])
 
-
-  let sprite = (character, building, currentTurn) => {
-    // if (character && (character.id === currentTurn)) {
-    //   return (
-    //     (character) &&
-    //     < motion.div
-    //       key={character}
-    //       layoutId={currentTurn}
-    //       variants={id}
-    //       animate={{}
-    //       }
-    //       transition={spring}
-    //     > <Sprite entity={character} />
-    //     </motion.div >
-    //   )
-    // } else 
-    if (character) {
-      return <Sprite entity={character} />
-    } else if (building) {
-      return <Sprite entity={building} />
-    }
-
-  }
 
   return (
-    <div className="component-tile" style={tileStyle(color, damage)} ref={inputRef}>
-
-      {sprite(character, building, currentTurn)}
+    <div className="component-tile" style={tileStyle(damage)} ref={inputRef}>
     </div>
   );
 
-}
-
-const spring = {
-  type: "tween",
-  duration: .15
 }

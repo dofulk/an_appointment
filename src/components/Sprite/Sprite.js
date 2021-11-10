@@ -3,11 +3,11 @@ import './Sprite.css'
 
 
 
-export const Sprite = ({ entity }) => {
+export const Sprite = ({ entity, style }) => {
 
 
   return (
-    <div className="sprite">
+    <div className="sprite" style={style}>
       <div className="sprite_sprite">
         {entity.sprite}
       </div>

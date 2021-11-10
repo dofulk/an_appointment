@@ -15,9 +15,9 @@ const generateEntityArray = (level) => {
     let i = Math.floor((level + 3) / 2)
     while (i > 0) {
         entities.push(
-            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 30, maxHP: 30, attack: 1, baseAttack: 4, type: 'character', sprite: "🪲" },
-            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 10, maxHP: 10, attack: 6, baseAttack: 1, type: 'character', sprite: "🥷🏼" },
-            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 15, maxHP: 15, attack: 3, baseAttack: 6, type: 'character', sprite: "🦊" },
+            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 30, maxHP: 30, attack: 1, baseAttack: 1, type: 'character', sprite: "🪲" },
+            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 10, maxHP: 10, attack: 6, baseAttack: 6, type: 'character', sprite: "🥷🏼" },
+            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 15, maxHP: 15, attack: 3, baseAttack: 3, type: 'character', sprite: "🦊" },
         )
         i--
     }
