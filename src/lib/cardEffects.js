@@ -43,18 +43,18 @@ export const generateCard = (title, description) => {
 }
 
 export const getNewCardList = (numberOfCards) => {
-    // let newCardList = []
-    // let keys = Object.keys(cardEffects);
+    let newCardList = []
+    let keys = Object.keys(cardEffects);
 
-    // let i = numberOfCards
-    // while (i > 0) {
-    //     let randomKey = keys[ keys.length * Math.random() << 0]
-    //     newCardList.push(cardEffects[randomKey])
-    //     keys = keys.filter(key => key !== randomKey)
-    //     i--
-    // }
-    // return newCardList
-    return [{title: 'Second Wind', effect: addOnAttack({ action: changeMoves('player', 1), removeOn: 'endCycle'}), description: 'Get a bonus move after you attack', onAdd: undefined}]
+    let i = numberOfCards
+    while (i > 0) {
+        let randomKey = keys[ keys.length * Math.random() << 0]
+        newCardList.push(cardEffects[randomKey])
+        keys = keys.filter(key => key !== randomKey)
+        i--
+    }
+    return newCardList
+   // return [{title: 'Second Wind', effect: addOnAttack({ action: changeMoves('player', 1), removeOn: 'endCycle'}), description: 'Get a bonus move after you attack', onAdd: undefined}]
 
 }
 
