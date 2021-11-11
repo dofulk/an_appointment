@@ -56,7 +56,6 @@ const renderedEntities = (entities, sprites) => {
     let allEntities = []
 
     for (let entity in entities) {
-        console.log(entity, sprites)
         if (sprites[entity]) {
             allEntities.push(<Sprite className="sprite" entity={entities[entity]}
                 style={{
@@ -78,6 +77,7 @@ export const GameMap = ({ setPlayerPositionX, setPlayerPositionY }) => {
     const tiles = useSelector(selectTiles)
     const width = useSelector(selectWidth)
     const height = useSelector(selectHeight)
+    // const onNewMap = 
 
     const entitiesArray = useSelector(entitiesArraySelector)
 

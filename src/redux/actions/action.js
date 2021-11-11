@@ -1,7 +1,6 @@
 import { batch } from "react-redux"
 import * as PF from "pathfinding"
 import { onAttack, onKill, onMove } from "./conditionalActions"
-import { entityByIdSelector } from "../selectors"
 import { chooseRandomTarget } from "../../lib/movement"
 
 
@@ -49,7 +48,13 @@ export const changeAttack = (id, attack) => ({
     }
 })
 
-
+export const changeBaseAttack = (id, attack) => ({
+    type: 'CHANGE_BASE_ATTACK',
+    payload: {
+        id: id,
+        attack: attack
+    }
+})
 export const draw = (number) => ({
 
     type: 'DRAW',
@@ -91,7 +96,7 @@ export const newCycle = () => ({
 
 })
 
-export const newMap = (level) => ({
+export const newMap = (level, onNewMap) => ({
     type: 'NEW_MAP',
     payload: {
         map: level.map,
@@ -207,6 +212,10 @@ export const addOnAttack = (effect) => {
     }
 }
 
+
+
+
+
 export const unlockDoor = (building) => {
     return {
         type: 'UNLOCK_DOOR',
@@ -233,6 +242,12 @@ export const attackTarget = (target, attacker, killEffects) => {
         batch(() => {
             dispatch(changeMoves(attacker.id, -attacker.moves))
             dispatch(changeHp(target, -attacker.attack, killEffects))
+            dispatch({
+                type: 'ON_ATTACK',
+                payload: {
+                    attacker: attacker.id
+                }
+            })
         })
     }
 }

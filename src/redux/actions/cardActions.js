@@ -1,5 +1,5 @@
 import { batch } from 'react-redux'
-import {changeDrawAmount, changeHp, changeGold, changeAttack, addOnKill, addOnAttack, changeMoves, draw } from './action'
+import {changeDrawAmount, changeHp, changeGold, changeAttack, addOnKill, addOnAttack, changeMoves} from './action'
 
 export const bloodRitual = () => {
     return (dispatch, getState) => {
@@ -38,7 +38,7 @@ export const glassCannon = () => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', 10))
-            dispatch(addOnAttack({ action: changeMoves('player', -3), removeOn: 'endCycle' }))
+            dispatch(addOnAttack({ action: changeAttack('player', -3), removeOn: 'endCycle' }))
         })
     }
     

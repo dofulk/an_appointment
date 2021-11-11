@@ -1,4 +1,4 @@
-import { attackTarget, changeHp, deleteEntity, moveEntity } from "./action"
+import { attackTarget, deleteEntity, moveEntity } from "./action"
 import { batch } from "react-redux"
 
 
@@ -29,7 +29,7 @@ export const onAttack = (target, entity, attackEffects, killEffects) => {
     return dispatch => {
         batch(() => {
             dispatch(attackTarget(target, entity, killEffects))
-            batchList(attackEffects, dispatch)
+            batchList(attackEffects, dispatch, target, entity, killEffects)
 
         })
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
-import { changeGold, changeHp, newMap } from "../../../redux/actions/action";
-import { playerSelector, levelSelector, goldSelector } from "../../../redux/selectors";
+import { changeGold, changeHp} from "../../../redux/actions/action";
+import { playerSelector} from "../../../redux/selectors";
 
 
 

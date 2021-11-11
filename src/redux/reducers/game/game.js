@@ -7,12 +7,14 @@ const initialState = {
   numberOfCycles: 0,
   drawAmount: 5,
   baseDraw: 5,
-  gold: 10,
+  gold: 15,
   level: 0,
   removeAmount: 0,
   onKill: [],
   onMove: [],
   onAttack: [],
+  onNewMap: [],
+
 };
 
 
@@ -29,8 +31,18 @@ const game = (state = initialState, action) => {
         phase: 0,
         onKill: state.onKill.filter(item => item.removeOn !== 'endCycle'),
         onMove: state.onMove.filter(item => item.removeOn !== 'endCycle'),
-        onAttack: state.onAttack.filter(item => item.removeOn !== 'endCycle')
+        onAttack: state.onAttack.filter(item => item.removeOn !== 'endCycle'),
+
       }
+
+    case 'ON_ATTACK' : 
+    return {
+      ...state,
+      onKill: state.onKill.filter(item => item.removeOn !== 'onAttack'),
+      onMove: state.onMove.filter(item => item.removeOn !== 'onAttack'),
+      onAttack: state.onAttack.filter(item => item.removeOn !== 'onAttack'),
+
+    }
 
     case 'NEW_CYCLE':
       return {
@@ -67,9 +79,10 @@ const game = (state = initialState, action) => {
         level: action.payload.level,
         phase: 0,
         drawAmount: state.baseDraw,
-        onKill: state.onKill.filter(item => item.removeOn !== 'endCycle'),
-        onMove: state.onMove.filter(item => item.removeOn !== 'endCycle'),
-        onAttack: state.onAttack.filter(item => item.removeOn !== 'endCycle')
+        onKill: state.onKill.filter(item => item.removeOn !== 'newMap'),
+        onMove: state.onMove.filter(item => item.removeOn !== 'newMap'),
+        onAttack: state.onAttack.filter(item => item.removeOn !== 'newMap'),
+        onNewMap: []
       }
     case 'ADD_ON_KILL':
       return {
@@ -96,6 +109,14 @@ const game = (state = initialState, action) => {
           action.payload.onAttack
         ]
       }
+      case 'REMOVE_ON':
+        return {
+          ...state,
+          onPlay: [
+            ...state.removeOn,
+            action.payload.removeOn
+          ]
+        }
     case 'CHANGE_REMOVE_AMOUNT':
       return {
         ...state,

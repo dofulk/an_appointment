@@ -98,6 +98,21 @@ const entities = (state = initialState, action) => {
 
                 }
             }
+
+
+        case 'CHANGE_BASE_ATTACK':
+            console.log(action.payload.attack)
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    [action.payload.id]: {
+                        ...state.byId[action.payload.id],
+                        baseAttack: state.byId[action.payload.id].attack + action.payload.attack
+                    }
+
+                }
+            }
         case 'END_CYCLE':
             let entities = {}
             for (let key in state.byId) {
