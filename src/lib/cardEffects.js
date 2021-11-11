@@ -27,8 +27,6 @@ const cardEffects = {
     'Quick Hands': {title: 'Quick Hands', effect: quickHands(), description: 'Gain 2 moves and draw 1', onAdd: undefined},
     'Jackpot': {title: 'Jackpot', effect: undefined, description: 'When added gain 150 gold', onAdd: changeGold(150)},
     'Second Wind': {title: 'Second Wind', effect: addOnAttack({ action: changeMoves('player', 1), removeOn: 'onAttack'}), description: 'Get a bonus move after you attack', onAdd: undefined},
-   
-
     'Bulk': {title: 'Bulk', effect: changeBaseAttack('player', 1), description: 'Gain 1 attack for the rest of the floor', onAdd: undefined}
 
     // 'Scalpel': { title: 'Scalpel', effect: changeAttack('player', 4), description: "Add 4 to attack. When added choose a card to remove", onAdd: changeRemoveAmount(1)},
