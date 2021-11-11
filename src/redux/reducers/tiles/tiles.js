@@ -1,7 +1,7 @@
 import { breakTiles } from "../../../lib/breakTiles"
 import { attackTarget } from "../../actions/action"
 
-const initialState = {
+export const initialState = {
     byId: {
     },
     allIds: [],

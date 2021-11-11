@@ -1,10 +1,15 @@
-import gameReducer, {initialState} from "./game"
+import game, {initialState} from "./game"
 
 
 describe('Game reducer', () => {
+    it('should return the initial state', () => {
+        expect(game(undefined, {})).toEqual(
+            initialState
+        )
+    })
     it('should handle CHANGE_GOLD', () => {
         expect(
-            gameReducer(undefined, {
+            game(undefined, {
                 type: 'CHANGE_GOLD',
                 payload: {
                     gold: -1

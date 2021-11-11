@@ -1,6 +1,6 @@
 
 
-const initialState = {
+export const initialState = {
   phase: 0,
   allPhases: ['cards', 'player', 'enemies'],
   isPaused: false,

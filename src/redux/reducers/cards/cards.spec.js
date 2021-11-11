@@ -45,23 +45,6 @@ describe('cards reducer', () => {
         })
     })
 
-    it('should handle PLAY', () => {
-        expect(
-            cards(undefined, {
-                type: 'PLAY',
-                payload: {
-                    id: '1'
-                }
-            })
-        ).toEqual({
-            ...initialState,
-            hand: initialState.hand.filter(item => item.id !== '1'),
-            played: [
-                ...initialState.discard,
-                ...initialState.hand.filter(item => item.id == '1')
-            ]
-        })
-    })
 
     it('should handle DISCARD', () => {
         expect(
@@ -72,11 +55,29 @@ describe('cards reducer', () => {
         ).toEqual({
             ...initialState,
             hand: [],
-            played: [],
             discard: [
                 ...initialState.discard,
                 ...initialState.hand,
-                ...initialState.played
+            ]
+        })
+
+    })
+
+    it('should ADD_CARD_TO_DISCARD', () => {
+        expect(
+            cards(undefined, {
+                type: 'ADD_CARD_TO_DISCARD',
+                payload: {
+                    card: { id: 'sampleID', cardTitle: 'Move', description: "Gain 2 moves"},
+                }
+
+            })
+        ).toEqual({
+            ...initialState,
+            discard: [
+                ...initialState.discard,
+                { id: 'sampleID', cardTitle: 'Move', description: "Gain 2 moves"},
+
             ]
         })
 

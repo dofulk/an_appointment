@@ -6,42 +6,19 @@ const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
 describe('actions', () => {
-  it('should create an action to add a child to a tile', () => {
+  it('should create an action to add a character to a tile', () => {
     const tile = '0,0'
     const child = 'player'
     const expectedAction = {
-      type: 'ADD_CHILD',
+      type: 'ADD_CHARACTER',
       payload: {
         tile: tile,
-        child: child
+        character: child
       }
     }
-    expect(actions.addChild(tile, child)).toEqual(expectedAction)
+    expect(actions.addCharacter(tile, child)).toEqual(expectedAction)
   })
-  it('should create an action to remove a child from a tile', () => {
-    const tile = '0,0'
-    const child = 'player'
-    const expectedAction = {
-      type: 'REMOVE_CHILD',
-      payload: {
-        tile: tile,
-        child: child
-      }
-    }
-    expect(actions.removeChild(tile, child)).toEqual(expectedAction)
-  })
-  it('should create an action change position of an entity', () => {
-    const target = '0,0'
-    const id = 'player'
-    const expectedAction = {
-      type: 'MOVE_ENTITY',
-      payload: {
-        target: target,
-        id: id
-      }
-    }
-    expect(actions.moveEntity(target, id)).toEqual(expectedAction)
-  })
+
 
   it('should create an action to change count of an entities moves', () => {
     const id = 'player'
@@ -57,27 +34,44 @@ describe('actions', () => {
   })
 
   it('should create an action to change count of an entities hp', () => {
-    const id = 'player'
+    const entity = { id: "player", position: "1,1", moves: 3, baseMoves: 3, hp: 30, maxHP: 30, attack: 3, baseAttack: 4, type: 'character', sprite: "🙂" }
     const hp = 1
     const expectedAction = {
       type: 'CHANGE_HP',
       payload: {
-        id: id,
+        id: entity.id,
         hp: hp,
       }
     }
-    expect(actions.changeHp(id, hp)).toEqual(expectedAction)
+    expect(actions.changeHp(entity, hp)).toEqual(expectedAction)
   })
 
   it('should create an action to change the phase of the turn', () => {
     const phase = 'cards'
     const expectedAction = {
       type: 'NEW_PHASE',
-      payload: 'cards'
+      payload: {
+        phase: 'cards'
+      }
     }
     expect(actions.newPhase(phase)).toEqual(expectedAction)
   })
+
+  it('should create an action change position of an entity', () => {
+    const target = { id: '2,2', row: 2, column: 2, isAValidMove: true, character: [], wall: false, damage: 1, isAStructure: false, building: [] }
+    const id = 'player'
+    const expectedAction = {
+      type: 'MOVE_ENTITY',
+      payload: {
+        target: target.id,
+        entity: id,
+        targetDamage: target.damage
+      }
+    }
+    expect(actions.moveEntity(target, id)).toEqual(expectedAction)
+  })
 })
+
 
 
 
@@ -85,36 +79,4 @@ describe('actions', () => {
 describe('async actions', () => {
 
 
-  it('creates three actions to move a child to a new tile', async () => {
-    const target = '0,0'
-    const child = { id: "player", type: "player", position: "2,1" }
-    const expectedActions = [
-      {
-        type: 'MOVE_ENTITY',
-        payload: {
-          target: target,
-          id: child.id
-        }
-      },
-      {
-        type: 'REMOVE_CHILD',
-        payload: {
-          tile: child.position,
-          child: child.id
-        }
-      },
-      {
-        type: 'ADD_CHILD',
-        payload: {
-          tile: target,
-          child: child.id
-        }
-      }
-
-    ]
-
-    const store = mockStore()
-    expect(store.dispatch(actions.moveChild(target, child))).toEqual(expectedActions)
-  }
-  )
 })

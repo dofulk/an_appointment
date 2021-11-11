@@ -1,3 +1,4 @@
+
 import entities, { initialState } from './entities'
 
 
@@ -8,6 +9,54 @@ describe('entities reducer', () => {
         )
     })
 
+    it('should handle MOVE_ENTITY', () => {
+        expect(
+            entities(undefined, {
+                type: 'MOVE_ENTITY',
+                payload: {
+                    targetDamage: 0,
+                    target: '1,2',
+                    entity: initialState.byId.player
+                }
+            })
+        ).toEqual({
+            ...initialState,
+            byId: {
+                ...initialState.byId,
+                'player': {
+                    ...initialState.byId['player'],
+                    position: '1,2',
+                    moves: initialState.byId['player'].moves - 1
+                }
+            }
+        }
+        )
+    })
+
+    it('should handle MOVE_ENTITY with target Damage', () => {
+        expect(
+            entities(undefined, {
+                type: 'MOVE_ENTITY',
+                payload: {
+                    targetDamage: 2,
+                    target: '1,2',
+                    entity: initialState.byId.player
+                }
+            })
+        ).toEqual({
+            ...initialState,
+            byId: {
+                ...initialState.byId,
+                'player': {
+                    ...initialState.byId['player'],
+                    position: '1,2',
+                    moves: initialState.byId['player'].moves - 1,
+                    hp: initialState.byId['player'].hp - 2
+                }
+            }
+        }
+        )
+    })
 
     it('should handle CHANGE_MOVES', () => {
         expect(
@@ -54,18 +103,6 @@ describe('entities reducer', () => {
         )
     })
 
-    it('should handle END_TURN', () => {
-        expect(
-            entities(undefined, {
-                type: 'END_TURN',
-                payload: 'MyTurn!'
-
-            })
-        ).toEqual({
-            ...initialState,
-            currentTurn: 'MyTurn!'
-        })
-    })
 
 
 
