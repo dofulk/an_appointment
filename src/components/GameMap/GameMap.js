@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { entitiesArraySelector, numberOfCyclesSelector } from '../../redux/selectors/index'
 import { Tile } from "../Tile/Tile";
@@ -54,19 +54,22 @@ const renderedTiles = (tiles, entities, setPlayerPositionX, setPlayerPositionY, 
 
 const renderedEntities = (entities, sprites) => {
     let allEntities = []
-
-    for (let entity in entities) {
-        if (sprites[entity]) {
-            allEntities.push(<Sprite className="sprite" entity={entities[entity]}
+    let entityKeys = Object.keys(entities)
+    entityKeys.map(id => {
+        if (sprites[id]) {
+            console.log()
+            return allEntities.push(<Sprite className="sprite" entity={entities[id]} key={id}
                 style={{
-                    transform: `translate(${sprites[entity][0]}px, ${sprites[entity][1]}px)`,
-                    zIndex: (entities[entity].type === 'building' ? 1 : 2) 
+                    transform: `translate(${sprites[id][0]}px, ${sprites[id][1]}px)`,
+                    zIndex: (entities[id].type === 'building' ? 1 : 2)
+                    
                 }} />)
         } else {
-            allEntities.push(<Sprite className="sprite" entity={entities[entity]}
+            return allEntities.push(<Sprite className="sprite" entity={entities[id]} key={id}
             />)
         }
-    }
+    })
+    console.log(allEntities)
     return allEntities
 }
 
@@ -101,23 +104,24 @@ export const GameMap = ({ setPlayerPositionX, setPlayerPositionY }) => {
 
 
 
-    const changePosition = (x, y, id) => {
+    const changePosition = useCallback(
+        (x, y, id) => {
 
-        setSprites(prevSprites => {
-            return {
-                ...prevSprites,
-                [id]: [x, y]
-            }
-        })
+            setSprites(prevSprites => {
+                return {
+                    ...prevSprites,
+                    [id]: [x, y]
+                }
+            })
 
-    }
+        }, [setSprites]
+    )
 
 
     return (
 
         <div className="gamemap">
             {renderedEntities(entitiesArray, sprites)}
-
             <ul style={gamemapStyle(width, height)}>
                 {renderedTiles(tiles, entitiesArray, setPlayerPositionX, setPlayerPositionY, changePosition)}
             </ul>

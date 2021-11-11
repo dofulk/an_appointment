@@ -63,7 +63,7 @@ export const Tile = ({ character, building, damage, setPlayerPositionX, setPlaye
     } else {
       changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, character.id)
     }
-  }, [character])
+  }, [changePosition, character])
 
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export const Tile = ({ character, building, damage, setPlayerPositionX, setPlaye
     } else {
       changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, building.id)
     }
-  }, [building])
+  }, [building, changePosition])
 
   useEffect(() => {
     if (!character) {
