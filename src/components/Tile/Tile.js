@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { Sprite } from '../Sprite/Sprite';
 
 const tileStyle = (damage) => {
 
