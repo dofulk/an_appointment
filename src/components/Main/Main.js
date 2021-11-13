@@ -45,13 +45,18 @@ export function Main() {
 
 
 
-  const gameMapStyle = {
-    flex: 4,
-    left: '50%',
-    top: '45%',
+  // const gameMapTransformation = (x, y) => {
 
-    transform: `translate(${-playerPositionX}px, ${-playerPositionY}px)`,
-  }
+  //   return `translate(${-x}px, ${-y}px)`
+  // }
+
+  // const gameMapStyle = {
+  //   flex: 4,
+  //   left: '50%',
+  //   top: '45%',
+
+  //   transform: gameMapTransformation(playerPositionX, playerPositionY),
+  // }
 
   useEffect(() => {
     if (removeAmount) {
@@ -130,11 +135,8 @@ export function Main() {
 
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
-      <div className="gamemap" style={gameMapStyle}>
 
         <GameMap className="gamemap_map" setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} />
-
-      </div>
       <div className='game_info'>
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>

@@ -1,5 +1,5 @@
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { entitiesArraySelector, numberOfCyclesSelector } from '../../redux/selectors/index'
 import { Tile } from "../Tile/Tile";
@@ -18,18 +18,34 @@ function isEven(num) {
 }
 
 
-
-const gamemapStyle = (width, height) => {
+const getWindowDimensions = () => {
+    const { innerWidth: viewWidth, innerHeight: viewHeight } = window;
     return {
-        display: 'flex',
-        flexWrap: 'wrap',
-        width: (150 * width) + 'px',
-        height: (150 * height) + 'px',
-        alignContent: 'flex-start',
-        alignSelf: 'center',
-
-    }
+        viewWidth,
+        viewHeight
+    };
 }
+
+
+const useWindowDimensions = () => {
+    const [windowDimensions, setWindowDimensions] = useState(
+        getWindowDimensions()
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return windowDimensions;
+}
+
+
+
 
 
 
@@ -57,26 +73,24 @@ const renderedEntities = (entities, sprites) => {
     let entityKeys = Object.keys(entities)
     entityKeys.map(id => {
         if (sprites[id]) {
-            console.log()
             return allEntities.push(<Sprite className="sprite" entity={entities[id]} key={id}
                 style={{
                     transform: `translate(${sprites[id][0]}px, ${sprites[id][1]}px)`,
                     zIndex: (entities[id].type === 'building' ? 1 : 2)
-                    
+
                 }} />)
         } else {
             return allEntities.push(<Sprite className="sprite" entity={entities[id]} key={id}
             />)
         }
     })
-    console.log(allEntities)
     return allEntities
 }
 
 
 
 
-export const GameMap = ({ setPlayerPositionX, setPlayerPositionY }) => {
+export const GameMap = () => {
     const tiles = useSelector(selectTiles)
     const width = useSelector(selectWidth)
     const height = useSelector(selectHeight)
@@ -87,8 +101,46 @@ export const GameMap = ({ setPlayerPositionX, setPlayerPositionY }) => {
     const numberOfCycles = useSelector(numberOfCyclesSelector)
 
     const [sprites, setSprites] = useState({})
+    const [playerPositionX, setPlayerPositionX] = useState()
+    const [playerPositionY, setPlayerPositionY] = useState()
+    const { viewHeight, viewWidth } = useWindowDimensions();
+    const ref = useRef()
+
+    const gameMapTransformation = (x, y) => {
+        if ((viewWidth / 2) > x) {
+            console.log(viewHeight, viewWidth)
+
+            return `translate(${-0}px, ${-y}px)`
+        } else if (ref.current && (ref.current.offsetWidth - (viewWidth / 2) < x )) {
+            return `translate(${-(ref.current.offsetWidth - viewWidth)}px, ${-y}px)`
+        } else {
+            return `translate(${-(x - (viewWidth / 2))}px, ${-y}px)`
+        }
 
 
+    }
+
+
+    const gamemapStyle = (width, height) => {
+        return {
+            display: 'flex',
+            flexWrap: 'wrap',
+            width: (150 * width) + 'px',
+            height: (150 * height) + 'px',
+            alignContent: 'flex-start',
+            alignSelf: 'center',
+
+
+        }
+    }
+
+    const gameMapContainerStyle = () => {
+        return {
+            transform: gameMapTransformation(playerPositionX, playerPositionY),
+            top: '45%',
+            left: '0',
+        }
+    }
 
     const dispatch = useDispatch()
 
@@ -120,7 +172,7 @@ export const GameMap = ({ setPlayerPositionX, setPlayerPositionY }) => {
 
     return (
 
-        <div className="gamemap">
+        <div className="gamemap" style={gameMapContainerStyle()} ref={ref}>
             {renderedEntities(entitiesArray, sprites)}
             <ul style={gamemapStyle(width, height)}>
                 {renderedTiles(tiles, entitiesArray, setPlayerPositionX, setPlayerPositionY, changePosition)}
