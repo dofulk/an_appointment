@@ -1,3 +1,4 @@
+import { getCardEffect } from '../../actions/cardActions'
 import { v4 as uuidv4 } from 'uuid'
 export const initialState = {
     draw: [
@@ -7,20 +8,18 @@ export const initialState = {
 
     ],
     discard: [
-        { id: uuidv4(), cardTitle: 'Attack', description: "Add 3 to attack"},
-        { id: uuidv4(), cardTitle: 'Attack', description: "Add 3 to attack"},
-        { id: uuidv4(), cardTitle: 'Attack', description: "Add 3 to attack"},
-        { id: uuidv4(), cardTitle: 'Attack', description: "Add 3 to attack"},
-        { id: uuidv4(), cardTitle: 'Attack', description: "Add 3 to attack"},
-        { id: uuidv4(), cardTitle: 'Move', description: "Gain 2 moves"},
-        { id: uuidv4(), cardTitle: 'Move', description: "Gain 2 moves"},
-        { id: uuidv4(), cardTitle: 'Move', description: "Gain 2 moves"},
-        { id: uuidv4(), cardTitle: 'Move', description: "Gain 2 moves"},
-        { id: uuidv4(), cardTitle: 'Move', description: "Gain 2 moves"},
-
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
 
     ]
-
 
 }
 

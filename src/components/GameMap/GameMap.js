@@ -57,7 +57,6 @@ const renderedEntities = (entities, sprites) => {
     let entityKeys = Object.keys(entities)
     entityKeys.map(id => {
         if (sprites[id]) {
-            console.log()
             return allEntities.push(<Sprite className="sprite" entity={entities[id]} key={id}
                 style={{
                     transform: `translate(${sprites[id][0]}px, ${sprites[id][1]}px)`,
@@ -69,7 +68,6 @@ const renderedEntities = (entities, sprites) => {
             />)
         }
     })
-    console.log(allEntities)
     return allEntities
 }
 

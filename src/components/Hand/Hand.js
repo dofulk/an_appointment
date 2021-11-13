@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector } from '../../redux/selectors/index'
-import {  newCycle, drawOne } from '../../redux/actions/action'
-import { getCardEffect } from "../../lib/cardEffects";
+import { newCycle, drawOne } from '../../redux/actions/action'
 import { Card } from "../Card/Card";
 import { CardList } from "../CardList/CardList"
 import { motion, AnimatePresence } from "framer-motion";
@@ -45,15 +44,12 @@ export const Hand = () => {
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (currentPhase === 'cards') {
+                console.log(hand)
 
                 if (Array.isArray(hand) && (cardsPlayed < hand.length) && drawAmount <= 0) {
                     setCardsPlayed(cardsPlayed => cardsPlayed + 1)
                     setBeingPlayed(hand[cardsPlayed].id)
-                    let cardEffect = getCardEffect(hand[cardsPlayed].cardTitle)
-                    if (cardEffect) {
-                        dispatch(getCardEffect(hand[cardsPlayed].cardTitle))
-                    }
-                    else return
+                    dispatch(hand[cardsPlayed].effect)
 
 
 
@@ -97,7 +93,7 @@ export const Hand = () => {
                         exit={{ opacity: 0 }}
                     >
 
-                        <Card title={card.cardTitle} isBig={false} description={card.description} id={card.id} beingPlayed={beingPlayed}></Card>
+                        <Card title={card.title} isBig={false} description={card.description} id={card.id} beingPlayed={beingPlayed}></Card>
                     </motion.li>
                 </AnimatePresence>)
         }

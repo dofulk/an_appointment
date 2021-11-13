@@ -64,7 +64,7 @@ export const GameInfo = ({ player, moves, gold }) => {
                 <h1
 
                     
-                >Moves: {moves}/{player.baseMoves}</h1>
+                >Moves: {moves}</h1>
             </div>
 
             <div 
@@ -77,7 +77,7 @@ export const GameInfo = ({ player, moves, gold }) => {
             className="attack"
             attackanimation={attackAnimation}>
             <h1
-            >Attack: {player.attack}/{player.baseAttack}</h1>
+            >Attack: {player.attack}</h1>
             </div>
             <div 
             className="gold"

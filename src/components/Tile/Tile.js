@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-
 const tileStyle = (damage) => {
 
 
@@ -13,41 +12,42 @@ const tileStyle = (damage) => {
     case 1:
       background = '#c8e6c9'
       break;
+    // case 1:
+    //   background = '#a5d6a7'
+    //   break;
     case 2:
-      background = '#a5d6a7'
-      break;
-    case 3:
       background = '#81c784'
       break;
-    case 4:
-      background = '#66bb6a'
-      break;
-    case 5:
+    // case 2:
+    //   background = '#66bb6a'
+    //   break;
+    case 3:
       background = '#4caf50'
       break;
-    case 6:
-      background = '#43a047'
-      break;
-    case 7:
+    // case 3:
+    //   background = '#43a047'
+    //   break;
+    case 4:
       background = '#388e3c'
       break;
-    case 8:
-      background = '#2e7d32'
-      break;
-    case 9:
-      background = '#1b5e20'
-      break;
+    case 4:
+      // background = '#2e7d32'
+      // break;
+    // case 9:
+    //   background = '#1b5e20'
+    //   break;
     default:
       background = 'black'
   }
   return {
     width: (100 / 20) + '%',
     height: (100 / 7) + '%',
-    backgroundColor: background,
+    background: background,
     listStyleType: 'none',
     borderRadius: 3,
   }
 }
+
 
 
 
@@ -63,6 +63,7 @@ export const Tile = ({ character, building, damage, setPlayerPositionX, setPlaye
       changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, character.id)
     }
   }, [changePosition, character])
+
 
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { generateCard } from "../../../lib/cardEffects";
 import { buyCard } from "../../../redux/actions/action";
 import { goldSelector } from "../../../redux/selectors";
 import { Card } from "../../Card/Card";
@@ -15,8 +14,9 @@ export const Shop = ({ setModalIsOpen, shopItems, building }) => {
     const gold = useSelector(goldSelector)
 
     const purchase = (building, item) => {
+        console.log(item)
         if (gold >= item.price) {
-        dispatch(buyCard(building, generateCard(item.content.title, item.content.description), -item.price, item.onAdd))
+        dispatch(buyCard(building, item.content, -item.price, item.content.onAdd))
         } else {
             return
         }

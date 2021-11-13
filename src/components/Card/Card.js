@@ -12,12 +12,11 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
 
   useEffect(()=> {
     if (beingPlayed === id) {
-      console.log('being played')
       setIsPlaying(1)
     } else {
       setIsPlaying(0)
     }
-  }, [beingPlayed])
+  }, [beingPlayed, id])
 
   
 

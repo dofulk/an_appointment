@@ -102,6 +102,10 @@ export function Main() {
       case 'ArrowRight':
       case 'ArrowDown':
       case 'ArrowLeft':
+      case 'w':
+      case 'a':
+      case 's':
+      case 'd':  
 
 
         let target = choosePlayerTarget(player.position, e.key)
