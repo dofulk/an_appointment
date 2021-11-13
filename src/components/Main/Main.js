@@ -37,26 +37,11 @@ export function Main() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
-  const [playerPositionX, setPlayerPositionX] = useState()
-  const [playerPositionY, setPlayerPositionY] = useState()
   const [enemyTurnOrder, setEnemyTurnOrder] = useState()
 
   const dispatch = useDispatch()
 
 
-
-  // const gameMapTransformation = (x, y) => {
-
-  //   return `translate(${-x}px, ${-y}px)`
-  // }
-
-  // const gameMapStyle = {
-  //   flex: 4,
-  //   left: '50%',
-  //   top: '45%',
-
-  //   transform: gameMapTransformation(playerPositionX, playerPositionY),
-  // }
 
   useEffect(() => {
     if (removeAmount) {
@@ -140,7 +125,7 @@ export function Main() {
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
 
-        <GameMap className="gamemap_map" setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} />
+        <GameMap className="gamemap_map" />
       <div className='game_info'>
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>

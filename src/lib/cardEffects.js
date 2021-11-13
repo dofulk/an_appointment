@@ -1,5 +1,5 @@
 
-import { changeAttack, changeGold, changeHp, changeMoves, addOnKill, addOnMove, addOnAttack, changeBaseAttack, } from '../redux/actions/action'
+import {changeGold, changeBaseAttack, } from '../redux/actions/action'
 import { getCardEffect } from '../redux/actions/cardActions'
 import { v4 as uuidv4 } from 'uuid'
 
