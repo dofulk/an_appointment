@@ -253,6 +253,7 @@ export const attackTarget = (target, attacker, killEffects) => {
 }
 
 export const addCardFromPicker = (building, card, onAdd) => {
+    console.log(onAdd)
     return dispatch => {
         batch(() => {
             dispatch(deleteEntity(building, building.position))
@@ -263,6 +264,7 @@ export const addCardFromPicker = (building, card, onAdd) => {
 }
 
 export const buyCard = (building, card, price, onAdd) => {
+    console.log(onAdd)
     return dispatch => {
         batch(() => {
             dispatch(addCardToDiscard(card, onAdd))

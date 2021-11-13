@@ -137,7 +137,7 @@ const entities = (state = initialState, action) => {
                     ...state.byId,
                     [action.payload.shop.id]: {
                         ...state.byId[action.payload.shop.id],
-                        content: state.byId[action.payload.shop.id].content.filter(item => item.content.title !== action.payload.card.cardTitle)
+                        content: state.byId[action.payload.shop.id].content.filter(item => item.content.title !== action.payload.card.title)
                     }
                 }
             }

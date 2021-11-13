@@ -30,12 +30,16 @@ export const choosePlayerTarget = (position, keystroke) => {
 
     switch (keystroke) {
         case 'ArrowUp':
+        case 'w':
             return moveUp(position, 1)
         case 'ArrowRight':
+        case 'd':
             return moveRight(position, 1)
         case 'ArrowDown':
+        case 's':
             return moveDown(position, 1)
         case 'ArrowLeft':
+        case 'a':
             return moveLeft(position, 1)
         default:
             break;
