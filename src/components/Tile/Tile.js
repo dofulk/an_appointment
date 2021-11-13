@@ -1,8 +1,20 @@
 import React, { useEffect, useRef } from "react";
+import './Tile.css'
 
-const tileStyle = (damage) => {
+const tileStyle = () => {
 
 
+
+  
+  return {
+    width: (100 / 20) + '%',
+    height: (100 / 7) + '%',
+    backgroundColor: 'fffffaa',
+    listStyleType: 'none',
+  }
+}
+
+const tileMiddleStyle =(damage) =>  {
 
   let background
 
@@ -38,14 +50,13 @@ const tileStyle = (damage) => {
       background = '#1b5e20'
       break;
     default:
-      background = 'black'
+      background = '#595959'
   }
   return {
-    width: (100 / 20) + '%',
-    height: (100 / 7) + '%',
     backgroundColor: background,
-    listStyleType: 'none',
-    borderRadius: 3,
+    width: '96%',
+    height: '96%',
+    margin: '2%',
   }
 }
 
@@ -85,7 +96,10 @@ export const Tile = ({ character, building, damage, setPlayerPositionX, setPlaye
 
 
   return (
-    <div className="component-tile" style={tileStyle(damage)} ref={inputRef}>
+    <div className="component-tile" style={tileStyle()} ref={inputRef}>
+      <div className="tile-center" style={tileMiddleStyle(damage)}>
+
+      </div>
     </div>
   );
 
