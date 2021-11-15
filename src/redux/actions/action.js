@@ -289,7 +289,7 @@ export const buyCard = (building, item, hand) => {
                     type: 'BUY_CARD',
                     payload: {
                         card: item.content,
-                        gold: item.price,
+                        gold: -item.price,
                         shop: building
                     }
                 })

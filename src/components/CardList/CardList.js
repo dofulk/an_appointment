@@ -6,7 +6,7 @@ export const CardList = ({listOfCards })=> {
     <li key={card.id} style={{
       listStyle: "none",
     }}>
-      <Card id={card.id} title={card.title} description={card.description} isBig={true}></Card>
+      <Card id={card.id} title={card.title} description={card.description} isBig={true} key={card.id}></Card>
     </li>
   )
     return (

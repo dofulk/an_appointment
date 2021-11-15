@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CardPicker } from "./CardPicker/CardPicker";
 import { Exit } from "./Exit/Exit";
-import Modal from 'react-modal';
 import { Shop } from "./Shop/Shop";
 import { Arcade } from "./Arcade/Arcade";
 
@@ -16,43 +15,84 @@ import { GoldPile } from "./GoldPile/GoldPile";
 
 export const ModalView = ({ setModalIsOpen, building }) => {
 
+    const handleKeydown = (e) => {
+        switch (e.key) {
+            case 'Escape':
+                setModalIsOpen(false)
+                break;
+            default:
+                break;
+
+        };
+    }
+
+    useEffect(() => {
+
+
+        window.addEventListener("keydown", handleKeydown);
+        return () => {
+            window.removeEventListener("keydown", handleKeydown);
+        }
+
+    });
 
     const content = (building) => {
         switch (building.buildingType) {
             case 'Chest':
                 return (
-                    <CardPicker
-                        setModalIsOpen={setModalIsOpen}
-                        listOfCards={building.content}
-                        building={building} />
-                )
+                    <div className="modalview-container">
+                        <CardPicker
+                            setModalIsOpen={setModalIsOpen}
+                            listOfCards={building.content}
+                            building={building} />
+                            </div>
+                        )
 
-            case 'Exit':
-                return (
-                    <Exit
-                        setModalIsOpen={setModalIsOpen}
-                        building={building}
-                    // player={player}
-                    // level={game.level}
-                    ></Exit>
+                        case 'Exit':
+                        return (
+                        <div className="modalview-container">
+                        <Exit
+                            setModalIsOpen={setModalIsOpen}
+                            building={building}
+                        // player={player}
+                        // level={game.level}
+                        ></Exit>
+                    </div>
 
                 )
             case 'Shop':
                 return (
-                    <Shop setModalIsOpen={setModalIsOpen}
-                        shopItems={building.content}
-                        building={building}></Shop>
+                    <div className="modalview-container">
+                        <Shop setModalIsOpen={setModalIsOpen}
+                            shopItems={building.content}
+                            building={building}></Shop>
+                    </div>
                 )
             case 'Arcade':
                 return (
-                    <Arcade setModalIsOpen={setModalIsOpen} />
+                    <div className="modalview-container">
+                        <Arcade setModalIsOpen={setModalIsOpen} />
+                    </div>
                 )
             case 'Key':
-                return <Key setModalIsOpen={setModalIsOpen} building={building} />
+                return (
+                    <div className="modalview-container">
+                        <Key setModalIsOpen={setModalIsOpen} building={building} />
+                    </div>
+                )
+
             case 'Medic':
-                return <Medic setModalIsOpen={setModalIsOpen}></Medic>
+                return (
+                    <div className="modalview-container">
+                        <Medic setModalIsOpen={setModalIsOpen}></Medic>
+                    </div>
+                )
             case 'GoldPile':
-                return <GoldPile setModalIsOpen={setModalIsOpen} building={building}></GoldPile>
+                return (
+                    <div className="modalview-container">
+                        <GoldPile setModalIsOpen={setModalIsOpen} building={building}></GoldPile>
+                    </div>
+                )
 
             default:
                 return
@@ -69,7 +109,8 @@ export const ModalView = ({ setModalIsOpen, building }) => {
     }
     return (
         <div className="modalview">
+
             {view(building)}
         </div>
-    );
-}
+                );
+        }

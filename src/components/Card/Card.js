@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 
-import { Sprite } from '../Sprite/Sprite';
+
 import './Card.css'
 
 

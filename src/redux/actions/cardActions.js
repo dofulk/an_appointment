@@ -84,7 +84,7 @@ export const glassCannon = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', params.attack))
-            dispatch(addOnMove({ action: changeAttack('player', -3), removeOn: 'endCycle' }))
+            dispatch(addOnMove({ action: changeHp({ id: 'player'}, -1), removeOn: 'endCycle' }))
         })
     }
 

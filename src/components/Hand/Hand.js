@@ -45,7 +45,7 @@ export const Hand = () => {
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (currentPhase === 'cards') {
-                console.log(hand)
+                
 
                 if (Array.isArray(hand) && (cardsPlayed < hand.length) && drawAmount <= 0) {
                     setCardsPlayed(cardsPlayed => cardsPlayed + 1)

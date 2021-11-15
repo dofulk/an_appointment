@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { heightSelector, widthSelector } from "../../redux/selectors";
 import './Tile.css'
 
-const tileStyle = () => {
+const tileStyle = (width, height) => {
 
 
 
   
   return {
-    width: (100 / 20) + '%',
-    height: (100 / 7) + '%',
+    width: (100 / width) + '%',
+    height: (100 / height) + '%',
     backgroundColor: 'fffffaa',
     listStyleType: 'none',
   }
@@ -66,6 +68,8 @@ const tileMiddleStyle =(damage) =>  {
 export const Tile = ({ character, building, damage, setPlayerPositionX, setPlayerPositionY, changePosition }) => {
 
   const inputRef = useRef();
+  const width = useSelector(widthSelector)
+  const height = useSelector(heightSelector)
 
 
   useEffect(() => {
@@ -98,7 +102,7 @@ export const Tile = ({ character, building, damage, setPlayerPositionX, setPlaye
 
 
   return (
-    <div className="component-tile" style={tileStyle()} ref={inputRef}>
+    <div className="component-tile" style={tileStyle(width, height)} ref={inputRef}>
       <div className="tile-center" style={tileMiddleStyle(damage)}>
 
       </div>

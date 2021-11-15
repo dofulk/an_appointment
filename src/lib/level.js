@@ -35,7 +35,7 @@ export const createLevel = (player, level, numberOfCycles) => {
     let allIds = []
     let validMoves = []
     let width = 20
-    let height = 7
+    let height = 6
 
     let i = 0
 
