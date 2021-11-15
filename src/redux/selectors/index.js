@@ -17,7 +17,7 @@ export const entityByIdSelector = state => state.entities.byId
 
 export const gameSelector = state => state.game
 export const levelSelector = state => state.game.level
-
+export const upgradeQueueSelector = state => state.game.upgradeQueue
 
 export const handSelector = state => state.cards.hand
 export const discardSelector = state => state.cards.discard

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import { Sprite } from '../Sprite/Sprite';
 import './Card.css'
@@ -9,8 +9,10 @@ import './Card.css'
 export const Card = ({ id, color, title, description, onClick, beingPlayed }) => {
 
   const [isPlaying, setIsPlaying] = useState(0)
+  const [upgradeAnimation, setUpgradeAnimation] = useState(0)
+  const firstRender = useRef(true);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (beingPlayed === id) {
       setIsPlaying(1)
     } else {
@@ -18,12 +20,30 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
     }
   }, [beingPlayed, id])
 
-  
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false
+    } else {
+      setUpgradeAnimation(1)
+      let timer = setTimeout(() => {
+        setUpgradeAnimation(0)
+      }, 250);
+
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [description])
+
+
 
   return (
     <div className="card"
-    isplaying={isPlaying}
-      onClick={onClick}>
+      isplaying={isPlaying}
+      onClick={onClick}
+      upgradeAnimation={upgradeAnimation}
+    >
+
 
       <h2>{title}</h2>
       <div className="description">

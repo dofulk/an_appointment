@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector } from '../../redux/selectors/index'
-import { newCycle, drawOne } from '../../redux/actions/action'
+import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector, upgradeQueueSelector } from '../../redux/selectors/index'
+import { newCycle, drawOne, upgradeCard } from '../../redux/actions/action'
 import { Card } from "../Card/Card";
 import { CardList } from "../CardList/CardList"
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,6 +22,7 @@ export const Hand = () => {
     const draw = useSelector(drawSelector)
     const currentPhase = useSelector(currentPhaseSelector)
     const drawAmount = useSelector(drawAmountSelector)
+    const upgradeQueue = useSelector(upgradeQueueSelector)
 
     const [modalContent, setModalContent] = useState()
     const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -63,6 +64,20 @@ export const Hand = () => {
 
         return () => clearInterval(timeout);
     }, [drawAmount, cardsPlayed, currentPhase, hand, dispatch])
+
+    useEffect(() => {
+    
+        if (upgradeQueue.length && upgradeQueue[0].method === 'random') {
+            let validCards = hand.filter(card => card[upgradeQueue[0].type])
+            console.log(validCards)
+            if (!validCards.length) {
+                return
+            } else {
+            let cardToUpgrade = validCards[Math.floor(Math.random()*validCards.length)];
+            dispatch(upgradeCard(cardToUpgrade.id, upgradeQueue[0]))
+            }
+        }
+    }, [hand, upgradeQueue])
 
     useEffect(() => {
         setCardsPlayed(0)

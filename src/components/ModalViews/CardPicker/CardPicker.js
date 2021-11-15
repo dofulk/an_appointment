@@ -1,8 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../../Card/Card";
 import { addCardFromPicker } from "../../../redux/actions/action";
-import { generateCard } from "../../../lib/cardEffects";
+
 
 
 
@@ -13,7 +13,7 @@ export const CardPicker = ({ setModalIsOpen, listOfCards, building }) => {
   const dispatch = useDispatch()
 
   const addCard = (building,card) => {
-    dispatch(addCardFromPicker(building, card, card.onAdd))
+    dispatch(addCardFromPicker(building, card))
     setModalIsOpen(false)
   }
 

@@ -14,9 +14,8 @@ export const Shop = ({ setModalIsOpen, shopItems, building }) => {
     const gold = useSelector(goldSelector)
 
     const purchase = (building, item) => {
-        console.log(item)
         if (gold >= item.price) {
-        dispatch(buyCard(building, item.content, -item.price, item.content.onAdd))
+        dispatch(buyCard(building, item))
         } else {
             return
         }

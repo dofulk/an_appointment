@@ -131,12 +131,11 @@ export const changeGold = (gold) => ({
     }
 })
 
-export const addCardToDiscard = (card, onAdd) => {
-    console.log(card)
-    if (onAdd) {
+export const addCardToDiscard = (card) => {
+    if (card.onAdd) {
         return dispatch => {
             batch(() => {
-                dispatch(onAdd)
+                dispatch(card.onAdd)
                 dispatch({
                     type: 'ADD_CARD_TO_DISCARD',
                     payload: {
@@ -212,7 +211,26 @@ export const addOnAttack = (effect) => {
     }
 }
 
+export const addToUpgradeQueue = (upgrade) => {
+    return{
+        type: 'ADD_TO_UPGRADE_QUEUE',
+        payload: {
+            upgrade: upgrade
+        }
+    }
+}
 
+
+export const upgradeCard = (id, upgrade) => {
+    return {
+        type: 'UPGRADE_CARD',
+        payload: {
+            id: id,
+            upgrade: upgrade
+        }
+    }
+
+}
 
 
 
@@ -252,32 +270,41 @@ export const attackTarget = (target, attacker, killEffects) => {
     }
 }
 
-export const addCardFromPicker = (building, card, onAdd) => {
-    console.log(onAdd)
+export const addCardFromPicker = (building, card) => {
     return dispatch => {
         batch(() => {
             dispatch(deleteEntity(building, building.position))
-            dispatch(addCardToDiscard(card, onAdd))
+            dispatch(addCardToDiscard(card))
         })
 
     }
 }
 
-export const buyCard = (building, card, price, onAdd) => {
-    console.log(onAdd)
+export const buyCard = (building, item, hand) => {
     return dispatch => {
         batch(() => {
-            dispatch(addCardToDiscard(card, onAdd))
+            dispatch(addCardToDiscard(item.content, hand))
             dispatch(
                 {
                     type: 'BUY_CARD',
                     payload: {
-                        card: card,
-                        gold: price,
+                        card: item.content,
+                        gold: item.price,
                         shop: building
                     }
                 })
         })
+
+    }
+}
+
+export const upgradeAttack = (id, attack) => {
+    return {
+        type: 'UPGRADE_ATTACK',
+        payload: {
+            attack: attack,
+            id: id 
+        }
 
     }
 }

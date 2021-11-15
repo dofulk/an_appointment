@@ -91,6 +91,25 @@ const cards = (state = initialState, action) => {
                     action.payload.card
                 ]
             }
+        case 'UPGRADE_CARD':
+
+            return {
+                ...state,
+                hand: [
+                    ...state.hand.map((card) => {
+                        if (card.id === action.payload.id) {
+                            card[action.payload.upgrade.type] = card[action.payload.upgrade.type] + action.payload.upgrade.amount
+                            console.log(card)
+                            return card
+                        } else {
+                            return card
+                        }
+
+                    })
+
+                ]
+
+            }
 
         default:
             return state;

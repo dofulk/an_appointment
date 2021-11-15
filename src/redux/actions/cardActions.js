@@ -102,8 +102,8 @@ export const dashAttack = (params) => {
 export const midasDagger = (params) => {
     return dispatch => {
         batch(() => {
-            dispatch(changeAttack('player', 5))
-            dispatch(changeGold(2))
+            dispatch(changeAttack('player', params.attack))
+            dispatch(changeGold(params.gold))
         })
     }
 }
@@ -112,8 +112,8 @@ export const midasDagger = (params) => {
 export const pickpocket = (params) => {
     return dispatch => {
         batch(() => {
-            dispatch(changeDrawAmount(1))
-            dispatch(changeGold(2))
+            dispatch(changeDrawAmount(params.draw))
+            dispatch(changeGold(params.gold))
         })
     }
 }
@@ -142,7 +142,7 @@ export const secondWind = (params) => {
 
 const bulk = (params) => {
 
-    changeBaseAttack('player', params.attack)
+    changeBaseAttack('player', params.strength)
 }
 
 

@@ -14,6 +14,7 @@ export const initialState = {
   onMove: [],
   onAttack: [],
   onNewMap: [],
+  upgradeQueue: [],
 
 };
 
@@ -35,14 +36,14 @@ const game = (state = initialState, action) => {
 
       }
 
-    case 'ON_ATTACK' : 
-    return {
-      ...state,
-      onKill: state.onKill.filter(item => item.removeOn !== 'onAttack'),
-      onMove: state.onMove.filter(item => item.removeOn !== 'onAttack'),
-      onAttack: state.onAttack.filter(item => item.removeOn !== 'onAttack'),
+    case 'ON_ATTACK':
+      return {
+        ...state,
+        onKill: state.onKill.filter(item => item.removeOn !== 'onAttack'),
+        onMove: state.onMove.filter(item => item.removeOn !== 'onAttack'),
+        onAttack: state.onAttack.filter(item => item.removeOn !== 'onAttack'),
 
-    }
+      }
 
     case 'NEW_CYCLE':
       return {
@@ -109,18 +110,32 @@ const game = (state = initialState, action) => {
           action.payload.onAttack
         ]
       }
-      case 'REMOVE_ON':
-        return {
-          ...state,
-          onPlay: [
-            ...state.removeOn,
-            action.payload.removeOn
-          ]
-        }
+    case 'REMOVE_ON':
+      return {
+        ...state,
+        onPlay: [
+          ...state.removeOn,
+          action.payload.removeOn
+        ]
+      }
     case 'CHANGE_REMOVE_AMOUNT':
       return {
         ...state,
         removeAmount: state.removeAmount + action.payload.removeAmount
+      }
+    case 'ADD_TO_UPGRADE_QUEUE':
+      return {
+        ...state,
+        upgradeQueue: [
+          ...state.upgradeQueue,
+          action.payload.upgrade
+        ]
+      }
+
+    case 'UPGRADE_CARD':
+      return {
+        ...state,
+        upgradeQueue: state.upgradeQueue.slice(1)
       }
     default:
       return state;
