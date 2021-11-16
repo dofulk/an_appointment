@@ -23,9 +23,9 @@ const allCards = {
     'Midas Dagger': { title: 'Midas Dagger', get effect() { return getCardEffect('Midas Dagger', { attack: this.attack, gold: this.gold }) }, get description() { return 'Add ' + this.attack + ' to attack and gain ' + this.gold + ' gold' }, onAdd: undefined, attack: 4, moves: undefined, gold: 2 },
     'Pickpocket': { title: 'Pickpocket', get effect() { return getCardEffect('Pickpocket', { draw: 1, gold: this.gold }) }, get description() { return 'Gain ' + this.gold + ' gold, draw 1' }, onAdd: undefined, attack: undefined, moves: undefined, gold: 2 },
     'Sprint': { title: 'Sprint', get effect() { return getCardEffect('Sprint', { moves: this.moves, attack: this.attack }) }, get description() { return 'Gain ' + this.moves + ' moves, ' + this.attack + ' attack' }, onAdd: undefined, attack: -5, moves: 4, gold: undefined },
-    'Quick Hands': { title: 'Quick Hands', get effect() { return getCardEffect('Quick Hands', { moves: this.moves, draw: 1 }) }, get description() {return 'Gain 2 moves and draw 1'}, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
-    'Jackpot': { title: 'Jackpot', get effect() { return getCardEffect('Jackpot', {}) }, get description() { return 'When added gain '+this.gold+' gold'}, get onAdd(){return changeGold(this.gold)}, attack: undefined, moves: undefined, gold: 80 },
-    'Second Wind': { title: 'Second Wind', get effect() { return getCardEffect('Second Wind', { moves: 1 }) }, get description() {return 'Get a bonus move after you attack'}, onAdd: undefined, attack: undefined, moves: undefined, gold: undefined },
+    'Quick Hands': { title: 'Quick Hands', get effect() { return getCardEffect('Quick Hands', { moves: this.moves, draw: 1 }) }, get description() { return 'Gain 2 moves and draw 1' }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
+    'Jackpot': { title: 'Jackpot', get effect() { return getCardEffect('Jackpot', {}) }, get description() { return 'When added gain ' + this.gold + ' gold' }, get onAdd() { return changeGold(this.gold) }, attack: undefined, moves: undefined, gold: 80 },
+    'Second Wind': { title: 'Second Wind', get effect() { return getCardEffect('Second Wind', { moves: 1 }) }, get description() { return 'Get a bonus move after you attack' }, onAdd: undefined, attack: undefined, moves: undefined, gold: undefined },
     //  'Bulk': { id: uuidv4(), title: 'Bulk', get effect() { return getCardEffect('Bulk', { strength: 1 }) }, get description() { return 'Gain ' + 1 + ' strength for the rest of the floor' }, onAdd: undefined, attack: 1, moves: undefined, gold: undefined },
     'Knife Sharpener': { title: 'Knife Sharpener', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return '+ ' + this.attack + ' Attack. On Add, add 2 to a random card with Attack' }, onAdd: addToUpgradeQueue({ method: 'random', type: 'attack', amount: 2 }), attack: 3, moves: undefined, gold: undefined },
     'AAA Batteries': { title: 'AAA Batteries', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return '+ ' + this.moves + ' Moves. On Add, add 1 to a random card with Move' }, onAdd: addToUpgradeQueue({ method: 'random', type: 'moves', amount: 1 }), attack: undefined, moves: 2, gold: undefined },
@@ -35,9 +35,12 @@ const allCards = {
 
 
 export const generateCard = (title) => {
-    let newCard = allCards[title]
-    newCard.id = uuidv4()
-    return newCard
+    let newObject = Object.create(
+        Object.getPrototypeOf(allCards[title]), 
+        Object.getOwnPropertyDescriptors(allCards[title]),
+    );
+    newObject.id = uuidv4()
+    return newObject
 }
 
 export const getNewCardList = (numberOfCards) => {

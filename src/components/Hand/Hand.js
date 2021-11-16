@@ -49,6 +49,7 @@ export const Hand = () => {
 
                 if (Array.isArray(hand) && (cardsPlayed < hand.length) && drawAmount <= 0) {
                     setCardsPlayed(cardsPlayed => cardsPlayed + 1)
+                    console.log(hand[cardsPlayed])
                     setBeingPlayed(hand[cardsPlayed].id)
                     dispatch(hand[cardsPlayed].effect)
 
