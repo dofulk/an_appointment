@@ -37,26 +37,11 @@ export function Main() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
-  const [playerPositionX, setPlayerPositionX] = useState()
-  const [playerPositionY, setPlayerPositionY] = useState()
   const [enemyTurnOrder, setEnemyTurnOrder] = useState()
 
   const dispatch = useDispatch()
 
 
-
-  // const gameMapTransformation = (x, y) => {
-
-  //   return `translate(${-x}px, ${-y}px)`
-  // }
-
-  // const gameMapStyle = {
-  //   flex: 4,
-  //   left: '50%',
-  //   top: '45%',
-
-  //   transform: gameMapTransformation(playerPositionX, playerPositionY),
-  // }
 
   useEffect(() => {
     if (removeAmount) {
@@ -116,7 +101,7 @@ export function Main() {
         let target = choosePlayerTarget(player.position, e.key)
         let targetTile = tiles.byId[target]
 
-        if (currentPhase !== 'player' || modalIsOpen) {
+        if (currentPhase !== 'player') {
           return
         } else if (!target) {
           return
@@ -125,6 +110,10 @@ export function Main() {
         } else if (targetTile.building.length && !targetTile.character.length) {
           setModalIsOpen(true)
           setModalContent(targetTile.building)
+          dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
+        }else if (modalIsOpen) {
+          setModalIsOpen(false)
+          setModalContent()
           dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
         } else if (targetTile) {
           dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
@@ -140,11 +129,11 @@ export function Main() {
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
 
-        <GameMap className="gamemap_map" setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} />
+        <GameMap className="gamemap_map" />
       <div className='game_info'>
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>
-      <div className="game_modal" style={{ backgroundColor: modalIsOpen ? 'darkgrey' : '' }}>
+      <div className="game_modal">
         {modalIsOpen ?
           <ModalView className="game_modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} isOpen={1} /> :
           <ModalView className="game_modal" setModalIsOpen={setModalIsOpen} isOpen={0} />

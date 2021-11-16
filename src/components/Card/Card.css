@@ -9,18 +9,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #fff;
   }
 
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
   
-  .card[isplaying="0"] {
-    background: #fff;
-  }
 
   .card[isplaying="1"] {
     background: rgb(153, 224, 215);
+  }
+
+  .card[upgradeAnimation="1"] {
+    background: rgb(72, 228, 93);
   }
   .description {
       height: 75px;

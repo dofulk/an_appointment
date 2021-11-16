@@ -11,9 +11,6 @@ export const initialState = {
         { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
         { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
         { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
-        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
-        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 3, moves: undefined, gold: undefined },
-        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
         { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
         { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
         { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 2, gold: undefined },
@@ -90,6 +87,25 @@ const cards = (state = initialState, action) => {
                     ...state.discard,
                     action.payload.card
                 ]
+            }
+        case 'UPGRADE_CARD':
+
+            return {
+                ...state,
+                hand: [
+                    ...state.hand.map((card) => {
+                        if (card.id === action.payload.id) {
+                            card[action.payload.upgrade.type] = card[action.payload.upgrade.type] + action.payload.upgrade.amount
+                            console.log(card)
+                            return card
+                        } else {
+                            return card
+                        }
+
+                    })
+
+                ]
+
             }
 
         default:

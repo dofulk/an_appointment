@@ -13,7 +13,7 @@ export const GameInfo = ({ player, moves, gold }) => {
         setMovesAnimation(1)
         let timer = setTimeout(() => {
             setMovesAnimation(0)
-        }, 350);
+        }, 250);
 
         return () => {
             clearTimeout(timer)

@@ -108,13 +108,12 @@ export const GameMap = () => {
 
     const gameMapTransformation = (x, y) => {
         if ((viewWidth / 2) > x) {
-            console.log(viewHeight, viewWidth)
 
-            return `translate(${-0}px, ${-y}px)`
+            return `translate(${-0}px, ${0}px)`
         } else if (ref.current && (ref.current.offsetWidth - (viewWidth / 2) < x )) {
-            return `translate(${-(ref.current.offsetWidth - viewWidth)}px, ${-y}px)`
+            return `translate(${-(ref.current.offsetWidth - viewWidth)}px, ${0}px)`
         } else {
-            return `translate(${-(x - (viewWidth / 2))}px, ${-y}px)`
+            return `translate(${-(x - (viewWidth / 2))}px, ${0}px)`
         }
 
 
@@ -122,6 +121,7 @@ export const GameMap = () => {
 
 
     const gamemapStyle = (width, height) => {
+        console.log(height)
         return {
             display: 'flex',
             flexWrap: 'wrap',
@@ -137,7 +137,7 @@ export const GameMap = () => {
     const gameMapContainerStyle = () => {
         return {
             transform: gameMapTransformation(playerPositionX, playerPositionY),
-            top: '45%',
+            top: '0',
             left: '0',
         }
     }

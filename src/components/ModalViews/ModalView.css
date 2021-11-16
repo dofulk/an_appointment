@@ -1,6 +1,15 @@
 .modalview {
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+}
+
+.modalview-container {
+    display: inline-block;
+    background-color: #f0f0f0;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    min-width: 500px;
+    min-height: 500px;
+    border-radius: 20px;
 }
