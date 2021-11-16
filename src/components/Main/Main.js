@@ -56,7 +56,6 @@ export function Main() {
       setEnemyTurnOrder()
       dispatch(endCycle())
     } else if (entitiesById[enemyTurnOrder[0]].moves <= 0) {
-      console.log(enemyTurnOrder.slice(1))
       setEnemyTurnOrder(enemyTurnOrder.slice(1))
     } else {
       dispatch(chooseMove(tiles, entitiesById[enemyTurnOrder[0]], player, entitiesById, height, width))

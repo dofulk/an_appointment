@@ -67,7 +67,6 @@ export const createLevel = (player, level, numberOfCycles) => {
     }
 
 
-    console.log(numberOfCycles)
     byId = breakTiles(validMoves, numberOfCycles, byId)
 
 
@@ -91,8 +90,6 @@ export const createLevel = (player, level, numberOfCycles) => {
     let exitPosition = (width - 2) + ',' + Math.floor(height / 2)
     exit.position = exitPosition
     validMoves = validMoves.filter(item => item !== exitPosition)
-
-    console.log(exitPosition)
 
     byId = {
         ...byId,

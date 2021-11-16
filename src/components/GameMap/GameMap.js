@@ -103,7 +103,7 @@ export const GameMap = () => {
     const [sprites, setSprites] = useState({})
     const [playerPositionX, setPlayerPositionX] = useState()
     const [playerPositionY, setPlayerPositionY] = useState()
-    const { viewHeight, viewWidth } = useWindowDimensions();
+    const { viewWidth } = useWindowDimensions();
     const ref = useRef()
 
     const gameMapTransformation = (x, y) => {
@@ -121,7 +121,6 @@ export const GameMap = () => {
 
 
     const gamemapStyle = (width, height) => {
-        console.log(height)
         return {
             display: 'flex',
             flexWrap: 'wrap',

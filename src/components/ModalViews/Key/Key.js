@@ -14,7 +14,7 @@ export const Key = ({ setModalIsOpen, building }) => {
             dispatch(unlockDoor(building))
         }
        
-    }, [])
+    }, [building, dispatch, setModalIsOpen])
 
     return (
         <div className="component-Player">

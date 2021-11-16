@@ -18,7 +18,7 @@ export const GoldPile = ({ setModalIsOpen, building }) => {
             })
         }
 
-    }, [])
+    }, [building, dispatch, setModalIsOpen])
     return (
         <div className="component-Player">
             <h1>Gain {building.gold} Gold</h1>

@@ -41,7 +41,7 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
     <div className="card"
       isplaying={isPlaying}
       onClick={onClick}
-      upgradeAnimation={upgradeAnimation}
+      upgradeanimation={upgradeAnimation}
     >
 
 

@@ -1,8 +1,6 @@
 
 export const breakTiles = (validMoves, numberOfTiles, byId) => {
 
-    console.log(numberOfTiles)
-
     if (numberOfTiles <= 0) {
 
         return byId

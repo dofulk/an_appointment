@@ -49,7 +49,6 @@ export const Hand = () => {
 
                 if (Array.isArray(hand) && (cardsPlayed < hand.length) && drawAmount <= 0) {
                     setCardsPlayed(cardsPlayed => cardsPlayed + 1)
-                    console.log(hand[cardsPlayed])
                     setBeingPlayed(hand[cardsPlayed].id)
                     dispatch(hand[cardsPlayed].effect)
 
@@ -78,7 +77,7 @@ export const Hand = () => {
             dispatch(upgradeCard(cardToUpgrade.id, upgradeQueue[0]))
             }
         }
-    }, [hand, upgradeQueue])
+    }, [dispatch, hand, upgradeQueue])
 
     useEffect(() => {
         setCardsPlayed(0)
@@ -98,7 +97,7 @@ export const Hand = () => {
         let allCards = []
         if (card) {
             allCards.push(
-                <AnimatePresence>
+                <AnimatePresence key={card.id}>
                     <motion.li
                         key={card.id}
                         style={{

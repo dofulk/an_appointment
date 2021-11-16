@@ -21,7 +21,7 @@
     background: rgb(153, 224, 215);
   }
 
-  .card[upgradeAnimation="1"] {
+  .card[upgradeanimation="1"] {
     background: rgb(72, 228, 93);
   }
   .description {

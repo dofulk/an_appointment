@@ -48,7 +48,6 @@ export const choosePlayerTarget = (position, keystroke) => {
 
 
 export const chooseRandomTarget = (position) => {
-    console.log(position)
     let direction = Math.floor(Math.random() * 4)
 
     switch (direction) {
