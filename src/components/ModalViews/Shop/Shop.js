@@ -36,6 +36,7 @@ export const Shop = ({ setModalIsOpen, shopItems, building }) => {
             flexDirection: "column",
             alignItems: "center"
           }}>
+              <div className="shop_title">WELCOME TO THE CARD STORE</div>
             <ul className="cards">
                 {items}
             </ul>

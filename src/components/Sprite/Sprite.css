@@ -13,19 +13,31 @@
 .sprite_attack {
     position: absolute;
     font-size: 3rem;
+    background-color: rgb(204, 135, 195);
+    width: 35%;
+    border-radius: 40%;
+    padding: 3%;
     bottom: 0;
-    left: 5px;
+    left: 10px;
+    bottom: 10px;
+    text-align: center;
 }
 
 .sprite_hp {
     position: absolute;
     font-size: 3rem;
+    border-radius: 40%;
+    padding: 3%;
+    background-color: rgb(204, 135, 195);
+    width: 35%;
     bottom: 0;
-    right: 5px;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;
 }
 
 .sprite_sprite {
-    font-size: 9rem;
+    font-size: 7rem;
     position: absolute;
     margin-left: auto;
     margin-right: auto;

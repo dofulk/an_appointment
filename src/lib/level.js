@@ -4,13 +4,16 @@ import { breakTiles } from "./breakTiles"
 
 const generateEntityArray = (level) => {
     let entities = [
-        { id: "Chest", position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
+        { id: uuidv4(), position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
 
-        { id: "Arcade", position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
-        { id: "Shop", position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" },
-        { id: "Key", position: "", type: "building", buildingType: "Key", sprite: "🔑" },
-        { id: "Medic", position: "", type: "building", buildingType: "Medic", sprite: "🏥" },
-        { id: "GoldPile", position: "", type: "building", gold: 22, buildingType: "GoldPile", sprite: "💰" }
+        { id: uuidv4(), position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
+        { id: uuidv4(), position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" },
+        { id: uuidv4(), position: "", type: "building", buildingType: "Key", sprite: "🔑" },
+        { id: uuidv4(), position: "", type: "building", buildingType: "Medic", sprite: "🏥" },
+        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
+        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
+        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
+        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
     ]
     let i = Math.floor((level + 3) / 2)
     while (i > 0) {
