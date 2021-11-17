@@ -128,11 +128,12 @@ export function Main() {
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
 
-        <GameMap className="gamemap_map" />
+        
       <div className='game_info'>
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>
       <div className="game_modal">
+      <GameMap className="gamemap_map" />
         {modalIsOpen ?
           <ModalView className="game_modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} isOpen={1} /> :
           <ModalView className="game_modal" setModalIsOpen={setModalIsOpen} isOpen={0} />

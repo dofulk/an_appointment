@@ -6,5 +6,6 @@
 }
 
 .gamemap {
-    position: relative;
+    position: absolute;
+    transition: transform 150ms linear;
 }

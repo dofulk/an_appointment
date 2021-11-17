@@ -35,7 +35,7 @@ export const createLevel = (player, level, numberOfCycles) => {
     let allIds = []
     let validMoves = []
     let width = 20
-    let height = 6
+    let height = 4
 
     let i = 0
 
@@ -47,18 +47,11 @@ export const createLevel = (player, level, numberOfCycles) => {
 
 
             allIds.push(positionId)
+            validMoves.push(positionId)
+            byId = {
+                ...byId,
+                [positionId]: { id: positionId, row: i, column: j, isAValidMove: true, character: [], wall: false, damage: 0, isAStructure: false, building: [] },
 
-            if (i === 0 || j === 0 || i === height - 1 || j === width - 1) {
-                byId = {
-                    ...byId,
-                    [positionId]: { id: positionId, row: i, column: j, isAValidMove: false, character: [], wall: true, damage: 0, isAStructure: true, building: [] },
-                }
-            } else {
-                validMoves.push(positionId)
-                byId = {
-                    ...byId,
-                    [positionId]: { id: positionId, row: i, column: j, isAValidMove: true, character: [], wall: false, damage: 0, isAStructure: false, building: [] },
-                }
             }
 
             j++

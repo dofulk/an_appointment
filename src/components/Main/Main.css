@@ -22,14 +22,12 @@
 
 .game_modal {
 
-
+    position: relative;
     z-index: 2;
     flex-grow: 1;
 }
 
 
 .gamemap {
-    position: absolute;
-    transition: transform 150ms linear;
     z-index: 1;
 }
