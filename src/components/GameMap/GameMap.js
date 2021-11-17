@@ -13,9 +13,6 @@ const selectTiles = state => state.tiles
 const selectWidth = state => state.level.width
 const selectHeight = state => state.level.height
 
-function isEven(num) {
-    return num % 2 === 0
-}
 
 
 const getWindowDimensions = () => {
