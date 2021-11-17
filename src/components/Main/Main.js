@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
-import {  moveOrAttack, chooseMove, newPhase, endCycle } from '../../redux/actions/action';
+import {  moveOrAttack, chooseMove, newPhase, endCycle, changeMoves } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
 
 
@@ -105,6 +105,8 @@ export function Main() {
         } else if (!target) {
           return
         } else if (moves <= 0) {
+        }else if (!targetTile) {
+          dispatch(changeMoves('player', -1))
 
         } else if (targetTile.building.length && !targetTile.character.length) {
           setModalIsOpen(true)

@@ -65,7 +65,7 @@ const renderedTiles = (tiles, entities, setPlayerPositionX, setPlayerPositionY, 
     return tileList
 }
 
-const renderedEntities = (entities, sprites) => {
+const renderedEntities = (entities, sprites, width, height) => {
     let allEntities = []
     let entityKeys = Object.keys(entities)
     entityKeys.map(id => {
@@ -73,7 +73,9 @@ const renderedEntities = (entities, sprites) => {
             return allEntities.push(<Sprite className="sprite" entity={entities[id]} key={id}
                 style={{
                     transform: `translate(${sprites[id][0]}px, ${sprites[id][1]}px)`,
-                    zIndex: (entities[id].type === 'building' ? 1 : 2)
+                    zIndex: (entities[id].type === 'building' ? 1 : 2),
+                    width: (100 / width) + '%',
+                    height: (100 / height) + '%',
 
                 }} />)
         } else {
@@ -116,12 +118,20 @@ export const GameMap = () => {
 
     }
 
+    const gameMapWidth = (currentRef) => {
+        if (!currentRef) {
+            return 0
+        } else {
+            return (currentRef.offsetHeight/height * width) + 'px'
+        }
+
+    }
 
     const gamemapStyle = (width, height) => {
         return {
             display: 'flex',
             flexWrap: 'wrap',
-            width: (150 * width) + 'px',
+            width: gameMapWidth(ref.current),
             height: '100%',
             alignContent: 'flex-start',
             alignSelf: 'center',
@@ -170,7 +180,7 @@ export const GameMap = () => {
     return (
 
         <div className="gamemap" style={gameMapContainerStyle()} ref={ref}>
-            {renderedEntities(entitiesArray, sprites)}
+            {renderedEntities(entitiesArray, sprites, width, height)}
             <div style={gamemapStyle(width, height)}>
                 {renderedTiles(tiles, entitiesArray, setPlayerPositionX, setPlayerPositionY, changePosition)}
             </div>

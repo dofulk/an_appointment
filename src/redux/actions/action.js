@@ -330,7 +330,7 @@ export const moveOrAttack = (targetTile, entity, entities, moveEffects, attackEf
 
 
 export const moveOnly = (targetTile, entity, entities, moveEffects, attackEffects, killEffects) => {
-    if (targetTile.wall) {
+    if (!targetTile || targetTile.wall) {
         return changeMoves(entity.id, -1)
     } else if (targetTile.isAValidMove) {
         return onMove(targetTile, entity, moveEffects)
