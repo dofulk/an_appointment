@@ -55,6 +55,8 @@
     font-size: 4.5rem;
     width: 100%;
     text-align: center;
+    color: rgba(207, 207, 207, 0.384);  
+    text-shadow: 0 0 0 rgb(214, 144, 64);
 }
 .sprite_attack_number {
     position: absolute;
@@ -69,6 +71,8 @@
     font-size: 4.5rem;
     width: 100%;
     text-align: center;
+    color: rgba(207, 207, 207, 0.384);  
+    text-shadow: 0 0 0 rgb(235, 103, 85);
 }
 .sprite_hp_number {
     position: absolute;

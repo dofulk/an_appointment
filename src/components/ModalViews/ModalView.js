@@ -8,7 +8,7 @@ import './ModalView.css'
 import { Key } from "./Key/Key";
 import { Medic } from "./Medic/Medic";
 import { GoldPile } from "./GoldPile/GoldPile";
-
+import { Button } from "../Button/Button";
 
 
 
@@ -41,17 +41,25 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Chest':
                 return (
                     <div className="modalview-container">
-                        <CardPicker
+                        <div onClick={() => setModalIsOpen(false)} style={{
+                            padding: "10px",
+                            left: "10px",
+                            position: "absolute"
+                        }}>X</div>                        <CardPicker
                             setModalIsOpen={setModalIsOpen}
                             listOfCards={building.content}
                             building={building} />
-                            </div>
-                        )
+                    </div>
+                )
 
-                        case 'Exit':
-                        return (
-                        <div className="modalview-container">
-                        <Exit
+            case 'Exit':
+                return (
+                    <div className="modalview-container">
+                        <div onClick={() => setModalIsOpen(false)} style={{
+                            padding: "10px",
+                            left: "10px",
+                            position: "absolute"
+                        }}>X</div>                        <Exit
                             setModalIsOpen={setModalIsOpen}
                             building={building}
                         // player={player}
@@ -63,7 +71,11 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Shop':
                 return (
                     <div className="modalview-container">
-                        <Shop setModalIsOpen={setModalIsOpen}
+                        <div onClick={() => setModalIsOpen(false)} style={{
+                            padding: "10px",
+                            left: "10px",
+                            position: "absolute"
+                        }}>X</div>                        <Shop setModalIsOpen={setModalIsOpen}
                             shopItems={building.content}
                             building={building}></Shop>
                     </div>
@@ -71,25 +83,42 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Arcade':
                 return (
                     <div className="modalview-container">
-                        <Arcade setModalIsOpen={setModalIsOpen} />
+                        <div onClick={() => setModalIsOpen(false)} style={{
+                            padding: "10px",
+                            left: "10px",
+                            position: "absolute"
+                        }}>X</div>                        <Arcade setModalIsOpen={setModalIsOpen} />
                     </div>
                 )
             case 'Key':
                 return (
                     <div className="modalview-container">
-                        <Key setModalIsOpen={setModalIsOpen} building={building} />
+                        <div onClick={() => setModalIsOpen(false)} style={{
+                            padding: "10px",
+                            left: "10px",
+                            position: "absolute"
+                        }}>X</div>                        <Key setModalIsOpen={setModalIsOpen} building={building} />
                     </div>
                 )
 
             case 'Medic':
                 return (
                     <div className="modalview-container">
-                        <Medic setModalIsOpen={setModalIsOpen}></Medic>
+                        <Button onClick={() => setModalIsOpen(false)} style={{
+                            padding: "10px",
+                            left: "10px",
+                            position: "absolute"
+                        }} text="X"></Button>                        <Medic setModalIsOpen={setModalIsOpen}></Medic>
                     </div>
                 )
             case 'GoldPile':
                 return (
                     <div className="modalview-container">
+                        <div onClick={() => setModalIsOpen(false)} style={{
+                            padding: "10px",
+                            left: "10px",
+                            position: "absolute"
+                        }}>X</div>
                         <GoldPile setModalIsOpen={setModalIsOpen} building={building}></GoldPile>
                     </div>
                 )
@@ -110,7 +139,8 @@ export const ModalView = ({ setModalIsOpen, building }) => {
     return (
         <div className="modalview">
 
+
             {view(building)}
         </div>
-                );
-        }
+    );
+}

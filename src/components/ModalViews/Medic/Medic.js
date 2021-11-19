@@ -2,6 +2,7 @@ import React from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
 import { changeGold, changeHp } from "../../../redux/actions/action";
 import { playerSelector, goldSelector } from "../../../redux/selectors";
+import { Button } from "../../Button/Button";
 
 
 
@@ -25,8 +26,7 @@ export const Medic = ({ setModalIsOpen }) => {
     }
     return (
         <div className="component-Player">
-            <button onClick={onClick}>GIVE GOLD GAIN HEALTH</button>
-            <button onClick={() => setModalIsOpen(false)}>EXIT</button>
+            <Button onClick={onClick} text="GIVE GOLD GAIN HEALTH"></Button>
         </div>
     );
 }

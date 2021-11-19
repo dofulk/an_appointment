@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch} from "react-redux";
 import { Card } from "../../Card/Card";
 import { addCardFromPicker } from "../../../redux/actions/action";
-
-
+import './CardPicker.css'
+import { Button } from "../../Button/Button";
 
 
 
@@ -27,18 +27,15 @@ export const CardPicker = ({ setModalIsOpen, listOfCards, building }) => {
     </li>
   )
   return (
-    <div className="component-Player" style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
-    }}>
+    <div className="cardpicker">
+      <div className="cardpicker_title">PICK ONE</div>
       <ul style={{
         display: "flex",
         flexDirection: "row"
       }}>
       {cards}
       </ul>
-      <button onClick={() => setModalIsOpen(false)}>EXIT</button>
+      <Button onClick={() => setModalIsOpen(false)} text="EXIT"></Button>
     </div>
   );
 }

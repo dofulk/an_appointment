@@ -67,7 +67,7 @@ export const createLevel = (player, level, numberOfCycles) => {
 
 
 
-    let playerPosition = '1,' + Math.floor(height / 2)
+    let playerPosition = '0,0'
     player.position = playerPosition
     validMoves = validMoves.filter(item => item !== playerPosition)
     byId = {
@@ -83,7 +83,7 @@ export const createLevel = (player, level, numberOfCycles) => {
     let exit = { id: "Exit", position: "", isLocked: true, type: "building", buildingType: "Exit", sprite: "🪜" }
 
 
-    let exitPosition = (width - 2) + ',' + Math.floor(height / 2)
+    let exitPosition = (width - 1) + ',' + (height - 1)
     exit.position = exitPosition
     validMoves = validMoves.filter(item => item !== exitPosition)
 

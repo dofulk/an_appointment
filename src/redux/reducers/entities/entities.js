@@ -181,15 +181,6 @@ const entities = (state = initialState, action) => {
                 characterIds: [...state.characterIds, action.payload.character]
 
             }
-
-            case 'ADD_BUILDING':
-                return {
-                    ...state,
-                    byId: {
-                        ...state.byId,
-                        [action.payload.building.id]: action.payload.building
-                    }    
-                }
         case 'UNLOCK_DOOR':
             let keyId = action.payload.entityId
             let { [keyId]: keyValue, ...byIdNoKey } = state.byId
