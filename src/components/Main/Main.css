@@ -21,7 +21,8 @@
 }
 
 .game_modal {
-
+    display: flex;
+    justify-content: center;
     position: relative;
     z-index: 2;
     flex-grow: 1;

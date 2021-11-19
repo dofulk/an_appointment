@@ -10,7 +10,6 @@ export const Key = ({ setModalIsOpen, building }) => {
     const dispatch = useDispatch()
     useEffect(() => {
         return() => {
-            setModalIsOpen(false)
             dispatch(unlockDoor(building))
         }
        

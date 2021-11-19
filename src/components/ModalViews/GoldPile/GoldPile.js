@@ -11,7 +11,6 @@ export const GoldPile = ({ setModalIsOpen, building }) => {
 
     useEffect(() => {
         return () => {
-            setModalIsOpen(false)
             batch(() => {
                 dispatch(changeGold(building.gold))
                 dispatch(deleteEntity(building, building.position))
