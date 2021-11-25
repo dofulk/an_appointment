@@ -9,7 +9,9 @@ import './Card.css'
 export const Card = ({ id, color, title, description, onClick, beingPlayed }) => {
 
   const [isPlaying, setIsPlaying] = useState(0)
+  const [isLarge, setIsLarge] = useState(0)
   const [upgradeAnimation, setUpgradeAnimation] = useState(0)
+  const [opacity, setOpacity] = useState(0)
   const firstRender = useRef(true);
 
   useEffect(() => {
@@ -23,6 +25,7 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false
+      setOpacity(1)
     } else {
       setUpgradeAnimation(1)
       let timer = setTimeout(() => {
@@ -35,6 +38,12 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
     }
   }, [description])
 
+  useEffect(() => {
+    return () => {
+      setOpacity(0)
+    }
+  }, [])
+
 
 
   return (
@@ -42,6 +51,8 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
       isplaying={isPlaying}
       onClick={onClick}
       upgradeanimation={upgradeAnimation}
+      islarge={isLarge}
+      opacity={opacity}
     >
 
 

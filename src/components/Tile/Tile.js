@@ -65,7 +65,7 @@ const tileMiddleStyle =(damage) =>  {
 
 
 
-export const Tile = ({ character, building, damage, setPlayerPositionX, setPlayerPositionY, changePosition }) => {
+export const Tile = ({ character, building, damage, setPlayerPositionX, setPlayerPositionY, changePosition, setModalContent }) => {
 
   const inputRef = useRef();
   const width = useSelector(widthSelector)
@@ -78,9 +78,18 @@ export const Tile = ({ character, building, damage, setPlayerPositionX, setPlaye
     } else {
       changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, character.id)
     }
+
+ 
   }, [changePosition, character])
 
-
+ 
+  useEffect(() => {
+    if (character && character.id === 'player' && building) {
+      setModalContent(building.id)
+    } else if ( character && character.id === 'player') {
+      setModalContent()
+    }
+  }, [character, building, setModalContent])
 
   useEffect(() => {
     if (!building) {

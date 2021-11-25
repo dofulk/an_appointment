@@ -7,7 +7,7 @@ import './Shop.css'
 
 
 
-export const Shop = ({ setModalIsOpen, shopItems, building }) => {
+export const Shop = ({ shopItems, building }) => {
 
     const dispatch = useDispatch()
 
@@ -40,7 +40,6 @@ export const Shop = ({ setModalIsOpen, shopItems, building }) => {
             <ul className="cards">
                 {items}
             </ul>
-            <button onClick={() => setModalIsOpen(false)}>EXIT</button>
         </div>
     );
 }

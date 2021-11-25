@@ -13,12 +13,12 @@ import { Button } from "../Button/Button";
 
 
 
-export const ModalView = ({ setModalIsOpen, building }) => {
+export const ModalView = ({setModalContent, building }) => {
 
     const handleKeydown = (e) => {
         switch (e.key) {
             case 'Escape':
-                setModalIsOpen(false)
+                setModalContent()
                 break;
             default:
                 break;
@@ -41,12 +41,12 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Chest':
                 return (
                     <div className="modalview-container">
-                        <div onClick={() => setModalIsOpen(false)} style={{
+                        <div onClick={() => setModalContent()} style={{
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
                         }}>X</div>                        <CardPicker
-                            setModalIsOpen={setModalIsOpen}
+                            setModalContent={setModalContent}
                             listOfCards={building.content}
                             building={building} />
                     </div>
@@ -55,12 +55,12 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Exit':
                 return (
                     <div className="modalview-container">
-                        <div onClick={() => setModalIsOpen(false)} style={{
+                        <div onClick={() => setModalContent()} style={{
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
                         }}>X</div>                        <Exit
-                            setModalIsOpen={setModalIsOpen}
+                            setModalContent={setModalContent}
                             building={building}
                         // player={player}
                         // level={game.level}
@@ -71,11 +71,11 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Shop':
                 return (
                     <div className="modalview-container">
-                        <div onClick={() => setModalIsOpen(false)} style={{
+                        <div onClick={() => setModalContent()} style={{
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
-                        }}>X</div>                        <Shop setModalIsOpen={setModalIsOpen}
+                        }}>X</div>                        <Shop setModalContent={setModalContent}
                             shopItems={building.content}
                             building={building}></Shop>
                     </div>
@@ -83,43 +83,43 @@ export const ModalView = ({ setModalIsOpen, building }) => {
             case 'Arcade':
                 return (
                     <div className="modalview-container">
-                        <div onClick={() => setModalIsOpen(false)} style={{
+                        <div onClick={() => setModalContent()} style={{
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
-                        }}>X</div>                        <Arcade setModalIsOpen={setModalIsOpen} />
+                        }}>X</div>                        <Arcade setModalContent={setModalContent} />
                     </div>
                 )
             case 'Key':
                 return (
                     <div className="modalview-container">
-                        <div onClick={() => setModalIsOpen(false)} style={{
+                        <div onClick={() => setModalContent()} style={{
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
-                        }}>X</div>                        <Key setModalIsOpen={setModalIsOpen} building={building} />
+                        }}>X</div>                        <Key setModalContent={setModalContent} building={building} />
                     </div>
                 )
 
             case 'Medic':
                 return (
                     <div className="modalview-container">
-                        <Button onClick={() => setModalIsOpen(false)} style={{
+                        <Button onClick={() => setModalContent()} style={{
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
-                        }} text="X"></Button>                        <Medic setModalIsOpen={setModalIsOpen}></Medic>
+                        }} text="X"></Button>                        <Medic setModalContent={setModalContent}></Medic>
                     </div>
                 )
             case 'GoldPile':
                 return (
                     <div className="modalview-container">
-                        <div onClick={() => setModalIsOpen(false)} style={{
+                        <div onClick={() => setModalContent()} style={{
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
                         }}>X</div>
-                        <GoldPile setModalIsOpen={setModalIsOpen} building={building}></GoldPile>
+                        <GoldPile setModalContent={setModalContent} building={building}></GoldPile>
                     </div>
                 )
 

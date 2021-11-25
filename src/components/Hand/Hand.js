@@ -4,7 +4,6 @@ import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector
 import { newCycle, drawOne, upgradeCard } from '../../redux/actions/action'
 import { Card } from "../Card/Card";
 import { CardList } from "../CardList/CardList"
-import { motion, AnimatePresence } from "framer-motion";
 import Modal from 'react-modal';
 
 
@@ -45,7 +44,7 @@ export const Hand = () => {
     useEffect(() => {
         const timeout = setTimeout(() => {
             if (currentPhase === 'cards') {
-                
+
 
                 if (Array.isArray(hand) && (cardsPlayed < hand.length) && drawAmount <= 0) {
                     setCardsPlayed(cardsPlayed => cardsPlayed + 1)
@@ -66,15 +65,15 @@ export const Hand = () => {
     }, [drawAmount, cardsPlayed, currentPhase, hand, dispatch])
 
     useEffect(() => {
-    
+
         if (upgradeQueue.length && upgradeQueue[0].method === 'random') {
             let validCards = hand.filter(card => card[upgradeQueue[0].type])
             console.log(validCards)
             if (!validCards.length) {
                 return
             } else {
-            let cardToUpgrade = validCards[Math.floor(Math.random()*validCards.length)];
-            dispatch(upgradeCard(cardToUpgrade.id, upgradeQueue[0]))
+                let cardToUpgrade = validCards[Math.floor(Math.random() * validCards.length)];
+                dispatch(upgradeCard(cardToUpgrade.id, upgradeQueue[0]))
             }
         }
     }, [dispatch, hand, upgradeQueue])
@@ -97,20 +96,16 @@ export const Hand = () => {
         let allCards = []
         if (card) {
             allCards.push(
-                <AnimatePresence key={card.id}>
-                    <motion.li
-                        key={card.id}
-                        style={{
-                            listStyle: "none"
-                        }}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
+                <li
+                    className="hand_list"
+                    key={card.id}
+                    style={{
+                        listStyle: "none"
+                    }}
+                >
 
-                        <Card title={card.title} isBig={false} description={card.description} id={card.id} beingPlayed={beingPlayed}></Card>
-                    </motion.li>
-                </AnimatePresence>)
+                    <Card title={card.title} isBig={false} description={card.description} id={card.id} beingPlayed={beingPlayed}></Card>
+                </li>)
         }
         return allCards
     })

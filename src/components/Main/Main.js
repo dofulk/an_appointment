@@ -34,14 +34,10 @@ export function Main() {
   const attackEffects = useSelector(onAttackSelector)
   const killEffects = useSelector(onKillSelector)
   const removeAmount = useSelector(removeAmountSelector)
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState()
   const [enemyTurnOrder, setEnemyTurnOrder] = useState()
 
   const dispatch = useDispatch()
-
-
 
   useEffect(() => {
     if (removeAmount) {
@@ -66,7 +62,7 @@ export function Main() {
 
   useEffect(() => {
 
-    if (currentPhase === 'player' && moves <= 0 && !modalIsOpen) {
+    if (currentPhase === 'player' && moves <= 0 && !modalContent) {
       dispatch(newPhase('enemies'))
 
     }
@@ -108,14 +104,13 @@ export function Main() {
         }else if (!targetTile) {
           dispatch(changeMoves('player', -1))
 
-        } else if (targetTile.building.length && !targetTile.character.length) {
-          setModalIsOpen(true)
-          setModalContent(targetTile.building)
-          dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
-        }else if (modalIsOpen) {
-          setModalIsOpen(false)
-          setModalContent()
-          dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
+        // } else if (targetTile.building.length && !targetTile.character.length) {
+        //   setModalIsOpen(true)
+        //   setModalContent(targetTile.building)
+        //   dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
+        // }else if (modalI) {
+        //   setModalContent()
+        //   dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
         } else if (targetTile) {
           dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
         }
@@ -135,10 +130,10 @@ export function Main() {
         <GameInfo player={player} moves={moves} gold={gold} />
       </div>
       <div className="game_modal">
-      <GameMap className="gamemap_map" />
-        {modalIsOpen ?
-          <ModalView className="game_modal" building={entitiesById[modalContent]} setModalIsOpen={setModalIsOpen} isOpen={1} /> :
-          <ModalView className="game_modal" setModalIsOpen={setModalIsOpen} isOpen={0} />
+      <GameMap className="gamemap_map" setModalContent={setModalContent}/>
+        {modalContent ?
+          <ModalView className="game_modal"  setModalContent={setModalContent} building={entitiesById[modalContent]} isOpen={1} /> :
+          <ModalView className="game_modal" isOpen={0} setModalContent={setModalContent}/>
         }
       </div>
 

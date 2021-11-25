@@ -8,21 +8,20 @@ import { playerSelector, levelSelector, numberOfCyclesSelector } from "../../../
 
 
 
-export const Exit = ({ setModalIsOpen, building }) => {
+export const Exit = ({ setModalContent, building }) => {
   const player = useSelector(playerSelector)
   const level = useSelector(levelSelector)
   const numberOfCycles = useSelector(numberOfCyclesSelector)
   const dispatch = useDispatch()
   const onClick = () => {
     dispatch(newMap(createLevel(player, level, numberOfCycles)))
-    setModalIsOpen(false)
+    setModalContent()
   }
   return (
     <div className="component-Player">
       {building.isLocked
         ? <h1>Door Locked! Find the Key</h1>
         : <button onClick={onClick}>NEXT FLOOR</button>}
-      <button onClick={() => setModalIsOpen(false)}>EXIT</button>
     </div>
   );
 }

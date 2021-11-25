@@ -2,6 +2,7 @@ import React from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
 import { changeGold, changeHp} from "../../../redux/actions/action";
 import { playerSelector} from "../../../redux/selectors";
+import { Button } from "../../Button/Button";
 
 
 
@@ -22,8 +23,7 @@ export const Arcade = ({ setModalIsOpen }) => {
     }
     return (
         <div className="component-Player">
-            <button onClick={onClick}>GIVE BLOOD GAIN GOLD</button>
-            <button onClick={() => setModalIsOpen(false)}>EXIT</button>
+            <Button onClick={onClick} text="GIVE BLOOD GAIN GOLD"></Button>
         </div>
     );
 }

@@ -47,17 +47,13 @@ const useWindowDimensions = () => {
 
 
 
-const renderedTiles = (tiles, entities, setPlayerPositionX, setPlayerPositionY, changePosition) => {
+const renderedTiles = (tiles, entities, setPlayerPositionX, setPlayerPositionY, changePosition, setModalContent) => {
     let tileList = []
     tiles.allIds.map(id => {
         let tile = tiles.byId[id]
         let character = tile.character
         let building = tile.building
-        if (tiles.byId[id].wall) {
-            return tileList.push(<Tile key={id} id={id} color="wall" character={entities[character]} building={entities[building]} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} changePosition={changePosition} />)
-        } else {
-            return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} damage={tiles.byId[id].damage} changePosition={changePosition} />)
-        }
+        return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} damage={tiles.byId[id].damage} changePosition={changePosition} setModalContent={setModalContent}/>)
     })
     return tileList
 }
@@ -86,7 +82,7 @@ const renderedEntities = (entities, sprites, width, height) => {
 
 
 
-export const GameMap = () => {
+export const GameMap = ({ setModalContent }) => {
     const tiles = useSelector(selectTiles)
     const width = useSelector(selectWidth)
     const height = useSelector(selectHeight)
@@ -119,7 +115,7 @@ export const GameMap = () => {
         if (!currentRef) {
             return 0
         } else {
-            return (currentRef.offsetHeight/height * width) + 'px'
+            return (currentRef.offsetHeight / height * width) + 'px'
         }
 
     }
@@ -179,7 +175,7 @@ export const GameMap = () => {
         <div className="gamemap" style={gameMapContainerStyle()} ref={ref}>
             {renderedEntities(entitiesArray, sprites, width, height)}
             <div style={gamemapStyle(width, height)}>
-                {renderedTiles(tiles, entitiesArray, setPlayerPositionX, setPlayerPositionY, changePosition)}
+                {renderedTiles(tiles, entitiesArray, setPlayerPositionX, setPlayerPositionY, changePosition, setModalContent)}
             </div>
         </div>
 

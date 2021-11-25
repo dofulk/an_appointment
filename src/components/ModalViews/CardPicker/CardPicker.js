@@ -8,13 +8,12 @@ import { Button } from "../../Button/Button";
 
 
 
-export const CardPicker = ({ setModalIsOpen, listOfCards, building }) => {
+export const CardPicker = ({ listOfCards, building }) => {
 
   const dispatch = useDispatch()
 
   const addCard = (building,card) => {
     dispatch(addCardFromPicker(building, card))
-    setModalIsOpen(false)
   }
 
 
@@ -35,7 +34,6 @@ export const CardPicker = ({ setModalIsOpen, listOfCards, building }) => {
       }}>
       {cards}
       </ul>
-      <Button onClick={() => setModalIsOpen(false)} text="EXIT"></Button>
     </div>
   );
 }
