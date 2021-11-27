@@ -2,10 +2,12 @@
     position: absolute;
     transition: transform 150ms linear;
     z-index: 2;
+    will-change: transform;
     /* transform: translate(190px, 466px); */
 }
 
 .gamemap {
     position: absolute;
     transition: transform 150ms linear;
+    will-change: transform;
 }

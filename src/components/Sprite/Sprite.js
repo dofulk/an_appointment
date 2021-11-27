@@ -12,9 +12,11 @@ export const Sprite = ({ entity, style, width, height }) => {
   const [opacity, setOpacity] = useState("1")
 
   useEffect(() => {
-    if (entity.hp <= 0) {
+    if (entity.hp <= 0 && entity.id !== 'player') {
       setOpacity("0")
       dispatch(deleteEntity(entity, entity.position))
+    } else if (entity.hp <= 0 && entity.id === 'player') {
+      console.log('GAME OVER')
     }
   }, [dispatch, entity])
 
