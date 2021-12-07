@@ -19,9 +19,7 @@ export const Exit = ({ setModalContent, building }) => {
   }
   return (
     <div className="component-Player">
-      {building.isLocked
-        ? <h1>Door Locked! Find the Key</h1>
-        : <button onClick={onClick}>NEXT FLOOR</button>}
+     <button onClick={onClick}>NEXT FLOOR</button>
     </div>
   );
 }

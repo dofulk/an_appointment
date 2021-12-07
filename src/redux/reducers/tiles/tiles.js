@@ -94,15 +94,15 @@ const tiles = (state = initialState, action) => {
 
 
 
-        case 'END_CYCLE':
-            let newTiles = breakTiles(state.validMoves, action.payload.brokenTiles, state.byId)
+        // case 'END_CYCLE':
+        //     let newTiles = breakTiles(state.validMoves, action.payload.brokenTiles, state.byId)
 
 
 
-            return {
-                ...state,
-                byId: newTiles
-            }
+        //     return {
+        //         ...state,
+        //         byId: newTiles
+        //     }
 
         default:
             return state;
