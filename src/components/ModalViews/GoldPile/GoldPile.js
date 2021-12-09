@@ -10,7 +10,9 @@ export const GoldPile = ({ setModalIsOpen, building }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        console.log(building)
         return () => {
+            console.log(building)
             batch(() => {
                 dispatch(changeGold(building.gold))
                 dispatch(deleteEntity(building, building.position))

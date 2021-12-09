@@ -133,6 +133,7 @@ export const changeGold = (gold) => ({
 
 export const addCardToDiscard = (card) => {
     if (card.onAdd) {
+        console.log(card.onAdd)
         return dispatch => {
             batch(() => {
                 dispatch(card.onAdd)

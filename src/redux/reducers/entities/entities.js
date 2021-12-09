@@ -1,6 +1,6 @@
 export const initialState = {
     byId: {
-        "player": { id: "player", position: "1,1", moves: 3, baseMoves: 3, hp: 30, maxHP: 30, attack: 1, baseAttack: 1, type: 'character', sprite: "🙂" },
+        "player": { id: "player", position: "1,1", moves: 1, baseMoves: 1, hp: 10, maxHP: 10, attack: 1, baseAttack: 1, type: 'character', sprite: "🙂" },
 
     },
     characterIds: [],
@@ -101,7 +101,6 @@ const entities = (state = initialState, action) => {
 
 
         case 'CHANGE_BASE_ATTACK':
-            console.log(action.payload.attack)
             return {
                 ...state,
                 byId: {
@@ -116,10 +115,14 @@ const entities = (state = initialState, action) => {
         case 'END_CYCLE':
             let entities = {}
             for (let key in state.byId) {
-                entities[key] = {
-                    ...state.byId[key],
-                    moves: state.byId[key].baseMoves,
-                    attack: state.byId[key].baseAttack
+                if (state.byId[key].type === 'character') {
+                    entities[key] = {
+                        ...state.byId[key],
+                        moves: state.byId[key].baseMoves,
+                        attack: state.byId[key].baseAttack
+                    }
+                } else {
+                    entities[key] = state.byId[key]
                 }
 
             }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector, upgradeQueueSelector } from '../../redux/selectors/index'
+import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector, upgradeQueueSelector, removeAmountSelector } from '../../redux/selectors/index'
 import { newCycle, drawOne, upgradeCard } from '../../redux/actions/action'
 import { Card } from "../Card/Card";
 import { CardList } from "../CardList/CardList"
@@ -22,11 +22,29 @@ export const Hand = () => {
     const currentPhase = useSelector(currentPhaseSelector)
     const drawAmount = useSelector(drawAmountSelector)
     const upgradeQueue = useSelector(upgradeQueueSelector)
+    const removeAmount = useSelector(removeAmountSelector)
 
     const [modalContent, setModalContent] = useState()
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [cardsPlayed, setCardsPlayed] = useState(0)
     const [beingPlayed, setBeingPlayed] = useState()
+    const [selected, setSelected] = useState()
+
+
+    const setCardSelected = (id) => {
+        if (selected === id) {
+            setSelected()
+        } else {
+            setSelected(id)
+        }
+    }
+
+
+    useEffect(() => {
+        if (removeAmount) {
+            console.log('remove')
+        }
+    }, [removeAmount])
 
 
     useEffect(() => {
@@ -65,16 +83,21 @@ export const Hand = () => {
     }, [drawAmount, cardsPlayed, currentPhase, hand, dispatch])
 
     useEffect(() => {
+        if (!upgradeQueue.length) {
 
-        if (upgradeQueue.length && upgradeQueue[0].method === 'random') {
+        } else if ( upgradeQueue[0].method === 'random') {
             let validCards = hand.filter(card => card[upgradeQueue[0].type])
-            console.log(validCards)
             if (!validCards.length) {
                 return
             } else {
                 let cardToUpgrade = validCards[Math.floor(Math.random() * validCards.length)];
                 dispatch(upgradeCard(cardToUpgrade.id, upgradeQueue[0]))
             }
+        } else  if ( upgradeQueue[0].method === 'id') {
+            let card = hand.filter(card => card.id === upgradeQueue[0].id)[0]
+            dispatch(upgradeCard(card.id, upgradeQueue[0]))
+        } else if ( upgradeQueue[0].method === 'choose') {
+            console.log('choose')
         }
     }, [dispatch, hand, upgradeQueue])
 
@@ -104,7 +127,7 @@ export const Hand = () => {
                     }}
                 >
 
-                    <Card title={card.title} isBig={false} description={card.description} id={card.id} beingPlayed={beingPlayed}></Card>
+                    <Card title={card.title} isLarge={(card.id === selected).toString()} onClick={() => setCardSelected(card.id)} description={card.description} id={card.id} beingPlayed={beingPlayed} buttonText={"Upgrade"}></Card>
                 </li>)
         }
         return allCards

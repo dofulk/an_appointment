@@ -1,15 +1,15 @@
 
 import React, { useEffect, useState, useRef } from "react";
+import {Button} from '../Button/Button'
 
 
 import './Card.css'
 
 
 
-export const Card = ({ id, color, title, description, onClick, beingPlayed }) => {
+export const Card = ({ id, color, title, description, onClick, beingPlayed, isLarge = "false", buttonText, onButtonClick}) => {
 
   const [isPlaying, setIsPlaying] = useState(0)
-  const [isLarge, setIsLarge] = useState(0)
   const [upgradeAnimation, setUpgradeAnimation] = useState(0)
   const [opacity, setOpacity] = useState(0)
   const firstRender = useRef(true);
@@ -47,6 +47,7 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
 
 
   return (
+    <div>
     <div className="card"
       isplaying={isPlaying}
       onClick={onClick}
@@ -60,6 +61,9 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed }) =>
       <div className="description">
         {description}
       </div>
+      {(buttonText && isLarge === "true") && <Button text={buttonText}></Button>}
+    </div>
+    
     </div>
   );
 

@@ -15,26 +15,6 @@ import { Button } from "../Button/Button";
 
 export const ModalView = ({setModalContent, building }) => {
 
-    const handleKeydown = (e) => {
-        switch (e.key) {
-            case 'Escape':
-                setModalContent()
-                break;
-            default:
-                break;
-
-        };
-    }
-
-    useEffect(() => {
-
-
-        window.addEventListener("keydown", handleKeydown);
-        return () => {
-            window.removeEventListener("keydown", handleKeydown);
-        }
-
-    });
 
     const content = (building) => {
         switch (building.buildingType) {

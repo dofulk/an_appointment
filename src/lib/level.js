@@ -2,26 +2,36 @@ import { getNewCardList, generateShop } from "./cardEffects"
 import { v4 as uuidv4 } from 'uuid'
 import { breakTiles } from "./breakTiles"
 
+const enemies = [
+    {   position: "", moves: 1, baseMoves: 1, hp: 8, maxHP: 8, attack: 1, baseAttack: 1, type: 'character', sprite: "🪲" },
+    {  position: "", moves: 1, baseMoves: 1, hp: 3, maxHP: 3, attack: 2, baseAttack: 2, type: 'character', sprite: "🥷🏼" },
+    {  position: "", moves: 1, baseMoves: 1, hp: 6, maxHP: 6, attack: 3, baseAttack: 3, type: 'character', sprite: "🦊" },
+]
+
 const generateEntityArray = (level) => {
     let entities = [
         { id: uuidv4(), position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
 
-        { id: uuidv4(), position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
+        // { id: uuidv4(), position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
         { id: uuidv4(), position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" },
-        { id: uuidv4(), position: "", type: "building", buildingType: "Key", sprite: "🔑" },
-        { id: uuidv4(), position: "", type: "building", buildingType: "Medic", sprite: "🏥" },
+        // { id: uuidv4(), position: "", type: "building", buildingType: "Key", sprite: "🔑" },
+        // { id: uuidv4(), position: "", type: "building", buildingType: "Medic", sprite: "🏥" },
         { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
-        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
-        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
-        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
+
     ]
-    let i = Math.floor((level + 3) / 2)
+    let i = level + 2
+
+    let keys = Object.keys(enemies);
+
+
     while (i > 0) {
-        entities.push(
-            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 30, maxHP: 30, attack: 1, baseAttack: 1, type: 'character', sprite: "🪲" },
-            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 10, maxHP: 10, attack: 6, baseAttack: 6, type: 'character', sprite: "🥷🏼" },
-            { id: uuidv4(), position: "", moves: 1, baseMoves: 1, hp: 15, maxHP: 15, attack: 3, baseAttack: 3, type: 'character', sprite: "🦊" },
-        )
+        let randomKey = keys[keys.length * Math.random() << 0]
+        let newEnemy = Object.create(
+            Object.getPrototypeOf(enemies[randomKey]),
+            Object.getOwnPropertyDescriptors(enemies[randomKey]),
+        );
+        newEnemy.id = uuidv4()
+        entities.push(newEnemy)
         i--
     }
     return entities
@@ -37,7 +47,7 @@ export const createLevel = (player, level, numberOfCycles) => {
     let byId = {}
     let allIds = []
     let validMoves = []
-    let width = 20
+    let width = 10
     let height = 4
 
     let i = 0
@@ -61,6 +71,9 @@ export const createLevel = (player, level, numberOfCycles) => {
         }
         i++
     }
+
+    //temporarily removing damage
+    numberOfCycles = 0
 
 
     byId = breakTiles(validMoves, numberOfCycles, byId)

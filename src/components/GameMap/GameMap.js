@@ -53,7 +53,7 @@ const renderedTiles = (tiles, entities, setPlayerPositionX, setPlayerPositionY, 
         let tile = tiles.byId[id]
         let character = tile.character
         let building = tile.building
-        return tileList.push(<Tile key={id} id={id} color="light" character={entities[character]} building={entities[building]} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} damage={tiles.byId[id].damage} changePosition={changePosition} setModalContent={setModalContent}/>)
+        return tileList.push(<Tile key={id} id={id} color="light" characterId={character} buildingId={building} setPlayerPositionX={setPlayerPositionX} setPlayerPositionY={setPlayerPositionY} damage={tiles.byId[id].damage} changePosition={changePosition} setModalContent={setModalContent} />)
     })
     return tileList
 }
@@ -99,14 +99,14 @@ export const GameMap = ({ setModalContent }) => {
     const ref = useRef()
 
     const gameMapTransformation = (x, y) => {
-        if ((viewWidth / 2) > x) {
+        // if ((viewWidth / 2) > x) {
 
-            return `translate(${-0}px, ${0}px)`
-        } else if (ref.current && (ref.current.offsetWidth - (viewWidth / 2) < x)) {
-            return `translate(${-(ref.current.offsetWidth - viewWidth)}px, ${0}px)`
-        } else {
-            return `translate(${-(x - (viewWidth / 2))}px, ${0}px)`
-        }
+        return `translate(${-0}px, ${0}px)`
+        // } else if (ref.current && (ref.current.offsetWidth - (viewWidth / 2) < x)) {
+        //     return `translate(${-(ref.current.offsetWidth - viewWidth)}px, ${0}px)`
+        // } else {
+        //     return `translate(${-(x - (viewWidth / 2))}px, ${0}px)`
+        // }
 
 
     }

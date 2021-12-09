@@ -28,14 +28,14 @@
       height: 5em;
   }
 
-  .card[islarge="1"] {
+  .card[islarge="true"] {
     height: 22em;
     width: 20em;
     transform: translate(0px, -500px);
 
   }
 
-  .card[islarge="0"] {
+  .card[islarge="false"] {
     width: 10em;
     height: 11em;
   }

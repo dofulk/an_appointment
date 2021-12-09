@@ -1,5 +1,5 @@
 import { batch } from 'react-redux'
-import { changeDrawAmount, changeHp, changeGold, changeAttack, addOnKill, addOnAttack, changeMoves, addOnMove, changeBaseAttack } from './action'
+import { changeDrawAmount, changeHp, changeGold, changeAttack, addOnKill, addOnAttack, changeMoves, addOnMove, changeBaseAttack, addToUpgradeQueue } from './action'
 
 
 
@@ -28,7 +28,7 @@ const bloodRitual = (params) => {
     }
 }
 
-export const bribe = (params) => {
+const bribe = (params) => {
     return (dispatch) => {
 
         batch(() => {
@@ -39,7 +39,7 @@ export const bribe = (params) => {
     }
 }
 
-export const bloodyDagger = (params) => {
+const bloodyDagger = (params) => {
     return (dispatch) => {
 
         batch(() => {
@@ -58,7 +58,7 @@ const vampirism = (params) => {
     return addOnKill({ action: changeHp({ id: 'player' }, params.hp), removeOn: 'endCycle' })
 }
 
-const jeffreyBezos = (params) => {
+const sellSoul = (params) => {
     return addOnKill({ action: changeGold(params.gold), removeOn: 'endCycle' })
 }
 const snowball = (params) => {
@@ -80,7 +80,7 @@ const goldenFists = (params) => {
     return addOnAttack({ action: changeGold(params.gold), removeOn: 'endCycle' })
 }
 
-export const glassCannon = (params) => {
+const glassCannon = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', params.attack))
@@ -90,7 +90,7 @@ export const glassCannon = (params) => {
 
 }
 
-export const dashAttack = (params) => {
+const dashAttack = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', params.attack))
@@ -99,7 +99,7 @@ export const dashAttack = (params) => {
     }
 }
 
-export const midasDagger = (params) => {
+const midasDagger = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', params.attack))
@@ -109,7 +109,7 @@ export const midasDagger = (params) => {
 }
 
 
-export const pickpocket = (params) => {
+const pickpocket = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeDrawAmount(params.draw))
@@ -119,7 +119,7 @@ export const pickpocket = (params) => {
 }
 
 
-export const sprint = (params) => {
+const sprint = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeMoves('player', params.moves))
@@ -128,7 +128,7 @@ export const sprint = (params) => {
     }
 }
 
-export const quickHands = (params) => {
+const quickHands = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeMoves('player', params.moves))
@@ -136,7 +136,7 @@ export const quickHands = (params) => {
         })
     }
 }
-export const secondWind = (params) => {
+const secondWind = (params) => {
     return addOnAttack({ action: changeMoves('player', params.moves), removeOn: 'endCycle' })
 }
 
@@ -145,6 +145,23 @@ const bulk = (params) => {
     changeBaseAttack('player', params.strength)
 }
 
+const fragileSword = (params) => {
+    return dispatch => {
+        batch(() => {
+            dispatch(changeAttack('player', params.attack))
+            dispatch(addToUpgradeQueue({ id: params.id, method: 'id', type: 'attack', amount: -1 }))
+        })
+    }
+}
+
+const morningStrength = (params) => {
+    return dispatch => {
+        batch(() => {
+            dispatch(changeAttack('player', params.attack))
+            dispatch(addOnMove({ action: changeAttack('player', -1), removeOn: 'endCycle' }))
+        })
+    }
+}
 
 export const getCardEffect = (effect, params) => {
 
@@ -165,8 +182,8 @@ export const getCardEffect = (effect, params) => {
             return pieceOfSilver(params)
         case 'Vampirism':
             return vampirism(params)
-        case 'Jeffrey Bezos':
-            return jeffreyBezos(params)
+        case 'Sell Soul':
+            return sellSoul(params)
         case 'Snowball':
             return snowball(params)
         case 'Meatball':
@@ -193,6 +210,10 @@ export const getCardEffect = (effect, params) => {
             return secondWind(params)
         case 'Bulk':
             return bulk(params)
+        case 'Fragile Sword': 
+            return fragileSword(params)
+        case 'Morning Strength':
+            return morningStrength(params)
         default:
             console.log('no action')
             return {

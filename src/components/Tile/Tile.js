@@ -7,7 +7,7 @@ const tileStyle = (width, height) => {
 
 
 
-  
+
   return {
     width: (100 / width) + '%',
     height: (100 / height) + '%',
@@ -16,7 +16,7 @@ const tileStyle = (width, height) => {
   }
 }
 
-const tileMiddleStyle =(damage) =>  {
+const tileMiddleStyle = (damage) => {
 
   let background
 
@@ -65,7 +65,7 @@ const tileMiddleStyle =(damage) =>  {
 
 
 
-export const Tile = ({ character, building, damage, setPlayerPositionX, setPlayerPositionY, changePosition, setModalContent }) => {
+export const Tile = ({ characterId, buildingId, damage, setPlayerPositionX, setPlayerPositionY, changePosition, setModalContent }) => {
 
   const inputRef = useRef();
   const width = useSelector(widthSelector)
@@ -73,41 +73,32 @@ export const Tile = ({ character, building, damage, setPlayerPositionX, setPlaye
 
 
   useEffect(() => {
-    if (!character) {
+      changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, characterId)
 
-    } else {
-      changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, character.id)
-    }
 
- 
-  }, [changePosition, character])
+  }, [changePosition, characterId])
 
- 
+
   useEffect(() => {
-    if (character && character.id === 'player' && building) {
-      setModalContent(building.id)
-    } else if ( character && character.id === 'player') {
+    if (characterId === 'player' && buildingId) {
+      setModalContent(buildingId)
+    } else if (characterId === 'player') {
       setModalContent()
     }
-  }, [character, building, setModalContent])
+  }, [characterId, buildingId, setModalContent])
 
   useEffect(() => {
-    if (!building) {
 
-    } else {
-      changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, building.id)
-    }
-  }, [building, changePosition])
+      changePosition(inputRef.current.offsetLeft, inputRef.current.offsetTop, buildingId)
+  }, [buildingId, changePosition])
 
   useEffect(() => {
-    if (!character) {
-
-    } else if (character.id === 'player') {
+    if (characterId === 'player') {
 
       setPlayerPositionX(inputRef.current.offsetLeft);
       setPlayerPositionY(inputRef.current.offsetTop);
     }
-  }, [character, setPlayerPositionX, setPlayerPositionY])
+  }, [characterId, setPlayerPositionX, setPlayerPositionY])
 
 
   return (

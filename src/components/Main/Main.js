@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { GameMap } from "../GameMap/GameMap";
 import { Hand } from "../Hand/Hand";
 import { useDispatch, useSelector } from 'react-redux';
-import {  moveOrAttack, chooseMove, newPhase, endCycle, changeMoves } from '../../redux/actions/action';
+import { moveOrAttack, chooseMove, newPhase, endCycle, changeMoves } from '../../redux/actions/action';
 import { choosePlayerTarget } from '../../lib/movement';
 
 
@@ -12,12 +12,13 @@ import { playerSelector, tilesSelector, playerMovesSelector, goldSelector, curre
 import "./Main.css";
 import { ModalView } from "../ModalViews/ModalView";
 import { GameInfo } from "../GameInfo/GameInfo";
+import { Button } from "../Button/Button";
 
 
 
 
 
-export function Main() {
+export function Main({ menuOpen }) {
 
   const player = useSelector(playerSelector)
   const tiles = useSelector(tilesSelector)
@@ -59,22 +60,27 @@ export function Main() {
   }
 
 
+  useEffect(() => {
+    if (currentPhase === 'player' && moves <= 0 && tiles.byId[player.position] && !tiles.byId[player.position].building.length) {
+      dispatch(newPhase('enemies'))
+    }
+
+
+  }, [currentPhase, dispatch, modalContent, moves, player.position, tiles])
+
 
   useEffect(() => {
 
-    if (currentPhase === 'player' && moves <= 0 && !modalContent) {
-      dispatch(newPhase('enemies'))
-
-    }
 
     if (currentPhase === 'enemies') {
       chooseEnemyTurns()
     }
 
-
-    window.addEventListener("keydown", handleKeydown);
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
+    if (!menuOpen) {
+      window.addEventListener("keydown", handleKeydown);
+      return () => {
+        window.removeEventListener("keydown", handleKeydown);
+      }
     }
 
   });
@@ -90,7 +96,7 @@ export function Main() {
       case 'w':
       case 'a':
       case 's':
-      case 'd':  
+      case 'd':
 
 
         let target = choosePlayerTarget(player.position, e.key)
@@ -101,18 +107,19 @@ export function Main() {
         } else if (!target) {
           return
         } else if (moves <= 0) {
-        }else if (!targetTile) {
+        } else if (!targetTile) {
           dispatch(changeMoves('player', -1))
-
-        // } else if (targetTile.building.length && !targetTile.character.length) {
-        //   setModalIsOpen(true)
-        //   setModalContent(targetTile.building)
-        //   dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
-        // }else if (modalI) {
-        //   setModalContent()
-        //   dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
         } else if (targetTile) {
           dispatch(moveOrAttack(targetTile, player, entitiesById, moveEffects, attackEffects, killEffects))
+        }
+        break;
+
+      case 'Enter':
+        setModalContent()
+        break;
+      case ' ':
+        if (currentPhase === 'player') {
+          dispatch(newPhase('enemies'))
         }
         break;
       default:
@@ -125,16 +132,18 @@ export function Main() {
   return (
     <div className="component-main" onKeyDown={handleKeydown} >
 
-        
+
       <div className='game_info'>
         <GameInfo player={player} moves={moves} gold={gold} />
+        {(currentPhase === 'player' && moves <= 0 && tiles.byId[player.position] && tiles.byId[player.position].building.length) ? <Button onClick={() => dispatch(newPhase('enemies'))} text="END TURN"></Button> : <div />}
       </div>
       <div className="game_modal">
-      <GameMap className="gamemap_map" setModalContent={setModalContent}/>
+        <GameMap className="gamemap_map" setModalContent={setModalContent} modalContent={modalContent} />
         {modalContent ?
-          <ModalView className="game_modal"  setModalContent={setModalContent} building={entitiesById[modalContent]} isOpen={1} /> :
-          <ModalView className="game_modal" isOpen={0} setModalContent={setModalContent}/>
+          <ModalView className="game_modal" setModalContent={setModalContent} building={entitiesById[modalContent]} isOpen={1} /> :
+          <ModalView className="game_modal" isOpen={0} setModalContent={setModalContent} />
         }
+
       </div>
 
       <div className="game_hand">

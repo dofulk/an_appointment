@@ -7,7 +7,7 @@ export const initialState = {
   numberOfCycles: 0,
   drawAmount: 5,
   baseDraw: 5,
-  gold: 15,
+  gold: 10,
   level: 0,
   removeAmount: 0,
   onKill: [],
@@ -80,9 +80,9 @@ const game = (state = initialState, action) => {
         level: action.payload.level,
         phase: 0,
         drawAmount: state.baseDraw,
-        onKill: state.onKill.filter(item => item.removeOn !== 'newMap'),
-        onMove: state.onMove.filter(item => item.removeOn !== 'newMap'),
-        onAttack: state.onAttack.filter(item => item.removeOn !== 'newMap'),
+        onKill: state.onKill.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle'),
+        onMove: state.onMove.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle'),
+        onAttack: state.onAttack.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle'),
         onNewMap: []
       }
     case 'ADD_ON_KILL':
@@ -124,6 +124,7 @@ const game = (state = initialState, action) => {
         removeAmount: state.removeAmount + action.payload.removeAmount
       }
     case 'ADD_TO_UPGRADE_QUEUE':
+      console.log('upgrade')
       return {
         ...state,
         upgradeQueue: [
