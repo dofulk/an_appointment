@@ -58,7 +58,7 @@ const vampirism = (params) => {
     return addOnKill({ action: changeHp({ id: 'player' }, params.hp), removeOn: 'endCycle' })
 }
 
-const sellSoul = (params) => {
+const hitman = (params) => {
     return addOnKill({ action: changeGold(params.gold), removeOn: 'endCycle' })
 }
 const snowball = (params) => {
@@ -149,7 +149,7 @@ const fragileSword = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', params.attack))
-            dispatch(addToUpgradeQueue({ id: params.id, method: 'id', type: 'attack', amount: -1 }))
+            dispatch(addToUpgradeQueue([{ id: params.id, method: 'id', type: 'attack', amount: -1 }]))
         })
     }
 }
@@ -182,8 +182,8 @@ export const getCardEffect = (effect, params) => {
             return pieceOfSilver(params)
         case 'Vampirism':
             return vampirism(params)
-        case 'Sell Soul':
-            return sellSoul(params)
+        case 'Hitman':
+            return hitman(params)
         case 'Snowball':
             return snowball(params)
         case 'Meatball':

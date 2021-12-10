@@ -87,6 +87,15 @@ const cards = (state = initialState, action) => {
                     action.payload.card
                 ]
             }
+
+        case 'REMOVE_CARD': {
+            return {
+                ...state,
+                draw: [ ...state.draw.filter(card => card.id !== action.payload.id)],
+                hand: [ ...state.hand.filter(card => card.id !== action.payload.id)],
+                discard: [ ...state.discard.filter(card => card.id !== action.payload.id)]
+            }
+        }
         case 'UPGRADE_CARD':
 
             return {
@@ -105,6 +114,8 @@ const cards = (state = initialState, action) => {
                 ]
 
             }
+        case 'NEW_GAME':
+            return initialState
 
         default:
             return state;

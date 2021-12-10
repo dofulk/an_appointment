@@ -41,4 +41,5 @@ export const onAttackSelector = state => state.game.onAttack
 export const heightSelector = state => state.level.height
 export const widthSelector = state => state.level.width
 
-export const removeAmountSelector = state => state.game.removeAmount
+
+export const controlsSelector = state => state.controls

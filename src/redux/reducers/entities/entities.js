@@ -4,7 +4,6 @@ export const initialState = {
 
     },
     characterIds: [],
-    playerTurnInitiated: false
 };
 
 const entities = (state = initialState, action) => {
@@ -22,7 +21,6 @@ const entities = (state = initialState, action) => {
                     }
                 },
                 characterIds: action.payload.entities.characterIds,
-                playerTurnInitiated: false,
             }
         //Changes the position value of entity
 
@@ -130,7 +128,6 @@ const entities = (state = initialState, action) => {
             return {
                 ...state,
                 byId: entities,
-                playerTurnInitiated: false,
             }
 
         case 'BUY_CARD':
@@ -144,15 +141,9 @@ const entities = (state = initialState, action) => {
                     }
                 }
             }
-        // return state
 
 
 
-        case 'INITIATE_TURN':
-            return {
-                ...state,
-                playerTurnInitiated: true
-            }
 
         case 'DELETE_ENTITY':
             let key = action.payload.entityId
@@ -200,6 +191,9 @@ const entities = (state = initialState, action) => {
                     }
                 }
             }
+        case 'NEW_GAME':
+            return initialState
+
 
         default:
             return state;

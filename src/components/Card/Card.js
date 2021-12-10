@@ -47,7 +47,7 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed, isLa
 
 
   return (
-    <div>
+    <div className="card_container" islarge={isLarge}>
     <div className="card"
       isplaying={isPlaying}
       onClick={onClick}
@@ -61,9 +61,9 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed, isLa
       <div className="description">
         {description}
       </div>
-      {(buttonText && isLarge === "true") && <Button text={buttonText}></Button>}
+      
     </div>
-    
+    {(buttonText && isLarge === "true") && <Button text={buttonText} onClick={onButtonClick}></Button>}
     </div>
   );
 

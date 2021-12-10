@@ -104,6 +104,9 @@ const tiles = (state = initialState, action) => {
         //         byId: newTiles
         //     }
 
+        case 'NEW_GAME':
+            return initialState
+
         default:
             return state;
     }

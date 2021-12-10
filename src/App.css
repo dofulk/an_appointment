@@ -9,6 +9,18 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-color: black;
+  background-color: #666666;
   z-index: 100;
+}
+
+.app_gameover {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #666666;
+  z-index: 99;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

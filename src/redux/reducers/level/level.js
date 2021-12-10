@@ -15,7 +15,7 @@ const level = (state = initialState, action) => {
                 floorTurn: state.floorTurn + 1
             }
 
-        case 'NEW_MAP': 
+        case 'NEW_MAP':
             return {
                 ...state,
                 width: action.payload.map.width,
@@ -23,6 +23,10 @@ const level = (state = initialState, action) => {
             }
         default:
             return state;
+
+        case 'NEW_GAME':
+            return initialState
+
     }
 
 }

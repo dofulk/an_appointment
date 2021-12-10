@@ -3,6 +3,19 @@ import * as PF from "pathfinding"
 import { onAttack, onKill, onMove } from "./conditionalActions"
 import { chooseRandomTarget } from "../../lib/movement"
 
+export const newGame = () => ({
+    type: 'NEW_GAME'
+})
+
+export const changeControl = (control, slot, key) => ({
+
+        type: 'CHANGE_CONTROL',
+        payload: {
+            control: control,
+            slot: slot,
+            key: key,
+        }
+    })
 
 export const addCharacter = (tile, character) => ({
     type: 'ADD_CHARACTER',
@@ -11,6 +24,7 @@ export const addCharacter = (tile, character) => ({
         character: character
     }
 })
+
 
 
 
@@ -133,7 +147,6 @@ export const changeGold = (gold) => ({
 
 export const addCardToDiscard = (card) => {
     if (card.onAdd) {
-        console.log(card.onAdd)
         return dispatch => {
             batch(() => {
                 dispatch(card.onAdd)
@@ -154,6 +167,13 @@ export const addCardToDiscard = (card) => {
         }
     }
 }
+
+export const removeCard = (card) => ({
+    type: 'REMOVE_CARD',
+    payload: {
+        id: card
+    }
+})
 
 
 export const moveEntity = (target, entity) => ({
@@ -212,11 +232,11 @@ export const addOnAttack = (effect) => {
     }
 }
 
-export const addToUpgradeQueue = (upgrade) => {
-    return{
+export const addToUpgradeQueue = (upgrades) => {
+    return {
         type: 'ADD_TO_UPGRADE_QUEUE',
         payload: {
-            upgrade: upgrade
+            upgrades: upgrades
         }
     }
 }
@@ -246,14 +266,6 @@ export const unlockDoor = (building) => {
     }
 }
 
-export const changeRemoveAmount = (amount) => {
-    return {
-        type: 'CHANGE_REMOVE_AMOUNT',
-        payload: {
-            removeAmount: amount
-        }
-    }
-}
 
 export const attackTarget = (target, attacker, killEffects) => {
     return (dispatch, getState) => {
@@ -304,7 +316,7 @@ export const upgradeAttack = (id, attack) => {
         type: 'UPGRADE_ATTACK',
         payload: {
             attack: attack,
-            id: id 
+            id: id
         }
 
     }

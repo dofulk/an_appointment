@@ -9,7 +9,6 @@ export const initialState = {
   baseDraw: 5,
   gold: 10,
   level: 0,
-  removeAmount: 0,
   onKill: [],
   onMove: [],
   onAttack: [],
@@ -118,26 +117,24 @@ const game = (state = initialState, action) => {
           action.payload.removeOn
         ]
       }
-    case 'CHANGE_REMOVE_AMOUNT':
-      return {
-        ...state,
-        removeAmount: state.removeAmount + action.payload.removeAmount
-      }
     case 'ADD_TO_UPGRADE_QUEUE':
-      console.log('upgrade')
       return {
         ...state,
         upgradeQueue: [
           ...state.upgradeQueue,
-          action.payload.upgrade
+          ...action.payload.upgrades
         ]
       }
-
+    case 'REMOVE_CARD':
     case 'UPGRADE_CARD':
       return {
         ...state,
         upgradeQueue: state.upgradeQueue.slice(1)
       }
+
+    case 'NEW_GAME':
+      return initialState
+
     default:
       return state;
   }

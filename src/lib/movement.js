@@ -26,20 +26,16 @@ const moveRight = (origin, distance) => {
     return target
 }
 
-export const choosePlayerTarget = (position, keystroke) => {
+export const choosePlayerTarget = (position, direction) => {
 
-    switch (keystroke) {
-        case 'ArrowUp':
-        case 'w':
+    switch (direction) {
+        case 'up':
             return moveUp(position, 1)
-        case 'ArrowRight':
-        case 'd':
+        case 'right':
             return moveRight(position, 1)
-        case 'ArrowDown':
-        case 's':
+        case 'down':
             return moveDown(position, 1)
-        case 'ArrowLeft':
-        case 'a':
+        case 'left':
             return moveLeft(position, 1)
         default:
             break;

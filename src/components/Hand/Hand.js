@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector, upgradeQueueSelector, removeAmountSelector } from '../../redux/selectors/index'
-import { newCycle, drawOne, upgradeCard } from '../../redux/actions/action'
+import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector, upgradeQueueSelector } from '../../redux/selectors/index'
+import { newCycle, drawOne, upgradeCard, removeCard } from '../../redux/actions/action'
 import { Card } from "../Card/Card";
 import { CardList } from "../CardList/CardList"
 import Modal from 'react-modal';
@@ -22,13 +22,14 @@ export const Hand = () => {
     const currentPhase = useSelector(currentPhaseSelector)
     const drawAmount = useSelector(drawAmountSelector)
     const upgradeQueue = useSelector(upgradeQueueSelector)
-    const removeAmount = useSelector(removeAmountSelector)
 
     const [modalContent, setModalContent] = useState()
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [cardsPlayed, setCardsPlayed] = useState(0)
     const [beingPlayed, setBeingPlayed] = useState()
     const [selected, setSelected] = useState()
+    const [buttonText, setButtonText] = useState()
+    const [onButtonClick, setOnButtonClick] = useState()
 
 
     const setCardSelected = (id) => {
@@ -39,12 +40,6 @@ export const Hand = () => {
         }
     }
 
-
-    useEffect(() => {
-        if (removeAmount) {
-            console.log('remove')
-        }
-    }, [removeAmount])
 
 
     useEffect(() => {
@@ -82,6 +77,9 @@ export const Hand = () => {
         return () => clearInterval(timeout);
     }, [drawAmount, cardsPlayed, currentPhase, hand, dispatch])
 
+
+
+
     useEffect(() => {
         if (!upgradeQueue.length) {
 
@@ -98,8 +96,17 @@ export const Hand = () => {
             dispatch(upgradeCard(card.id, upgradeQueue[0]))
         } else if ( upgradeQueue[0].method === 'choose') {
             console.log('choose')
+        } else if (upgradeQueue[0].method === 'remove') {
+            setButtonText('Remove')
+            setOnButtonClick(() => (id) => {
+                setButtonText()
+                setOnButtonClick()
+                dispatch(removeCard(id))
+            })
         }
     }, [dispatch, hand, upgradeQueue])
+
+
 
     useEffect(() => {
         setCardsPlayed(0)
@@ -127,7 +134,7 @@ export const Hand = () => {
                     }}
                 >
 
-                    <Card title={card.title} isLarge={(card.id === selected).toString()} onClick={() => setCardSelected(card.id)} description={card.description} id={card.id} beingPlayed={beingPlayed} buttonText={"Upgrade"}></Card>
+                    <Card title={card.title} isLarge={(card.id === selected).toString()} onClick={() => setCardSelected(card.id)} description={card.description} id={card.id} beingPlayed={beingPlayed} buttonText={buttonText} onButtonClick={() => onButtonClick(card.id)}></Card>
                 </li>)
         }
         return allCards
