@@ -1,5 +1,5 @@
 import { batch } from 'react-redux'
-import { changeDrawAmount, changeHp, changeGold, changeAttack, addOnKill, addOnAttack, changeMoves, addOnMove, changeBaseAttack, addToUpgradeQueue } from './action'
+import { changeDrawAmount, changeHP, changeGold, changeAttack, addOnKill, addOnAttack, changeMoves, addOnMove, changeBaseAttack, addToUpgradeQueue } from './action'
 
 
 
@@ -12,7 +12,7 @@ const move = (params) => {
     return changeMoves('player', params.moves)
 }
 const heal = (params) => {
-    return changeHp({ id: 'player' }, params.hp)
+    return changeHP({ id: 'player' }, params.hp)
 }
 
 const bloodRitual = (params) => {
@@ -22,7 +22,7 @@ const bloodRitual = (params) => {
 
         batch(() => {
             dispatch(changeDrawAmount(params.draw))
-            dispatch(changeHp({ id: 'player' }, -params.hp))
+            dispatch(changeHP({ id: 'player' }, -params.hp))
         })
 
     }
@@ -44,7 +44,7 @@ const bloodyDagger = (params) => {
 
         batch(() => {
             dispatch(changeAttack('player', params.attack))
-            dispatch(changeHp({ id: 'player' }, -params.hp))
+            dispatch(changeHP({ id: 'player' }, params.hp))
         })
 
     }
@@ -55,7 +55,7 @@ const pieceOfSilver = (params) => {
 
 
 const vampirism = (params) => {
-    return addOnKill({ action: changeHp({ id: 'player' }, params.hp), removeOn: 'endCycle' })
+    return addOnKill({ action: changeHP({ id: 'player' }, params.hp), removeOn: 'endCycle' })
 }
 
 const hitman = (params) => {
@@ -84,7 +84,7 @@ const glassCannon = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', params.attack))
-            dispatch(addOnMove({ action: changeHp({ id: 'player'}, -1), removeOn: 'endCycle' }))
+            dispatch(addOnMove({ action: changeHP({ id: 'player'}, -1), removeOn: 'endCycle' }))
         })
     }
 
@@ -149,7 +149,7 @@ const fragileSword = (params) => {
     return dispatch => {
         batch(() => {
             dispatch(changeAttack('player', params.attack))
-            dispatch(addToUpgradeQueue([{ id: params.id, method: 'id', type: 'attack', amount: -1 }]))
+            dispatch(addToUpgradeQueue([{ id: params.id, method: 'id', type: 'attack', amount: params.upgradeAmount }]))
         })
     }
 }

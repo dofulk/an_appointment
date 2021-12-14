@@ -8,13 +8,14 @@ export const initialState = {
 
     ],
     discard: [
-        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 1, moves: undefined, gold: undefined },
-        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 1, moves: undefined, gold: undefined },
-        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.attack }) }, get description() { return "Add " + this.attack + " to attack" }, onAdd: undefined, attack: 1, moves: undefined, gold: undefined },
-        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 1, gold: undefined },
-        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 1, gold: undefined },
-        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 1, gold: undefined },
-        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.moves }) }, get description() { return "Gain " + this.moves + " moves" }, onAdd: undefined, attack: undefined, moves: 1, gold: undefined },
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.params.attack }) }, get description() { return "Add " + this.params.attack + " to attack" }, onAdd: undefined, params: { attack: 1 }, tier: 0 },
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.params.attack }) }, get description() { return "Add " + this.params.attack + " to attack" }, onAdd: undefined, params: { attack: 1 }, tier: 0 },
+        { id: uuidv4(), title: 'Attack', get effect() { return getCardEffect('Attack', { attack: this.params.attack }) }, get description() { return "Add " + this.params.attack + " to attack" }, onAdd: undefined, params: { attack: 1 }, tier: 0 },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.params.moves }) }, get description() { return "Gain " + this.params.moves + " moves" }, onAdd: undefined, params: { moves: 1 }, tier: 0 },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.params.moves }) }, get description() { return "Gain " + this.params.moves + " moves" }, onAdd: undefined, params: { moves: 1 }, tier: 0 },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.params.moves }) }, get description() { return "Gain " + this.params.moves + " moves" }, onAdd: undefined, params: { moves: 1 }, tier: 0 },
+        { id: uuidv4(), title: 'Move', get effect() { return getCardEffect('Move', { moves: this.params.moves }) }, get description() { return "Gain " + this.params.moves + " moves" }, onAdd: undefined, params: { moves: 1 }, tier: 0 },
+
     ]
 
 }
@@ -91,20 +92,22 @@ const cards = (state = initialState, action) => {
         case 'REMOVE_CARD': {
             return {
                 ...state,
-                draw: [ ...state.draw.filter(card => card.id !== action.payload.id)],
-                hand: [ ...state.hand.filter(card => card.id !== action.payload.id)],
-                discard: [ ...state.discard.filter(card => card.id !== action.payload.id)]
+                draw: [...state.draw.filter(card => card.id !== action.payload.id)],
+                hand: [...state.hand.filter(card => card.id !== action.payload.id)],
+                discard: [...state.discard.filter(card => card.id !== action.payload.id)]
             }
         }
         case 'UPGRADE_CARD':
+
 
             return {
                 ...state,
                 hand: [
                     ...state.hand.map((card) => {
                         if (card.id === action.payload.id) {
-                            card[action.payload.upgrade.type] = card[action.payload.upgrade.type] + action.payload.upgrade.amount
-                            return card
+                            let newCard = card
+                            newCard.params[action.payload.upgrade.type] = card.params[action.payload.upgrade.type] + action.payload.upgrade.amount
+                            return newCard
                         } else {
                             return card
                         }

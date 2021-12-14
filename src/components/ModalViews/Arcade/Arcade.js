@@ -1,6 +1,6 @@
 import React from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
-import { changeGold, changeHp} from "../../../redux/actions/action";
+import { changeGold, changeHP} from "../../../redux/actions/action";
 import { playerSelector} from "../../../redux/selectors";
 import { Button } from "../../Button/Button";
 
@@ -17,7 +17,7 @@ export const Arcade = ({ setModalIsOpen }) => {
 
         batch(() => {
             dispatch(changeGold(5))
-            dispatch(changeHp(player, -1))
+            dispatch(changeHP(player, -1))
         })
 
     }

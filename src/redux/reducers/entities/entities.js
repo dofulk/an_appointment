@@ -84,6 +84,20 @@ const entities = (state = initialState, action) => {
                 }
             }
 
+        case 'CHANGE_MAX_HP':
+            return {
+                ...state,
+                byId: {
+                    ...state.byId,
+                    [action.payload.id]: {
+                        ...state.byId[action.payload.id],
+                        hp: state.byId[action.payload.id].hp + action.payload.maxHP,
+                        maxHP: state.byId[action.payload.id].maxHP + action.payload.maxHP
+                    }
+
+                }
+            }
+
         case 'CHANGE_ATTACK':
             return {
                 ...state,

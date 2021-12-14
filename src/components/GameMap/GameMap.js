@@ -149,7 +149,7 @@ export const GameMap = ({ setModalContent }) => {
 
 
         if (!Object.keys(tiles.byId).length) {
-            dispatch(newMap(createLevel(entitiesArray.player, 0, numberOfCycles)))
+            dispatch(newMap(createLevel(entitiesArray.player, 0, numberOfCycles, 1)))
         }
 
     })

@@ -6,7 +6,7 @@ import './GameInfo.css'
 export const GameInfo = ({ player, moves, gold }) => {
 
     const [movesAnimation, setMovesAnimation] = useState(0)
-    const [hpAnimation, setHpAnimation] = useState(0)
+    const [hpAnimation, setHPAnimation] = useState(0)
     const [attackAnimation, setAttackAnimation] = useState(0)
     const [goldAnimation, setGoldAnimation] = useState(0)
     useEffect(() => {
@@ -22,9 +22,9 @@ export const GameInfo = ({ player, moves, gold }) => {
 
 
     useEffect(() => {
-        setHpAnimation(1)
+        setHPAnimation(1)
         let timer = setTimeout(() => {
-            setHpAnimation(0)
+            setHPAnimation(0)
         }, 250);
 
         return () => {

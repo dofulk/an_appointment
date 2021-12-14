@@ -1,6 +1,6 @@
 import React from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
-import { changeGold, changeHp } from "../../../redux/actions/action";
+import { changeGold, changeHP } from "../../../redux/actions/action";
 import { playerSelector, goldSelector } from "../../../redux/selectors";
 import { Button } from "../../Button/Button";
 
@@ -18,7 +18,7 @@ export const Medic = ({ setModalIsOpen }) => {
         if (gold >= 7) {
             batch(() => {
                 dispatch(changeGold(-7))
-                dispatch(changeHp(player, 1))
+                dispatch(changeHP(player, 1))
             })
         } else return
      

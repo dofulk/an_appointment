@@ -47,10 +47,3 @@
   .card[opacity="1"] {
     opacity: 1;
   }
-
-  .card_container {
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  }
-  .card_container[islarge="true"] {
-    transform: translate(0px, -500px);
-  }

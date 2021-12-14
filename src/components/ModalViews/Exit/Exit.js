@@ -14,7 +14,7 @@ export const Exit = ({ setModalContent, building }) => {
   const numberOfCycles = useSelector(numberOfCyclesSelector)
   const dispatch = useDispatch()
   const onClick = () => {
-    dispatch(newMap(createLevel(player, level, numberOfCycles)))
+    dispatch(newMap(createLevel(player, level, numberOfCycles, Math.ceil(level / 3))))
     setModalContent()
   }
   return (

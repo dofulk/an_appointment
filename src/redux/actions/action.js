@@ -39,7 +39,7 @@ export const changeMoves = (id, moves) => ({
 })
 
 
-export const changeHp = (entity, hp, killEffects) => {
+export const changeHP = (entity, hp, killEffects) => {
     if (entity.id !== 'player' && entity.hp + hp <= 0) {
         return onKill(entity, entity.position, killEffects)
     } else {
@@ -53,6 +53,14 @@ export const changeHp = (entity, hp, killEffects) => {
     }
 
 }
+
+export const changeMaxHP = (entity, maxHP)  =>({
+    type: 'CHANGE_MAX_HP',
+    payload: {
+        id: entity.id,
+        maxHP: maxHP
+    }
+})
 
 export const changeAttack = (id, attack) => ({
     type: 'CHANGE_ATTACK',
@@ -253,6 +261,15 @@ export const upgradeCard = (id, upgrade) => {
 
 }
 
+export const upgradeCards = (cards, upgrade) => {
+    return dispatch => {
+        batch(() => {
+            for (let card in cards) {
+                dispatch(upgradeCard(cards[card].id, upgrade))
+            }
+        })
+    }
+}
 
 
 export const unlockDoor = (building) => {
@@ -272,7 +289,7 @@ export const attackTarget = (target, attacker, killEffects) => {
 
         batch(() => {
             dispatch(changeMoves(attacker.id, -attacker.moves))
-            dispatch(changeHp(target, -attacker.attack, killEffects))
+            dispatch(changeHP(target, -attacker.attack, killEffects))
             dispatch({
                 type: 'ON_ATTACK',
                 payload: {

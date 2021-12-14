@@ -38,6 +38,7 @@ export function Main({ menuOpen }) {
   const killEffects = useSelector(onKillSelector)
   const [modalContent, setModalContent] = useState()
   const [enemyTurnOrder, setEnemyTurnOrder] = useState()
+  const [movementLocked, setMovementLocked] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -67,12 +68,22 @@ export function Main({ menuOpen }) {
 
   useEffect(() => {
 
+    if (upgradeQueue.length || menuOpen) {
+      setMovementLocked(true)
+    } else {
+      setMovementLocked(false)
+    }
+
+  }, [upgradeQueue, menuOpen])
+
+  useEffect(() => {
+
 
     if (currentPhase === 'enemies') {
       chooseEnemyTurns()
     }
 
-    if (!menuOpen) {
+    if (!movementLocked) {
       window.addEventListener("keydown", handleKeydown);
       return () => {
         window.removeEventListener("keydown", handleKeydown);
@@ -84,7 +95,7 @@ export function Main({ menuOpen }) {
 
   const handleKeydown = (e) => {
 
-    let chooseMove= (direction) => {
+    let chooseMove = (direction) => {
       let target = choosePlayerTarget(player.position, direction)
       let targetTile = tiles.byId[target]
 
@@ -119,7 +130,7 @@ export function Main({ menuOpen }) {
 
       case controls.moveLeft.main:
       case controls.moveLeft.alt:
-        chooseMove('left')    
+        chooseMove('left')
         break;
 
       case controls.exitBuilding.main:
@@ -159,9 +170,9 @@ export function Main({ menuOpen }) {
         }
 
       </div>
-
+      <Hand />
       <div className="game_hand">
-        <Hand />
+
       </div>
     </div>
   );

@@ -8,12 +8,12 @@ const enemies = [
     {  position: "", moves: 1, baseMoves: 1, hp: 6, maxHP: 6, attack: 3, baseAttack: 3, type: 'character', sprite: "🦊" },
 ]
 
-const generateEntityArray = (level) => {
+const generateEntityArray = (level, tier) => {
     let entities = [
-        { id: uuidv4(), position: "", content: getNewCardList(2), type: "building", buildingType: "Chest", sprite: "🎁" },
+        { id: uuidv4(), position: "", content: getNewCardList(2, tier), type: "building", buildingType: "Chest", sprite: "🎁" },
 
         // { id: uuidv4(), position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
-        { id: uuidv4(), position: "", content: generateShop(), type: "building", buildingType: "Shop", sprite: "💲" },
+        { id: uuidv4(), position: "", content: generateShop(tier), type: "building", buildingType: "Shop", sprite: "💲" },
         // { id: uuidv4(), position: "", type: "building", buildingType: "Key", sprite: "🔑" },
         // { id: uuidv4(), position: "", type: "building", buildingType: "Medic", sprite: "🏥" },
         { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
@@ -37,12 +37,12 @@ const generateEntityArray = (level) => {
     return entities
 }
 
-export const createLevel = (player, level, numberOfCycles) => {
+export const createLevel = (player, level, numberOfCycles, tier) => {
 
 
 
 
-    let entityArray = generateEntityArray(level)
+    let entityArray = generateEntityArray(level, tier)
 
     let byId = {}
     let allIds = []

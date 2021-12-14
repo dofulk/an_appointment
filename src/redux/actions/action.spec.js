@@ -43,7 +43,7 @@ describe('actions', () => {
         hp: hp,
       }
     }
-    expect(actions.changeHp(entity, hp)).toEqual(expectedAction)
+    expect(actions.changeHP(entity, hp)).toEqual(expectedAction)
   })
 
   it('should create an action to change the phase of the turn', () => {

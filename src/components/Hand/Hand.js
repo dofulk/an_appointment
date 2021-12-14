@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { handSelector, currentPhaseSelector, drawAmountSelector, discardSelector, drawSelector, upgradeQueueSelector } from '../../redux/selectors/index'
-import { newCycle, drawOne, upgradeCard, removeCard } from '../../redux/actions/action'
+import { newCycle, drawOne, upgradeCard, removeCard, upgradeCards } from '../../redux/actions/action'
 import { Card } from "../Card/Card";
 import { CardList } from "../CardList/CardList"
 import Modal from 'react-modal';
@@ -23,13 +23,12 @@ export const Hand = () => {
     const drawAmount = useSelector(drawAmountSelector)
     const upgradeQueue = useSelector(upgradeQueueSelector)
 
-    const [modalContent, setModalContent] = useState()
-    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [cardsPlayed, setCardsPlayed] = useState(0)
     const [beingPlayed, setBeingPlayed] = useState()
     const [selected, setSelected] = useState()
     const [buttonText, setButtonText] = useState()
     const [onButtonClick, setOnButtonClick] = useState()
+    const [isSelecting, setIsSelecting] = useState(false)
 
 
     const setCardSelected = (id) => {
@@ -84,7 +83,7 @@ export const Hand = () => {
         if (!upgradeQueue.length) {
 
         } else if ( upgradeQueue[0].method === 'random') {
-            let validCards = hand.filter(card => card[upgradeQueue[0].type])
+            let validCards = hand.filter(card => card.params[upgradeQueue[0].type])
             if (!validCards.length) {
                 return
             } else {
@@ -92,17 +91,35 @@ export const Hand = () => {
                 dispatch(upgradeCard(cardToUpgrade.id, upgradeQueue[0]))
             }
         } else  if ( upgradeQueue[0].method === 'id') {
+            console.log(upgradeQueue)
             let card = hand.filter(card => card.id === upgradeQueue[0].id)[0]
             dispatch(upgradeCard(card.id, upgradeQueue[0]))
         } else if ( upgradeQueue[0].method === 'choose') {
-            console.log('choose')
+            setButtonText('Upgrade')
+            setIsSelecting(true)
+            setOnButtonClick(() => (id) => {
+                setIsSelecting(false)
+                setButtonText()
+                setOnButtonClick()
+                dispatch(upgradeCard(id, upgradeQueue[0]))
+            })
         } else if (upgradeQueue[0].method === 'remove') {
             setButtonText('Remove')
+            setIsSelecting(true)
             setOnButtonClick(() => (id) => {
+                setIsSelecting(false)
                 setButtonText()
                 setOnButtonClick()
                 dispatch(removeCard(id))
             })
+        } else if (upgradeQueue[0].method === 'all') {
+         
+            let validCards = hand.filter(card => card.params[upgradeQueue[0].type])
+            if (!validCards.length) {
+                return
+            } else {
+                dispatch(upgradeCards(validCards, upgradeQueue[0]))
+            }
         }
     }, [dispatch, hand, upgradeQueue])
 
@@ -111,15 +128,6 @@ export const Hand = () => {
     useEffect(() => {
         setCardsPlayed(0)
     }, [currentPhase])
-
-    const openCardList = (cards) => {
-        setModalIsOpen(true)
-        setModalContent(
-            <div>
-                <CardList listOfCards={cards}></CardList>
-                <button onClick={() => setModalIsOpen(false)}>Exit</button>
-            </div>)
-    }
 
 
     let cards = hand.map((card) => {
@@ -142,18 +150,14 @@ export const Hand = () => {
 
 
     return (
-        <div className="hand">
-            <Modal
-                isOpen={modalIsOpen}
-            >
-                {modalContent}
-            </Modal>
+        <div className="hand" selecting={isSelecting.toString()}>
 
-            <div onClick={() => openCardList(draw)} className="draw">
+
+            <div className="draw">
                 <h1>{draw.length}</h1>
             </div>
             <ul className="cards">{cards}</ul>
-            <div onClick={() => openCardList(discard)} className="discard">
+            <div className="discard">
                 <h1>{discard.length}</h1>
             </div>
         </div>
