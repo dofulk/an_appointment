@@ -13,7 +13,7 @@ import { Button } from "../Button/Button";
 
 
 
-export const ModalView = ({setModalContent, building }) => {
+export const ModalView = ({ setModalContent, building }) => {
 
 
     const content = (building) => {
@@ -42,8 +42,6 @@ export const ModalView = ({setModalContent, building }) => {
                         }}>X</div>                        <Exit
                             setModalContent={setModalContent}
                             building={building}
-                        // player={player}
-                        // level={game.level}
                         ></Exit>
                     </div>
 
@@ -55,7 +53,8 @@ export const ModalView = ({setModalContent, building }) => {
                             padding: "10px",
                             left: "10px",
                             position: "absolute"
-                        }}>X</div>                        <Shop setModalContent={setModalContent}
+                        }}>X</div>      
+                        <Shop setModalContent={setModalContent}
                             shopItems={building.content}
                             building={building}></Shop>
                     </div>

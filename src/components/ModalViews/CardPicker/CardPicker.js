@@ -27,7 +27,7 @@ export const CardPicker = ({ listOfCards, building }) => {
   )
   return (
     <div className="cardpicker">
-      <div className="cardpicker_title">PICK ONE</div>
+      <div className="cardpicker_title">ADD ONE CARD</div>
       <ul style={{
         display: "flex",
         flexDirection: "row"

@@ -46,16 +46,30 @@ const entities = (state = initialState, action) => {
 
         // Adds a value to moves value of an entity
         case 'CHANGE_MOVES':
-            return {
-                ...state,
-                byId: {
-                    ...state.byId,
-                    [action.payload.id]: {
-                        ...state.byId[action.payload.id],
-                        moves: state.byId[action.payload.id].moves + action.payload.moves
+            if (state.byId[action.payload.id].moves + action.payload.moves < 0) {
+                return {
+                    ...state,
+                    byId: {
+                        ...state.byId,
+                        [action.payload.id]: {
+                            ...state.byId[action.payload.id],
+                            moves: 0
+                        }
+                    }
+                }
+            } else {
+                return {
+                    ...state,
+                    byId: {
+                        ...state.byId,
+                        [action.payload.id]: {
+                            ...state.byId[action.payload.id],
+                            moves: state.byId[action.payload.id].moves + action.payload.moves
+                        }
                     }
                 }
             }
+
         // Adds an value to the HP value of an entity
         case 'CHANGE_HP':
             if (state.byId[action.payload.id].hp + action.payload.hp > state.byId[action.payload.id].maxHP) {
@@ -99,18 +113,30 @@ const entities = (state = initialState, action) => {
             }
 
         case 'CHANGE_ATTACK':
-            return {
-                ...state,
-                byId: {
-                    ...state.byId,
-                    [action.payload.id]: {
-                        ...state.byId[action.payload.id],
-                        attack: state.byId[action.payload.id].attack + action.payload.attack
-                    }
+            if (state.byId[action.payload.id].attack + action.payload.attack < 0) {
+                return {
+                    byId: {
+                        ...state.byId,
+                        [action.payload.id]: {
+                            ...state.byId[action.payload.id],
+                            attack: 0
+                        }
 
+                    }
+                }
+            } else {
+                return {
+                    ...state,
+                    byId: {
+                        ...state.byId,
+                        [action.payload.id]: {
+                            ...state.byId[action.payload.id],
+                            attack: state.byId[action.payload.id].attack + action.payload.attack
+                        }
+
+                    }
                 }
             }
-
 
         case 'CHANGE_BASE_ATTACK':
             return {

@@ -1,8 +1,19 @@
 .cards{
     display: flex;
     flex-direction: row;
-    align-items: center;
+
 }
 .shop_title {
     font-size: 3em;
+}
+.shop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop_card_price{
+    font-size: 1.5em;
+    text-align: center;
 }

@@ -15,31 +15,27 @@ export const Shop = ({ shopItems, building }) => {
 
     const purchase = (building, item) => {
         if (gold >= item.price) {
-        dispatch(buyCard(building, item))
+            dispatch(buyCard(building, item))
         } else {
             return
         }
-      }
-    
+    }
 
-    let items = shopItems.map((item) => 
-        <li key={item.id} style={{
+
+    let items = shopItems.map((item) =>
+        <li className="shop_card" key={item.id} style={{
             listStyle: "none",
         }}>
             <Card id={item.content.id} title={item.content.title} description={item.content.description} onClick={() => purchase(building, item)} isBig={true}></Card>
-            {item.price}
+            <div className="shop_card_price"> ${item.price}</div>
         </li>
     )
     return (
-        <div className="component-Player" style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}>
-              <div className="shop_title">WELCOME TO THE CARD STORE</div>
-            <ul className="cards">
+        <div className="shop">
+            <div className="shop_title">WELCOME TO THE CARD STORE</div>
+            <div className="cards">
                 {items}
-            </ul>
+            </div>
         </div>
     );
 }

@@ -84,7 +84,7 @@ export const GameInfo = ({ player, moves, gold }) => {
             goldanimation={goldAnimation}>
 
             <h1
-            >Coin: {gold}</h1>
+            >$: {gold}</h1>
             </div>
 
         </div>

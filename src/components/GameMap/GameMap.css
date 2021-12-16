@@ -7,7 +7,7 @@
 }
 
 .gamemap {
-    position: absolute;
-    transition: transform 150ms linear;
-    will-change: transform;
+    position: relative;
+    align-self:center;
+    justify-self: center;
 }

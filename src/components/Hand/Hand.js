@@ -29,6 +29,8 @@ export const Hand = () => {
     const [buttonText, setButtonText] = useState()
     const [onButtonClick, setOnButtonClick] = useState()
     const [isSelecting, setIsSelecting] = useState(false)
+    const [enabledType, setEnabledType] = useState()
+    const [selectText, setSelectText] = useState("CHOOSE A CARD")
 
 
     const setCardSelected = (id) => {
@@ -39,6 +41,10 @@ export const Hand = () => {
         }
     }
 
+
+    const checkIfDisabled = (params, enabledType) => {
+        return (enabledType && !params[enabledType])
+    }
 
 
     useEffect(() => {
@@ -82,7 +88,7 @@ export const Hand = () => {
     useEffect(() => {
         if (!upgradeQueue.length) {
 
-        } else if ( upgradeQueue[0].method === 'random') {
+        } else if (upgradeQueue[0].method === 'random') {
             let validCards = hand.filter(card => card.params[upgradeQueue[0].type])
             if (!validCards.length) {
                 return
@@ -90,15 +96,19 @@ export const Hand = () => {
                 let cardToUpgrade = validCards[Math.floor(Math.random() * validCards.length)];
                 dispatch(upgradeCard(cardToUpgrade.id, upgradeQueue[0]))
             }
-        } else  if ( upgradeQueue[0].method === 'id') {
+        } else if (upgradeQueue[0].method === 'id') {
             console.log(upgradeQueue)
             let card = hand.filter(card => card.id === upgradeQueue[0].id)[0]
             dispatch(upgradeCard(card.id, upgradeQueue[0]))
-        } else if ( upgradeQueue[0].method === 'choose') {
+        } else if (upgradeQueue[0].method === 'choose') {
             setButtonText('Upgrade')
             setIsSelecting(true)
+            setSelectText("Choose a card to add " + upgradeQueue[0].upgradeAmount + " to " + upgradeQueue[0].type)
+            setEnabledType(upgradeQueue[0].type)
             setOnButtonClick(() => (id) => {
+                setEnabledType()
                 setIsSelecting(false)
+                setSelected()
                 setButtonText()
                 setOnButtonClick()
                 dispatch(upgradeCard(id, upgradeQueue[0]))
@@ -106,6 +116,7 @@ export const Hand = () => {
         } else if (upgradeQueue[0].method === 'remove') {
             setButtonText('Remove')
             setIsSelecting(true)
+            setSelectText("Choose a card to remove")
             setOnButtonClick(() => (id) => {
                 setIsSelecting(false)
                 setButtonText()
@@ -113,7 +124,7 @@ export const Hand = () => {
                 dispatch(removeCard(id))
             })
         } else if (upgradeQueue[0].method === 'all') {
-         
+
             let validCards = hand.filter(card => card.params[upgradeQueue[0].type])
             if (!validCards.length) {
                 return
@@ -142,7 +153,7 @@ export const Hand = () => {
                     }}
                 >
 
-                    <Card title={card.title} isLarge={(card.id === selected).toString()} onClick={() => setCardSelected(card.id)} description={card.description} id={card.id} beingPlayed={beingPlayed} buttonText={buttonText} onButtonClick={() => onButtonClick(card.id)}></Card>
+                    <Card title={card.title} isLarge={(card.id === selected).toString()} onClick={() => setCardSelected(card.id)} description={card.description} id={card.id} beingPlayed={beingPlayed} buttonText={buttonText} onButtonClick={() => onButtonClick(card.id)} blank={checkIfDisabled(card.params, enabledType)}></Card>
                 </li>)
         }
         return allCards
@@ -150,15 +161,21 @@ export const Hand = () => {
 
 
     return (
-        <div className="hand" selecting={isSelecting.toString()}>
-
-
-            <div className="draw">
-                <h1>{draw.length}</h1>
+        <div className="container" selecting={isSelecting.toString()}>
+            <div className="selecttext">
+                {isSelecting && selectText}
             </div>
-            <ul className="cards">{cards}</ul>
-            <div className="discard">
-                <h1>{discard.length}</h1>
+            <div className="hand">
+
+
+
+               {!isSelecting && <div className="draw">
+                    <h1>{draw.length}</h1>
+                </div>}
+                <ul className="cards">{cards}</ul>
+                {!isSelecting && <div className="discard">
+                    <h1>{discard.length}</h1>
+                </div>}
             </div>
         </div>
     );

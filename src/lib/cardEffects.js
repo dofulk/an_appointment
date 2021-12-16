@@ -21,14 +21,13 @@ const allCards = {
     'Fragile Sword': { title: 'Fragile Sword', get effect() { return getCardEffect('Fragile Sword', { attack: this.params.attack, id: this.id, upgradeAmount: this.params.upgradeAmount }) }, get description() { return '+ ' + this.params.attack + ' Attack. On Play, this card permanently loses ' + this.params.upgradeAmount + ' attack' }, onAdd: undefined, params: { attack: 8, upgradeAmount: -1 }, tier: 1 },
     'Morning Strength': { title: 'Morning Strength', get effect() { return getCardEffect('Morning Strength', { attack: this.params.attack }) }, get description() { return '+ ' + this.params.attack + ' Attack. On Move, lose 1 attack' }, onAdd: undefined, params: { attack: 5 }, tier: 1 },
     'Vampirism': { title: 'Vampirism', get effect() { return getCardEffect('Vampirism', { hp: this.params.hp }) }, get description() { return 'Gain ' + this.params.hp + ' HP on a Kill' }, onAdd: undefined, params: { hp: 1 }, tier: 1 },
-    'Bribe': { title: 'Bribe', get effect() { return getCardEffect('Bribe', { gold: this.params.gold, draw: this.params.draw }) }, get description() { return this.params.gold + " Gold, Draw " + this.params.draw }, onAdd: undefined, params: { gold: -1, draw: 1 }, tier: 1 },
     'Cultivate': { title: 'Cultivate', get effect() { return getCardEffect('Cultivate', {}) }, get description() { return 'When added gain ' + this.params.hp + ' max HP' }, get onAdd() { return changeMaxHP({ id: 'player' }, this.params.hp) }, params: { hp: 1 }, tier: 1 },
-    'Scalpel': { title: 'Scalpel', get effect() { return getCardEffect('Attack', { attack: this.params.attack }) }, get description() { return "Add " + this.params.attack + " to attack. When added choose a card to remove" }, onAdd: addToUpgradeQueue([{ method: 'remove' }]), params: { attack: 2 }, tier: 1 },
 
 
     // Tier 2
-    'Live Wire': { title: 'Live Wire', get effect() { return getCardEffect('Move', { moves: this.params.moves }) }, get description() { return '+ ' + this.params.moves + ' Moves. On Add, add ' + this.params.upgradeAmount + ' to a random card with Move' }, get onAdd() { return addToUpgradeQueue([{ method: 'choose', type: 'moves', amount: this.params.upgradeAmount }]) }, params: { moves: 2, upgradeAmount: 2 }, tier: 1 },
-    'Windup': { title: 'Windup', get effect() { return getCardEffect('Attack', { moves: this.params.moves }) }, get description() { return '+ ' + this.params.attack + ' Moves. On Add, add ' + this.params.upgradeAmount + ' to a random card with Move' }, get onAdd() { return addToUpgradeQueue([{ method: 'choose', type: 'attack', amount: this.params.upgradeAmount }]) }, params: { attack: 2, upgradeAmount: 2 }, tier: 1 },
+    'Scalpel': { title: 'Scalpel', get effect() { return getCardEffect('Attack', { attack: this.params.attack }) }, get description() { return "Add " + this.params.attack + " to attack. When added choose a card to remove" }, onAdd: addToUpgradeQueue([{ method: 'remove' }]), params: { attack: 4 }, tier: 2 },
+    'Live Wire': { title: 'Live Wire', get effect() { return getCardEffect('Move', { moves: this.params.moves }) }, get description() { return '+ ' + this.params.moves + ' Moves. On Add, add ' + this.params.upgradeAmount + ' to a chosen card with Move' }, get onAdd() { return addToUpgradeQueue([{ method: 'choose', type: 'moves', amount: this.params.upgradeAmount }]) }, params: { moves: 2, upgradeAmount: 2 }, tier: 2 },
+    'Windup': { title: 'Windup', get effect() { return getCardEffect('Attack', { moves: this.params.moves }) }, get description() { return '+ ' + this.params.attack + ' Attack. On Add, add ' + this.params.upgradeAmount + ' to a chosen card with Attack' }, get onAdd() { return addToUpgradeQueue([{ method: 'choose', type: 'attack', amount: this.params.upgradeAmount }]) }, params: { attack: 2, upgradeAmount: 2 }, tier: 2 },
     'Snowball': { title: 'Snowball', get effect() { return getCardEffect('Snowball', { moves: this.params.moves }) }, get description() { return 'Gain ' + this.params.moves + ' Moves on a Kill' }, params: { moves: 2 }, tier: 2 },
     'Bloody Dagger': { title: 'Bloody Dagger', get effect() { return getCardEffect('Bloody Dagger', { hp: this.params.hp, attack: this.params.attack }) }, get description() { return this.params.hp + " HP, Gain " + this.params.attack + " Attack" }, onAdd: undefined, params: { attack: 10, hp: -1 }, tier: 2 },
     'Golden Fists': { title: 'Golden Fists', get effect() { return getCardEffect('Golden Fists', { gold: this.params.gold }) }, get description() { return 'Gain ' + this.params.gold + ' Gold when you Attack' }, onAdd: undefined, params: { gold: 5 }, tier: 2 },
@@ -44,6 +43,7 @@ const allCards = {
 
 
     // Tier 3 +
+    'Bribe': { title: 'Bribe', get effect() { return getCardEffect('Bribe', { gold: this.params.gold, draw: this.params.draw }) }, get description() { return this.params.gold + " Gold, Draw " + this.params.draw }, onAdd: undefined, params: { gold: -2, draw: 2 }, tier: 2 },
     'Speedy': { title: 'Speedy', get effect() { return getCardEffect('Move', { moves: this.params.moves }) }, get description() { return '+ ' + this.params.moves + ' Moves. On Add, add ' + this.params.upgradeAmount + ' to a all cards with Move' }, get onAdd() { return addToUpgradeQueue([{ method: 'all', type: 'moves', amount: this.params.upgradeAmount }]) }, params: { moves: 2, upgradeAmount: 3 }, tier: 3 },
     'Whirlwind': { title: 'Whirlwind', get effect() { return getCardEffect('Attack', { moves: this.params.moves }) }, get description() { return '+ ' + this.params.attack + ' Attack. On Add, add ' + this.params.upgradeAmount + ' to a all cards with Attack' }, get onAdd() { return addToUpgradeQueue([{ method: 'all', type: 'attack', amount: this.params.upgradeAmount }]) }, params: { attack: 2, upgradeAmount: 3 }, tier: 3 },
     'Cull': { title: 'Cull', get effect() { return getCardEffect('Cull', {}) }, get description() { return "When added choose 2 cards to remove" }, onAdd: addToUpgradeQueue([{ method: 'remove' }, { method: 'remove' }]), params: {}, tier: 3 },
@@ -105,6 +105,8 @@ export const getNewCardList = (numberOfCards, tier) => {
     }
     return newCardList
 
+
+
 }
 
 
@@ -121,7 +123,7 @@ export const generateShop = (tier) => {
     let allKeys = Object.keys(allCards);
     let keys = allKeys.filter(key => allCards[key].tier <= tier)
 
-    let i = 5
+    let i = 3
     let multiplier = Math.pow(2, (tier - 1))
     while (i > 0) {
         let randomKey = keys[keys.length * Math.random() << 0]

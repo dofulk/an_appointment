@@ -1,18 +1,19 @@
 
 import React, { useEffect, useState, useRef } from "react";
-import {Button} from '../Button/Button'
+import { Button } from '../Button/Button'
 
 
 import './Card.css'
 
 
 
-export const Card = ({ id, color, title, description, onClick, beingPlayed, isLarge = "false", buttonText, onButtonClick}) => {
+export const Card = ({ id, color, title, description, onClick, beingPlayed, isLarge = "false", buttonText, onButtonClick, blank = false }) => {
 
   const [isPlaying, setIsPlaying] = useState(0)
   const [upgradeAnimation, setUpgradeAnimation] = useState(0)
   const [opacity, setOpacity] = useState(0)
   const firstRender = useRef(true);
+
 
   useEffect(() => {
     if (beingPlayed === id) {
@@ -48,22 +49,23 @@ export const Card = ({ id, color, title, description, onClick, beingPlayed, isLa
 
   return (
     <div className="card_container" islarge={isLarge}>
-    <div className="card"
-      isplaying={isPlaying}
-      onClick={onClick}
-      upgradeanimation={upgradeAnimation}
-      islarge={isLarge}
-      opacity={opacity}
-    >
+      <div className="card"
+        isplaying={isPlaying}
+        onClick={onClick}
+        upgradeanimation={upgradeAnimation}
+        islarge={blank ? "false" : isLarge}
+        opacity={opacity}
+        blank={blank.toString()}
+      >
 
 
-      <h2>{title}</h2>
-      <div className="description">
-        {description}
+        <h2>{title}</h2>
+        <div className="description">
+          {description}
+        </div>
+
       </div>
-      
-    </div>
-    {(buttonText && isLarge === "true") && <Button text={buttonText} onClick={onButtonClick}></Button>}
+      {(buttonText && !blank && isLarge === "true") && <Button text={buttonText} onClick={onButtonClick}></Button>}
     </div>
   );
 

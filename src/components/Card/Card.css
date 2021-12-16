@@ -2,14 +2,14 @@
     display: inline-block;
     margin: 2px;
     position: relative;
- 
+    padding: 10px;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #fff;
+    background-color: #fff;
   }
 
   .card:hover {
@@ -34,10 +34,15 @@
     
 
   }
+  .card[blank="true"] {
+    background-color: rgb(139, 139, 139);
+    color: rgb(94, 94, 94);
+    box-shadow: none;
+  }
 
   .card[islarge="false"] {
     width: 10em;
-    height: 11em;
+    height: 10em;
   }
 
   .card[opacity="0"] {
