@@ -137,7 +137,7 @@ const quickHands = (params) => {
     }
 }
 const secondWind = (params) => {
-    return addOnAttack({ action: changeMoves('player', params.moves), removeOn: 'endCycle' })
+    return addOnAttack({ action: changeMoves('player', params.moves), removeOn: 'onAttack' })
 }
 
 const bulk = (params) => {
@@ -162,6 +162,7 @@ const morningStrength = (params) => {
         })
     }
 }
+
 
 export const getCardEffect = (effect, params) => {
 

@@ -95,6 +95,8 @@ export function Main({ menuOpen }) {
 
   const handleKeydown = (e) => {
 
+    setModalContent()
+
     let chooseMove = (direction) => {
       let target = choosePlayerTarget(player.position, direction)
       let targetTile = tiles.byId[target]

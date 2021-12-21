@@ -1,6 +1,6 @@
 export const initialState = {
     byId: {
-        "player": { id: "player", position: "1,1", moves: 1, baseMoves: 1, hp: 10, maxHP: 10, attack: 1, baseAttack: 1, type: 'character', sprite: "🙂" },
+        "player": { id: "player", position: "1,1", moves: 1, baseMoves: 1, hp: 25, maxHP: 25, attack: 1, baseAttack: 1, type: 'character', sprite: "🙂" },
 
     },
     characterIds: [],
@@ -17,7 +17,8 @@ const entities = (state = initialState, action) => {
                     player: {
                         ...action.payload.entities.byId['player'],
                         moves: state.byId['player'].baseMoves,
-                        attack: state.byId['player'].baseAttack
+                        attack: state.byId['player'].baseAttack,
+                        hp: state.byId['player'].maxHP
                     }
                 },
                 characterIds: action.payload.entities.characterIds,

@@ -1,22 +1,27 @@
 import { getNewCardList, generateShop } from "./cardEffects"
 import { v4 as uuidv4 } from 'uuid'
 import { breakTiles } from "./breakTiles"
+import { checkIfWall, chooseRandomWallFunction } from "./walls"
 
 const enemies = [
-    {   position: "", moves: 1, baseMoves: 1, hp: 8, maxHP: 8, attack: 1, baseAttack: 1, type: 'character', sprite: "🪲" },
-    {  position: "", moves: 1, baseMoves: 1, hp: 3, maxHP: 3, attack: 2, baseAttack: 2, type: 'character', sprite: "🥷🏼" },
-    {  position: "", moves: 1, baseMoves: 1, hp: 6, maxHP: 6, attack: 3, baseAttack: 3, type: 'character', sprite: "🦊" },
+    { position: "", moves: 1, baseMoves: 1, hp: 8, maxHP: 8, attack: 1, baseAttack: 1, type: 'character', sprite: "🪲" },
+    { position: "", moves: 1, baseMoves: 1, hp: 3, maxHP: 3, attack: 2, baseAttack: 2, type: 'character', sprite: "🥷🏼" },
+    { position: "", moves: 1, baseMoves: 1, hp: 6, maxHP: 6, attack: 3, baseAttack: 3, type: 'character', sprite: "🦊" },
 ]
 
-const generateEntityArray = (level, tier) => {
+const generateEntityArray = (level) => {
     let entities = [
-        { id: uuidv4(), position: "", content: getNewCardList(2, tier), type: "building", buildingType: "Chest", sprite: "🎁" },
+        { id: uuidv4(), position: "", content: getNewCardList(2, level), type: "building", buildingType: "Chest", sprite: "🎁" },
 
         // { id: uuidv4(), position: "", type: "building", buildingType: "Arcade", sprite: "🎰" },
-        { id: uuidv4(), position: "", content: generateShop(tier), type: "building", buildingType: "Shop", sprite: "💲" },
+        { id: uuidv4(), position: "", content: generateShop(level), type: "building", buildingType: "Shop", sprite: "💲" },
+        { id: uuidv4(), position: "", content: generateShop(level), type: "building", buildingType: "Shop", sprite: "💲" },
         // { id: uuidv4(), position: "", type: "building", buildingType: "Key", sprite: "🔑" },
         // { id: uuidv4(), position: "", type: "building", buildingType: "Medic", sprite: "🏥" },
-        { id: uuidv4(), position: "", type: "building", gold: 10, buildingType: "GoldPile", sprite: "💰" },
+        { id: uuidv4(), position: "", type: "building", gold: 3 + level, buildingType: "GoldPile", sprite: "💰" },
+        { id: uuidv4(), position: "", type: "building", gold: 3 + level, buildingType: "GoldPile", sprite: "💰" },
+        { id: uuidv4(), position: "", type: "building", gold: 3 + level, buildingType: "GoldPile", sprite: "💰" },
+        { id: uuidv4(), position: "", type: "building", gold: 3 + level, buildingType: "GoldPile", sprite: "💰" },
 
     ]
     let i = level + 2
@@ -37,20 +42,22 @@ const generateEntityArray = (level, tier) => {
     return entities
 }
 
-export const createLevel = (player, level, numberOfCycles, tier) => {
+export const createLevel = (player, level, numberOfCycles) => {
 
 
 
 
-    let entityArray = generateEntityArray(level, tier)
+    let entityArray = generateEntityArray(level)
 
     let byId = {}
     let allIds = []
     let validMoves = []
-    let width = 10
-    let height = 4
+    let width = 13
+    let height = 5
 
     let i = 0
+
+    const wallFunction = chooseRandomWallFunction()
 
 
     while (i < height) {
@@ -60,11 +67,19 @@ export const createLevel = (player, level, numberOfCycles, tier) => {
 
 
             allIds.push(positionId)
-            validMoves.push(positionId)
-            byId = {
-                ...byId,
-                [positionId]: { id: positionId, row: i, column: j, isAValidMove: true, character: [], wall: false, damage: 0, isAStructure: false, building: [] },
+            if (checkIfWall(positionId, wallFunction)) {
+                byId = {
+                    ...byId,
+                    [positionId]: { id: positionId, row: i, column: j, isAValidMove: false, character: [], wall: true, isAStructure: false, building: [] },
 
+                }
+            } else {
+                validMoves.push(positionId)
+                byId = {
+                    ...byId,
+                    [positionId]: { id: positionId, row: i, column: j, isAValidMove: true, character: [], wall: false, damage: 0, isAStructure: false, building: [] },
+
+                }
             }
 
             j++
@@ -80,7 +95,7 @@ export const createLevel = (player, level, numberOfCycles, tier) => {
 
 
 
-    let playerPosition = '0,0'
+    let playerPosition = '0,2'
     player.position = playerPosition
     validMoves = validMoves.filter(item => item !== playerPosition)
     byId = {
@@ -96,7 +111,7 @@ export const createLevel = (player, level, numberOfCycles, tier) => {
     let exit = { id: "Exit", position: "", isLocked: true, type: "building", buildingType: "Exit", sprite: "🪜" }
 
 
-    let exitPosition = (width - 1) + ',' + (height - 1)
+    let exitPosition = (width - 1) + ',' + Math.floor(height/ 2)
     exit.position = exitPosition
     validMoves = validMoves.filter(item => item !== exitPosition)
 

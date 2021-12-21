@@ -288,7 +288,7 @@ export const attackTarget = (target, attacker, killEffects) => {
     return (dispatch, getState) => {
 
         batch(() => {
-            dispatch(changeMoves(attacker.id, -attacker.moves))
+            dispatch(changeMoves(attacker.id, -1))
             dispatch(changeHP(target, -attacker.attack, killEffects))
             dispatch({
                 type: 'ON_ATTACK',

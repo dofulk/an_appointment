@@ -5,8 +5,8 @@ export const initialState = {
   allPhases: ['cards', 'player', 'enemies'],
   isPaused: false,
   numberOfCycles: 0,
-  drawAmount: 4,
-  baseDraw: 4,
+  drawAmount: 5,
+  baseDraw: 5,
   gold: 10,
   level: 0,
   onKill: [],
@@ -79,9 +79,9 @@ const game = (state = initialState, action) => {
         level: action.payload.level,
         phase: 0,
         drawAmount: state.baseDraw,
-        onKill: state.onKill.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle'),
-        onMove: state.onMove.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle'),
-        onAttack: state.onAttack.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle'),
+        onKill: state.onKill.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle' && item.removeOn !== 'onAttack'),
+        onMove: state.onMove.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle' && item.removeOn !== 'onAttack'),
+        onAttack: state.onAttack.filter(item => item.removeOn !== 'newMap' && item.removeOn !== 'endCycle' && item.removeOn !== 'onAttack'),
         onNewMap: []
       }
     case 'ADD_ON_KILL':
